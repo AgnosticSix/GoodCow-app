@@ -1,8 +1,16 @@
 package com.upc.agnosticsix.goodcow;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,16 +20,61 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import adapters.CowRecyclerAdapter;
+import model.Cow;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, SwipeRefreshLayout.OnRefreshListener {
+
+    private String TAG = MainActivity.class.getSimpleName();
+    private AppCompatActivity activity = MainActivity.this;
+    private RecyclerView recyclerViewCow;
+    private List<Cow> cowList;
+    private CowRecyclerAdapter cowRecyclerAdapter;
+    private Cow cow;
+    SwipeRefreshLayout swipeRefreshLayout;
+    private ProgressDialog progressDialog;
+    private static String url = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/bovinos?page=1&size=30";
+    ArrayList<HashMap<String,String>> dataList;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        dataList = new ArrayList<>();
+
+        initViews();
+        initObjects();
+
+        new GetData().execute();
+    }
+
+    private void initViews(){
+        recyclerViewCow = (RecyclerView) findViewById(R.id.recyclerViewCows);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary,
+                android.R.color.holo_green_dark,
+                android.R.color.holo_orange_dark,
+                android.R.color.holo_blue_dark);
+    }
+
+    private void initObjects(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -40,8 +93,21 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        TextView emailtext = (TextView) findViewById(R.id.emailview);
+
+        cowList = new ArrayList<>();
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerViewCow.setLayoutManager(layoutManager);
+        recyclerViewCow.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewCow.setHasFixedSize(true);
+        cowRecyclerAdapter = new CowRecyclerAdapter(cowList);
     }
 
+    @Override
+    public void onRefresh(){
+        swipeRefreshLayout.setRefreshing(false);
+    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -49,6 +115,7 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+            finish();
         }
     }
 
@@ -97,5 +164,79 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private class GetData extends AsyncTask<Void, Void, Void>{
+
+        @Override
+        protected void onPreExecute(){
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(MainActivity.this);
+            progressDialog.setMessage("Please wait...");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            HttpHandler sh = new HttpHandler();
+
+            String jsonStr = sh.makeServiceCall(url);
+
+            if(jsonStr != null){
+                try{
+                    JSONArray data = new JSONArray(jsonStr);
+
+                    for(int i = 0; i < data.length(); i++){
+                        JSONObject c = data.getJSONObject(i);
+
+                        Cow cowData = new Cow(c.getString("bovino_id"),
+                                c.getString("fierro"),
+                                c.getString("nombre"));
+                        String id = c.getString("bovino_id");
+                        String matricula = c.getString("fierro");
+                        String nombre = c.getString("nombre");
+
+                        cowList.add(cowData);
+                    }
+
+
+                } catch (final JSONException e){
+                    Log.e(TAG,"Json parsing error: " + e.getMessage());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(),
+                                    "Json parsing error" + e.getMessage(),
+                                    Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                    });
+                }
+            } else {
+                Log.e(TAG, jsonStr);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(),
+                                "Couldn't get json from server. Check LogCat for possible errors!",
+                                Toast.LENGTH_LONG)
+                                .show();
+                    }
+                });
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result){
+            super.onPostExecute(result);
+
+            if(progressDialog.isShowing())
+                progressDialog.dismiss();
+
+
+            recyclerViewCow.setAdapter(cowRecyclerAdapter);
+        }
     }
 }

@@ -20,6 +20,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -62,6 +63,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private String posttxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -335,7 +337,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             if (success) {
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
+                posttxt = mEmailView.getText().toString();
+                Log.e("a ", posttxt);
+                intent.putExtra("posttxt", posttxt);
+                if(intent.resolveActivity(getPackageManager()) != null)
+                    startActivity(intent);
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
