@@ -10,4 +10,9 @@ public class NacenciasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nacencias);
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }
