@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NacenciasActivity"
+    tools:context=".ZometricaActivity"
+
     android:padding="15sp"
     android:orientation="vertical">
 
@@ -18,6 +19,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
             <TextView
@@ -25,102 +27,15 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:textColor="@color/colorPrimary"
-                android:text="Bovino ID"/>
+                android:text="Bobino id"/>
 
-            <TextView
-                android:id="@+id/textViewId"
+            <EditText
+                android:id="@+id/textViewBobino"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textColor="@color/textColor"
                 android:text="@string/app_name"/>
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:orientation="horizontal">
-
-            <TextView
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:textColor="@color/colorPrimary"
-                android:text="Nacencia ID"/>
-
-            <TextView
-                android:id="@+id/textViewNombre"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@color/textColor"
-                android:text="@string/app_name"/>
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:orientation="horizontal">
-
-            <TextView
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:textColor="@color/colorPrimary"
-                android:text="Preñada ID"/>
-
-            <TextView
-                android:id="@+id/textViewPreñada"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@color/textColor"
-                android:text="@string/app_name"/>
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:orientation="horizontal">
-
-            <TextView
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:textColor="@color/colorPrimary"
-                android:text="Empleado ID"/>
-
-            <TextView
-                android:id="@+id/textViewEmpleado"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@color/textColor"
-                android:text="@string/app_name"/>
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:orientation="horizontal">
-
-            <Switch
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:textColor="@color/colorPrimary"
-                android:text="Vivo"/>
         </LinearLayout>
 
 
@@ -131,6 +46,55 @@
             android:orientation="horizontal">
 
             <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:textColor="@color/colorPrimary"
+                android:text="Altura"/>
+
+            <EditText
+                android:id="@+id/textViewAltura"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/textColor"
+                android:text="@string/app_name"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:textColor="@color/colorPrimary"
+                android:text="Fecha"/>
+
+            <EditText
+                android:id="@+id/textViewFecha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/textColor"
+                android:text="@string/app_name"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
@@ -138,7 +102,7 @@
                 android:text="Peso"/>
 
             <EditText
-                android:id="@+id/textViewPeso"
+                android:id="@+id/textViewClase"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -150,22 +114,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
-
-            <Switch
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:textColor="@color/colorPrimary"
-                android:text="Sexo"/>
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="15dp"
             android:orientation="horizontal">
 
             <TextView
@@ -173,15 +122,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:textColor="@color/colorPrimary"
-                android:text="Observaciones"/>
+                android:text="Testiculos"/>
 
-            <EditText
-                android:id="@+id/textViewFecha_Nac"
+            <Spinner
+                android:id="@+id/textViewTesticulos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="@color/textColor"
-                android:text="@string/app_name"/>
+                android:textColor="@color/textColor"/>
         </LinearLayout>
 
 
@@ -208,7 +156,6 @@
 
 
     </LinearLayout>
-
 
 
 </RelativeLayout>
