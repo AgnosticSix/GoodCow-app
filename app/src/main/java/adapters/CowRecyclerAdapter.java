@@ -1,11 +1,13 @@
 package adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.upc.agnosticsix.goodcow.CustomItemClickListener;
 import com.upc.agnosticsix.goodcow.R;
 
 import org.w3c.dom.Text;
@@ -16,17 +18,29 @@ import model.Cow;
 
 public class CowRecyclerAdapter extends RecyclerView.Adapter<CowRecyclerAdapter.CowViewHolder> {
 
+    Context context;
     List<Cow> cowList;
+    CustomItemClickListener itemClickListener;
 
-    public CowRecyclerAdapter(List<Cow> cowList){
+    public CowRecyclerAdapter(Context context, List<Cow> cowList, CustomItemClickListener itemClickListener){
+        this.context = context;
         this.cowList = cowList;
+        this.itemClickListener = itemClickListener;
     }
 
     public CowViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.itemlist_main, parent, false);
 
-        return new CowViewHolder(itemView);
+        final CowViewHolder mViewHolder = new CowViewHolder(itemView);
+        itemView.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                itemClickListener.onItemClick(v, mViewHolder.getAdapterPosition());
+            }
+        });
+        return mViewHolder;
     }
 
     @Override

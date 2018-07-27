@@ -10,4 +10,9 @@ public class OrdenhaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ordenha);
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }

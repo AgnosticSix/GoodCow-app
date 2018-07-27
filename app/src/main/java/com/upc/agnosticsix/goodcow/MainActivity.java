@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity
     private ProgressDialog progressDialog;
     private static String url = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/bovinos?page=1&size=30";
     ArrayList<HashMap<String,String>> dataList;
+    private String postId;
 
 
 
@@ -101,7 +102,15 @@ public class MainActivity extends AppCompatActivity
         recyclerViewCow.setLayoutManager(layoutManager);
         recyclerViewCow.setItemAnimator(new DefaultItemAnimator());
         recyclerViewCow.setHasFixedSize(true);
-        cowRecyclerAdapter = new CowRecyclerAdapter(cowList);
+        cowRecyclerAdapter = new CowRecyclerAdapter(getApplicationContext(), cowList, new CustomItemClickListener(){
+            @Override
+            public void onItemClick(View view, int i) {
+                postId = cowList.get(i).getId();
+                Intent intent = new Intent(activity, DetallesActivity.class);
+                intent.putExtra("idbovino", postId);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -154,14 +163,20 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(activity, NacenciasActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_gallery) {
+            Intent intent = new Intent(activity, OrdenhaActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_slideshow) {
+            Intent intent = new Intent(activity, PalpamientoActivity.class);
+            startActivity(intent);
+
+        }else if (id == R.id.nav_slideshow2) {
+            Intent intent = new Intent(activity, CruzamientoActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
 
         }
 
@@ -197,9 +212,9 @@ public class MainActivity extends AppCompatActivity
                         Cow cowData = new Cow(c.getString("bovino_id"),
                                 c.getString("fierro"),
                                 c.getString("nombre"));
-                        String id = c.getString("bovino_id");
-                        String matricula = c.getString("fierro");
-                        String nombre = c.getString("nombre");
+                        //String id = c.getString("bovino_id");
+                        //String matricula = c.getString("fierro");
+                        //String nombre = c.getString("nombre");
 
                         cowList.add(cowData);
                     }

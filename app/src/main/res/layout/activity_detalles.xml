@@ -29,12 +29,12 @@
                 android:text="Fierro"/>
 
             <TextView
-                android:id="@+id/textViewMatricula"
+                android:id="@+id/fierroDetalles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="@color/textColor"
-                android:text="@string/app_name"/>
+                android:text="@string/app_name"
+                android:textColor="@color/textColor" />
         </LinearLayout>
 
 
@@ -53,12 +53,12 @@
                 android:text="Nombre"/>
 
             <TextView
-                android:id="@+id/textViewNombre"
+                android:id="@+id/nombreDetalles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="@color/textColor"
-                android:text="@string/app_name"/>
+                android:text="@string/app_name"
+                android:textColor="@color/textColor" />
         </LinearLayout>
 
 
@@ -77,12 +77,12 @@
                 android:text="Sexo"/>
 
             <TextView
-                android:id="@+id/textViewSexo"
+                android:id="@+id/sexoDetalles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="@color/textColor"
-                android:text="@string/app_name"/>
+                android:text="@string/app_name"
+                android:textColor="@color/textColor" />
         </LinearLayout>
 
 
@@ -101,12 +101,12 @@
                 android:text="Clase"/>
 
             <TextView
-                android:id="@+id/textViewClase"
+                android:id="@+id/claseDetalles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="@color/textColor"
-                android:text="@string/app_name"/>
+                android:text="@string/app_name"
+                android:textColor="@color/textColor" />
         </LinearLayout>
 
 
@@ -124,12 +124,12 @@
                 android:text="Siniiga"/>
 
             <TextView
-                android:id="@+id/textViewSiniiga"
+                android:id="@+id/siniigaDetalles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="@color/textColor"
-                android:text="@string/app_name"/>
+                android:text="@string/app_name"
+                android:textColor="@color/textColor" />
         </LinearLayout>
 
 
@@ -147,12 +147,12 @@
                 android:text="Raza"/>
 
             <TextView
-                android:id="@+id/textViewRaza"
+                android:id="@+id/razaDetalles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="@color/textColor"
-                android:text="@string/app_name"/>
+                android:text="@string/app_name"
+                android:textColor="@color/textColor" />
         </LinearLayout>
 
 
@@ -170,12 +170,12 @@
                 android:text="Empadre"/>
 
             <TextView
-                android:id="@+id/textViewEmpadre"
+                android:id="@+id/empadreDetalles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="@color/textColor"
-                android:text="@string/app_name"/>
+                android:text="@string/app_name"
+                android:textColor="@color/textColor" />
         </LinearLayout>
 
 
@@ -193,12 +193,12 @@
                 android:text="Fecha Nacimiento"/>
 
             <TextView
-                android:id="@+id/textViewFecha_Nac"
+                android:id="@+id/fechaDetalles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="@color/textColor"
-                android:text="@string/app_name"/>
+                android:text="@string/app_name"
+                android:textColor="@color/textColor" />
         </LinearLayout>
 
 
@@ -216,12 +216,12 @@
                 android:text="Estado Bovino"/>
 
             <TextView
-                android:id="@+id/textViewEstado"
+                android:id="@+id/estadoDetalles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="@color/textColor"
-                android:text="@string/app_name"/>
+                android:text="@string/app_name"
+                android:textColor="@color/textColor" />
         </LinearLayout>
 
 

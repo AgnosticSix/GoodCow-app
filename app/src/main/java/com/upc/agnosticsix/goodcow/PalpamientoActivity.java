@@ -10,4 +10,9 @@ public class PalpamientoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_palpamiento);
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }

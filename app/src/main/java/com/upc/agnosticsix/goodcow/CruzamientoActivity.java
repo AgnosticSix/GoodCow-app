@@ -10,4 +10,9 @@ public class CruzamientoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cruzamiento);
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }
