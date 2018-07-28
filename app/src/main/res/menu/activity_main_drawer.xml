@@ -10,12 +10,16 @@
             android:title="Nacencias" />
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:icon="@drawable/indice"
+            android:title="Ordeña" />
         <item
             android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:icon="@drawable/indice"
+            android:title="Palpamiento" />
+        <item
+            android:id="@+id/nav_slideshow2"
+            android:icon="@drawable/indice"
+            android:title="Cruzamiento" />
         <item
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_manage"
@@ -28,10 +32,6 @@
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
                 android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
         </menu>
     </item>
 

@@ -10,4 +10,9 @@ public class VacunasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vacunas);
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }
