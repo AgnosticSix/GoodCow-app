@@ -15,53 +15,6 @@
         android:padding="16dp">
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:textColor="@color/colorPrimary"
-                android:text="Cruzamiento id"/>
-
-            <EditText
-                android:id="@+id/textViewCruzamiento"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@color/textColor"
-                android:text="@string/app_name"/>
-        </LinearLayout>
-
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
-
-            <TextView
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:textColor="@color/colorPrimary"
-                android:text="vaca id"/>
-
-            <EditText
-                android:id="@+id/textViewNombre"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@color/textColor"
-                android:text="@string/app_name"/>
-        </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
