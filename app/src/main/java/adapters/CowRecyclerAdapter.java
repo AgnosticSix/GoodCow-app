@@ -45,7 +45,7 @@ public class CowRecyclerAdapter extends RecyclerView.Adapter<CowRecyclerAdapter.
 
     @Override
     public void onBindViewHolder(CowViewHolder holder, int position){
-        holder.textViewId.setText(cowList.get(position).getId());
+        //holder.textViewId.setText(cowList.get(position).getId());
         holder.textViewMatricula.setText(cowList.get(position).getMatricula());
         holder.textViewNombre.setText(cowList.get(position).getNombre());
     }
@@ -56,13 +56,13 @@ public class CowRecyclerAdapter extends RecyclerView.Adapter<CowRecyclerAdapter.
     }
 
     public class CowViewHolder extends RecyclerView.ViewHolder{
-        public TextView textViewId;
+        //public TextView textViewId;
         public TextView textViewMatricula;
         public TextView textViewNombre;
 
         public CowViewHolder(View view){
             super(view);
-            textViewId = (TextView) view.findViewById(R.id.textViewId);
+            //textViewId = (TextView) view.findViewById(R.id.textViewId);
             textViewMatricula = (TextView) view.findViewById(R.id.textViewMatricula);
             textViewNombre = (TextView) view.findViewById(R.id.textViewNombre);
         }

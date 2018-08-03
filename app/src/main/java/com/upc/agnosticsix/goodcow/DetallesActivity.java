@@ -1,11 +1,14 @@
 package com.upc.agnosticsix.goodcow;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.nfc.Tag;
 import android.os.AsyncTask;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,13 +22,15 @@ import java.util.HashMap;
 import java.util.List;
 
 import model.Cow;
+import model.DataHelper;
 
 public class DetallesActivity extends AppCompatActivity {
 
     private String TAG = DetallesActivity.class.getSimpleName();
-    private String idbovino;
+    private String idbovino, siniigaa, clases, razas, empadres, estados;
     private ProgressDialog progressDialog;
-    private static String url = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/bovinos?where=bovino_id:";
+    private static String url = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/bovinos/";
+
     ArrayList<HashMap<String,String>> dataList;
     String url2;
     private List<Cow> cowList;
@@ -38,6 +43,7 @@ public class DetallesActivity extends AppCompatActivity {
     private TextView empadre;
     private TextView fecha;
     private TextView estado;
+    private DataHelper dataHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +70,20 @@ public class DetallesActivity extends AppCompatActivity {
     }
 
     private void initObjects(){
-        String idintent = getIntent().getStringExtra("idbovino");
+        final String idintent = getIntent().getStringExtra("idbovino");
         url2 = url.concat(idintent);
+        dataHelper = new DataHelper();
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab2);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DetallesActivity.this, VacunasActivity.class);
+                intent.putExtra("idbovino", idintent);
+                startActivity(intent);
+
+            }
+        });
     }
 
     private class GetData extends AsyncTask<Void, Void, Void> {
@@ -73,18 +91,17 @@ public class DetallesActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute(){
             super.onPreExecute();
-            //progressDialog = new ProgressDialog(DetallesActivity.this);
-            //progressDialog.setMessage("Please wait...");
-            //progressDialog.setCancelable(false);
-            //progressDialog.show();
+            progressDialog = new ProgressDialog(DetallesActivity.this);
+            progressDialog.setMessage("Please wait...");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
             HttpHandler sh = new HttpHandler();
 
-            String jsonStr = sh.makeServiceCall(url2);
-
+            final String jsonStr = sh.makeServiceCall(url2);
 
             if(jsonStr != null){
                 try{
@@ -96,13 +113,18 @@ public class DetallesActivity extends AppCompatActivity {
 
                         fierro.setText(c.getString("fierro"));
                         nombre.setText(c.getString("nombre"));
-                        sexo.setText(c.getString("sexo"));
-                        clase.setText(c.getString("clase_bovino_id"));
-                        siniiga.setText(c.getString("siniiga_id"));
-                        raza.setText(c.getString("raza_bovino_id"));
-                        empadre.setText(c.getString("empadre_id"));
+                        sexo.setText(c.getString("sexo").equals("1") ? "Macho" : "Hembra");
+                        clases = dataHelper.getClase(c.getString("clase_bovino_id"));
+                        //clase.setText(clases);
+                        siniigaa = dataHelper.getSiniiga(c.getString("siniiga_id"));
+                        //siniiga.setText(siniigaa);
+                        razas = dataHelper.getRaza(c.getString("raza_bovino_id"));
+                        //raza.setText(razas);
+                        empadres = dataHelper.getEmpadre(c.getString("empadre_id"));
+                        //empadre.setText(empadres);
                         fecha.setText(c.getString("fecha_nacimiento"));
-                        estado.setText(c.getString("estado_bovino_id"));
+                        estados = dataHelper.getEstado(c.getString("estado_bovino_id"));
+                        //estado.setText(estados);
 
                         //cowList.add(cowData);
                     }
@@ -139,6 +161,8 @@ public class DetallesActivity extends AppCompatActivity {
         protected void onPostExecute(Void result){
             super.onPostExecute(result);
 
+            if(progressDialog.isShowing())
+                progressDialog.dismiss();
 
         }
     }

@@ -72,7 +72,4 @@ public class Cow {
 
     }
 
-    public Cow(String id, String matricula, String nombre, String sexo, String clase, String siniiga, String raza, String empadre, String fecha_nac, String estado){
-
-    }
 }

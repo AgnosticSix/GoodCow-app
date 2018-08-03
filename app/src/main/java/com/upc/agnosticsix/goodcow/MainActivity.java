@@ -45,8 +45,7 @@ public class MainActivity extends AppCompatActivity
     private Cow cow;
     SwipeRefreshLayout swipeRefreshLayout;
     private ProgressDialog progressDialog;
-    private static String url = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/bovinos?page=1&size=30";
-    ArrayList<HashMap<String,String>> dataList;
+    private static String url = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/bovinos";
     private String postId;
 
 
@@ -55,7 +54,6 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        dataList = new ArrayList<>();
 
         initViews();
         initObjects();
@@ -146,9 +144,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+        //if (id == R.id.action_settings) {
+        //    return true;
+        //}
 
         return super.onOptionsItemSelected(item);
     }
