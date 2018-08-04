@@ -24,19 +24,18 @@
 
             <TextView
 
-                android:layout_width="match_parent"
+                android:layout_width="214dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:textColor="@color/colorPrimary"
-                android:text="Bobino id"/>
+                android:text="Vaca"
+                android:textColor="@color/colorPrimary" />
 
-            <EditText
-                android:id="@+id/textViewNombre"
+            <Spinner
+                android:id="@+id/bovinoPal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@color/textColor"
-                android:text="@string/app_name"/>
+                android:layout_weight="2" />
+
         </LinearLayout>
 
 
@@ -47,11 +46,12 @@
             android:orientation="horizontal">
 
             <Switch
+                android:id="@+id/swPal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:textColor="@color/colorPrimary"
-                android:text="Resultado Palpamiento"/>
+                android:text="Resultado Palpamiento"
+                android:textColor="@color/colorPrimary" />
         </LinearLayout>
 
 
@@ -70,12 +70,14 @@
                 android:text="Fecha"/>
 
             <EditText
-                android:id="@+id/textViewClase"
+                android:id="@+id/fechaPal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:editable="false"
+                android:text="@string/loading"
                 android:textColor="@color/textColor"
-                android:text="@string/app_name"/>
+                tools:clickable="false" />
         </LinearLayout>
 
 
@@ -93,12 +95,14 @@
                 android:text="Observaciones"/>
 
             <EditText
-                android:id="@+id/textViewObserva"
+                android:id="@+id/observaPal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
                 android:layout_weight="1"
+                android:editable="true"
+                android:maxLines="5"
                 android:textColor="@color/textColor"
-                android:text="@string/app_name"/>
+                tools:clickable="true" />
         </LinearLayout>
 
 
@@ -110,11 +114,12 @@
 
 
             <Button
+                android:id="@+id/addBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="@color/colorPrimary"
-                android:text="Agregar"/>
+                android:text="Agregar"
+                android:textColor="@color/colorPrimary" />
         </LinearLayout>
 
 

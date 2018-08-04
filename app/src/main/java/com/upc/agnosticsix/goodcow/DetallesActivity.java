@@ -27,22 +27,14 @@ import model.DataHelper;
 public class DetallesActivity extends AppCompatActivity {
 
     private String TAG = DetallesActivity.class.getSimpleName();
-    private String idbovino, siniigaa, clases, razas, empadres, estados;
+    private String idbovino, fierros, nombres, sexos, siniigaa, clases, razas, empadres, estados, fechas;
     private ProgressDialog progressDialog;
     private static String url = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/bovinos/";
 
     ArrayList<HashMap<String,String>> dataList;
     String url2;
     private List<Cow> cowList;
-    private TextView fierro;
-    private TextView nombre;
-    private TextView sexo;
-    private TextView clase;
-    private TextView siniiga;
-    private TextView raza;
-    private TextView empadre;
-    private TextView fecha;
-    private TextView estado;
+    private TextView fierro, nombre, sexo, clase, siniiga, raza, empadre, fecha, estado;
     private DataHelper dataHelper;
 
     @Override
@@ -52,6 +44,7 @@ public class DetallesActivity extends AppCompatActivity {
 
         initObjects();
         initViews();
+        //running();
         new GetData().execute();
 
     }
@@ -86,6 +79,10 @@ public class DetallesActivity extends AppCompatActivity {
         });
     }
 
+
+
+
+
     private class GetData extends AsyncTask<Void, Void, Void> {
 
         @Override
@@ -101,7 +98,7 @@ public class DetallesActivity extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
             HttpHandler sh = new HttpHandler();
 
-            final String jsonStr = sh.makeServiceCall(url2);
+            String jsonStr = sh.makeServiceCall(url2);
 
             if(jsonStr != null){
                 try{
@@ -111,20 +108,17 @@ public class DetallesActivity extends AppCompatActivity {
 
                         JSONObject c = data.getJSONObject(i);
 
-                        fierro.setText(c.getString("fierro"));
-                        nombre.setText(c.getString("nombre"));
-                        sexo.setText(c.getString("sexo").equals("1") ? "Macho" : "Hembra");
+                        fierros = c.getString("fierro");
+                        nombres = c.getString("nombre");
+                        sexos = c.getString("sexo").equals("1") ? "Macho" : "Hembra";
                         clases = dataHelper.getClase(c.getString("clase_bovino_id"));
-                        //clase.setText(clases);
                         siniigaa = dataHelper.getSiniiga(c.getString("siniiga_id"));
-                        //siniiga.setText(siniigaa);
                         razas = dataHelper.getRaza(c.getString("raza_bovino_id"));
-                        //raza.setText(razas);
                         empadres = dataHelper.getEmpadre(c.getString("empadre_id"));
-                        //empadre.setText(empadres);
-                        fecha.setText(c.getString("fecha_nacimiento"));
+                        fechas = c.getString("fecha_nacimiento");
                         estados = dataHelper.getEstado(c.getString("estado_bovino_id"));
-                        //estado.setText(estados);
+
+
 
                         //cowList.add(cowData);
                     }
@@ -163,6 +157,16 @@ public class DetallesActivity extends AppCompatActivity {
 
             if(progressDialog.isShowing())
                 progressDialog.dismiss();
+
+            fierro.setText(fierros);
+            nombre.setText(nombres);
+            sexo.setText(sexos);
+            clase.setText(clases);
+            siniiga.setText(siniigaa);
+            raza.setText(razas);
+            empadre.setText(empadres);
+            fecha.setText(fechas);
+            estado.setText(estados);
 
         }
     }

@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import com.upc.agnosticsix.goodcow.DetallesActivity;
 import com.upc.agnosticsix.goodcow.HttpHandler;
+import com.upc.agnosticsix.goodcow.VacunasActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,36 +20,14 @@ public class DataHelper {
     private static String urlRaza = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/razas_bovinos/";
     private static String urlEmpadre = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/empadres/";
     private static String urlEstado = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/estados/";
-    private static String urlBovino = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/bovinos/";
+
     private static String urlVacuna = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/vacunas";
     private static String urlEmpleado = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/empleados";
+    private String TAG2 = "";
     private String TAG = "";
-    private String siniiga, clase, raza, empadre, estado, bovino;
+    private String siniiga, clase, raza, empadre, estado, bovino, vacuna, empleado, sexo;
     ArrayList<String> vacunaList = new ArrayList<String>();
     ArrayList<String> empleadoList = new ArrayList<String>();
-
-
-    public String getBovino(String id){
-        HttpHandler sh = new HttpHandler();
-        String url = urlBovino.concat(id);
-
-        String jsonStr = sh.makeServiceCall(url);
-
-        if(jsonStr != null){
-            try{
-                JSONArray data = new JSONArray(jsonStr);
-
-                for(int i = 0; i < data.length(); i++){
-                    JSONObject c = data.getJSONObject(i);
-                    bovino = c.getString("nombre");
-
-                }
-            }catch (final JSONException e){
-                Log.e(TAG,"Json parsing error: " + e.getMessage());
-            }
-        }
-        return bovino;
-    }
 
     public String getClase(String id){
         HttpHandler sh = new HttpHandler();
@@ -68,6 +47,8 @@ public class DataHelper {
             }catch (final JSONException e){
                 Log.e(TAG,"Json parsing error: " + e.getMessage());
             }
+        }else {
+            Log.e(TAG, jsonStr);
         }
         return clase;
     }
@@ -90,6 +71,8 @@ public class DataHelper {
             }catch (final JSONException e){
                 Log.e(TAG,"Json parsing error: " + e.getMessage());
             }
+        }else {
+            Log.e(TAG, jsonStr);
         }
         return siniiga;
     }
@@ -112,6 +95,8 @@ public class DataHelper {
             }catch (final JSONException e){
                 Log.e(TAG,"Json parsing error: " + e.getMessage());
             }
+        }else {
+            Log.e(TAG, jsonStr);
         }
         return raza;
     }
@@ -134,6 +119,8 @@ public class DataHelper {
             }catch (final JSONException e){
                 Log.e(TAG,"Json parsing error: " + e.getMessage());
             }
+        }else {
+            Log.e(TAG, jsonStr);
         }
         return empadre;
     }
@@ -156,6 +143,8 @@ public class DataHelper {
             }catch (final JSONException e){
                 Log.e(TAG,"Json parsing error: " + e.getMessage());
             }
+        }else {
+            Log.e(TAG, jsonStr);
         }
         return estado;
     }
@@ -170,7 +159,8 @@ public class DataHelper {
 
                 for(int i = 0; i < data.length(); i++){
                     JSONObject c = data.getJSONObject(i);
-                    String vacuna = c.getString("nombre");
+                    vacuna = c.getString("nombre");
+
                     vacunaList.add(vacuna);
                 }
             }catch (final JSONException e){
@@ -191,11 +181,12 @@ public class DataHelper {
 
                 for(int i = 0; i < data.length(); i++){
                     JSONObject c = data.getJSONObject(i);
-                    String empleado = c.getString("empleado_id");
+                    empleado = c.getString("empleado_id");
+
                     empleadoList.add(empleado);
                 }
             }catch (final JSONException e){
-                Log.e(TAG,"Json parsing error: " + e.getMessage());
+                Log.e(TAG2,"Json parsing error: " + e.getMessage());
             }
         }
         return empleadoList;

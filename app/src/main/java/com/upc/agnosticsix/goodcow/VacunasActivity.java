@@ -29,6 +29,7 @@ public class VacunasActivity extends AppCompatActivity {
     private Spinner vacspin, empspin;
     private ProgressDialog progressDialog;
     private TextView bovino, fecha;
+    private String bovinos, fechas;
     private DataHelper dataHelper;
     private static String url = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/bovinos/";
     String idvacuna;
@@ -36,6 +37,7 @@ public class VacunasActivity extends AppCompatActivity {
     String url2;
     ArrayList<String> vacunaList;
     ArrayList<String> empleadoList;
+    ArrayAdapter<String> vacunaAdapter, empleadoAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +46,6 @@ public class VacunasActivity extends AppCompatActivity {
         initViews();
         initObjects();
         new GetData().execute();
-
-
     }
 
     private void initViews(){
@@ -65,9 +65,10 @@ public class VacunasActivity extends AppCompatActivity {
         url2 = url.concat(idintent);
         vacunaList = new ArrayList<>();
         empleadoList = new ArrayList<>();
-
-
-
+        vacunaList = dataHelper.getVacunas();
+        empleadoList = dataHelper.getEmpleados();
+        vacunaAdapter = new ArrayAdapter<>(VacunasActivity.this, R.layout.activity_vacunas, vacunaList);
+        empleadoAdapter = new ArrayAdapter<>(VacunasActivity.this, R.layout.activity_vacunas, empleadoList);
     }
 
     private class GetData extends AsyncTask<Void, Void, Void> {
@@ -87,25 +88,20 @@ public class VacunasActivity extends AppCompatActivity {
 
             String jsonStr = sh.makeServiceCall(url2);
             String currentTime = Calendar.getInstance().getTime().toString();
-            vacunaList = dataHelper.getVacunas();
-            empleadoList = dataHelper.getEmpleados();
 
             if(jsonStr != null){
                 try{
                     JSONArray data = new JSONArray(jsonStr);
 
-
                     for(int i = 0; i < data.length(); i++) {
 
                         JSONObject c = data.getJSONObject(i);
 
-                        bovino.setText(c.getString("nombre"));
-                        //fecha.setText(currentTime);
-
+                        bovinos = c.getString("nombre");
+                        fechas = currentTime;
                         //cowList.add(cowData);
                     }
-                    //vacspin.setAdapter(new ArrayAdapter<String>(VacunasActivity.this, R.layout.activity_vacunas, vacunaList));
-                    //empspin.setAdapter(new ArrayAdapter<String>(VacunasActivity.this, R.layout.activity_vacunas, empleadoList));
+
 
 
                 } catch (final JSONException e){
@@ -141,6 +137,12 @@ public class VacunasActivity extends AppCompatActivity {
 
             if(progressDialog.isShowing())
                 progressDialog.dismiss();
+
+            bovino.setText(bovinos);
+            fecha.setText(fechas);
+
+            vacspin.setAdapter(vacunaAdapter);
+            empspin.setAdapter(empleadoAdapter);
 
         }
     }

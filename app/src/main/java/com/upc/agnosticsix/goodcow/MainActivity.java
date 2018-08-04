@@ -107,6 +107,7 @@ public class MainActivity extends AppCompatActivity
                 Intent intent = new Intent(activity, DetallesActivity.class);
                 intent.putExtra("idbovino", postId);
                 startActivity(intent);
+                //finish();
             }
         });
     }
