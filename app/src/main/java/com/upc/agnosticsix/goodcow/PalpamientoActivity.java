@@ -55,7 +55,9 @@ public class PalpamientoActivity extends AppCompatActivity {
     private void initObjects(){
         dataHelper = new DataHelper();
         bovinoHList = new ArrayList<>();
-        bovinoAdapter = new ArrayAdapter<>(PalpamientoActivity.this, R.layout.activity_palpamiento, bovinoHList);
+        bovinoAdapter = new ArrayAdapter<String>(PalpamientoActivity.this, R.layout.activity_palpamiento, bovinoHList);
+        bovinoAdapter.setDropDownViewResource(R.layout.activity_palpamiento);
+        bovinospin.setAdapter(bovinoAdapter);
 
     }
 
@@ -125,7 +127,7 @@ public class PalpamientoActivity extends AppCompatActivity {
             if(progressDialog.isShowing())
                 progressDialog.dismiss();
 
-            bovinospin.setAdapter(bovinoAdapter);
+
             fecha.setText(fechas);
 
 

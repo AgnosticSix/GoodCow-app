@@ -29,14 +29,18 @@ public class VacunasActivity extends AppCompatActivity {
     private Spinner vacspin, empspin;
     private ProgressDialog progressDialog;
     private TextView bovino, fecha;
-    private String bovinos, fechas;
+    private String bovinos, fechas, vacuna, empleado;
     private DataHelper dataHelper;
     private static String url = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/bovinos/";
+    private static String urlVacuna = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/vacunas";
+    private static String urlEmpleado = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/empleados";
     String idvacuna;
 
     String url2;
     ArrayList<String> vacunaList;
     ArrayList<String> empleadoList;
+    //ArrayList<String> vacunaList2;
+    //ArrayList<String> empleadoList2;
     ArrayAdapter<String> vacunaAdapter, empleadoAdapter;
 
     @Override
@@ -65,10 +69,16 @@ public class VacunasActivity extends AppCompatActivity {
         url2 = url.concat(idintent);
         vacunaList = new ArrayList<>();
         empleadoList = new ArrayList<>();
-        vacunaList = dataHelper.getVacunas();
-        empleadoList = dataHelper.getEmpleados();
+        //vacunaList2 = new ArrayList<>();
+        //empleadoList2 = new ArrayList<>();
+        vacunaList = DataHelper.getVacunas();
+        empleadoList = DataHelper.getEmpleados();
         vacunaAdapter = new ArrayAdapter<>(VacunasActivity.this, R.layout.activity_vacunas, vacunaList);
         empleadoAdapter = new ArrayAdapter<>(VacunasActivity.this, R.layout.activity_vacunas, empleadoList);
+        vacunaAdapter.setDropDownViewResource(R.layout.activity_vacunas);
+        empleadoAdapter.setDropDownViewResource(R.layout.activity_vacunas);
+        vacspin.setAdapter(vacunaAdapter);
+        empspin.setAdapter(empleadoAdapter);
     }
 
     private class GetData extends AsyncTask<Void, Void, Void> {
@@ -101,8 +111,6 @@ public class VacunasActivity extends AppCompatActivity {
                         fechas = currentTime;
                         //cowList.add(cowData);
                     }
-
-
 
                 } catch (final JSONException e){
                     Log.e(TAG,"Json parsing error: " + e.getMessage());
@@ -141,8 +149,7 @@ public class VacunasActivity extends AppCompatActivity {
             bovino.setText(bovinos);
             fecha.setText(fechas);
 
-            vacspin.setAdapter(vacunaAdapter);
-            empspin.setAdapter(empleadoAdapter);
+
 
         }
     }

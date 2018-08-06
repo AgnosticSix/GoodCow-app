@@ -1,12 +1,7 @@
 package model;
 
 import android.util.Log;
-import android.widget.Toast;
-
-import com.upc.agnosticsix.goodcow.DetallesActivity;
 import com.upc.agnosticsix.goodcow.HttpHandler;
-import com.upc.agnosticsix.goodcow.VacunasActivity;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,11 +18,11 @@ public class DataHelper {
 
     private static String urlVacuna = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/vacunas";
     private static String urlEmpleado = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/empleados";
-    private String TAG2 = "";
-    private String TAG = "";
-    private String siniiga, clase, raza, empadre, estado, bovino, vacuna, empleado, sexo;
-    ArrayList<String> vacunaList = new ArrayList<String>();
-    ArrayList<String> empleadoList = new ArrayList<String>();
+    private static String TAG2 = "";
+    private static String TAG = "";
+    private static String siniiga, clase, raza, empadre, estado, bovino, vacuna, empleado, sexo;
+    static ArrayList<String> vacunaList = new ArrayList<>();
+    static ArrayList<String> empleadoList = new ArrayList<>();
 
     public String getClase(String id){
         HttpHandler sh = new HttpHandler();
@@ -47,8 +42,6 @@ public class DataHelper {
             }catch (final JSONException e){
                 Log.e(TAG,"Json parsing error: " + e.getMessage());
             }
-        }else {
-            Log.e(TAG, jsonStr);
         }
         return clase;
     }
@@ -71,8 +64,6 @@ public class DataHelper {
             }catch (final JSONException e){
                 Log.e(TAG,"Json parsing error: " + e.getMessage());
             }
-        }else {
-            Log.e(TAG, jsonStr);
         }
         return siniiga;
     }
@@ -95,8 +86,6 @@ public class DataHelper {
             }catch (final JSONException e){
                 Log.e(TAG,"Json parsing error: " + e.getMessage());
             }
-        }else {
-            Log.e(TAG, jsonStr);
         }
         return raza;
     }
@@ -119,8 +108,6 @@ public class DataHelper {
             }catch (final JSONException e){
                 Log.e(TAG,"Json parsing error: " + e.getMessage());
             }
-        }else {
-            Log.e(TAG, jsonStr);
         }
         return empadre;
     }
@@ -143,13 +130,11 @@ public class DataHelper {
             }catch (final JSONException e){
                 Log.e(TAG,"Json parsing error: " + e.getMessage());
             }
-        }else {
-            Log.e(TAG, jsonStr);
         }
         return estado;
     }
 
-    public ArrayList<String> getVacunas(){
+    public static ArrayList<String> getVacunas(){
         HttpHandler sh = new HttpHandler();
         String jsonStr = sh.makeServiceCall(urlVacuna);
 
@@ -170,7 +155,7 @@ public class DataHelper {
         return vacunaList;
     }
 
-    public ArrayList<String> getEmpleados(){
+    public static ArrayList<String> getEmpleados(){
         HttpHandler sh = new HttpHandler();
 
         String jsonStr = sh.makeServiceCall(urlEmpleado);
