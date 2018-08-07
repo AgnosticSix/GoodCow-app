@@ -2,6 +2,8 @@ package model;
 
 import android.util.Log;
 import com.upc.agnosticsix.goodcow.HttpHandler;
+import com.upc.agnosticsix.goodcow.ICallBack;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,7 +21,7 @@ public class DataHelper {
     private static String urlVacuna = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/vacunas";
     private static String urlEmpleado = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/empleados";
     private static String TAG2 = "";
-    private static String TAG = "";
+    private static String TAG = "LOOKUP-MATEO";
     private static String siniiga, clase, raza, empadre, estado, bovino, vacuna, empleado, sexo;
     static ArrayList<String> vacunaList = new ArrayList<>();
     static ArrayList<String> empleadoList = new ArrayList<>();
@@ -116,6 +118,7 @@ public class DataHelper {
         HttpHandler sh = new HttpHandler();
         String url = urlEstado.concat(id);
 
+        //final String finalJsonStr = jsonStr;
         String jsonStr = sh.makeServiceCall(url);
 
         if(jsonStr != null){
@@ -137,6 +140,7 @@ public class DataHelper {
     public static ArrayList<String> getVacunas(){
         HttpHandler sh = new HttpHandler();
         String jsonStr = sh.makeServiceCall(urlVacuna);
+        Log.i(TAG, urlVacuna+"\n"+jsonStr+"");
 
         if(jsonStr != null){
             try{
@@ -159,7 +163,7 @@ public class DataHelper {
         HttpHandler sh = new HttpHandler();
 
         String jsonStr = sh.makeServiceCall(urlEmpleado);
-
+        Log.i(TAG, urlVacuna+"\n"+jsonStr+"");
         if(jsonStr != null){
             try{
                 JSONArray data = new JSONArray(jsonStr);

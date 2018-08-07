@@ -57,7 +57,7 @@ public class PalpamientoActivity extends AppCompatActivity {
         bovinoHList = new ArrayList<>();
         bovinoAdapter = new ArrayAdapter<String>(PalpamientoActivity.this, R.layout.activity_palpamiento, bovinoHList);
         bovinoAdapter.setDropDownViewResource(R.layout.activity_palpamiento);
-        bovinospin.setAdapter(bovinoAdapter);
+
 
     }
 
@@ -93,6 +93,7 @@ public class PalpamientoActivity extends AppCompatActivity {
 
                     fechas = currentTime;
 
+
                 } catch (final JSONException e){
                     Log.e(TAG,"Json parsing error: " + e.getMessage());
                     runOnUiThread(new Runnable() {
@@ -127,7 +128,7 @@ public class PalpamientoActivity extends AppCompatActivity {
             if(progressDialog.isShowing())
                 progressDialog.dismiss();
 
-
+            bovinospin.setAdapter(bovinoAdapter);
             fecha.setText(fechas);
 
 

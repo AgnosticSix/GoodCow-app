@@ -20,8 +20,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import model.DataHelper;
+import model.Empleados;
+import model.Vacunas;
 
 public class VacunasActivity extends AppCompatActivity {
 
@@ -39,9 +42,8 @@ public class VacunasActivity extends AppCompatActivity {
     String url2;
     ArrayList<String> vacunaList;
     ArrayList<String> empleadoList;
-    //ArrayList<String> vacunaList2;
-    //ArrayList<String> empleadoList2;
-    ArrayAdapter<String> vacunaAdapter, empleadoAdapter;
+    ArrayAdapter<String> vacunaAdapter;
+    ArrayAdapter<String> empleadoAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +58,7 @@ public class VacunasActivity extends AppCompatActivity {
 
         bovino = (TextView) findViewById(R.id.bovinovacuna);
         fecha = (TextView) findViewById(R.id.fechavacuna);
-        vacspin = (Spinner) findViewById(R.id.vacspin);
-        empspin = (Spinner) findViewById(R.id.empspin);
+
 
 
     }
@@ -69,16 +70,10 @@ public class VacunasActivity extends AppCompatActivity {
         url2 = url.concat(idintent);
         vacunaList = new ArrayList<>();
         empleadoList = new ArrayList<>();
-        //vacunaList2 = new ArrayList<>();
-        //empleadoList2 = new ArrayList<>();
-        vacunaList = DataHelper.getVacunas();
-        empleadoList = DataHelper.getEmpleados();
-        vacunaAdapter = new ArrayAdapter<>(VacunasActivity.this, R.layout.activity_vacunas, vacunaList);
-        empleadoAdapter = new ArrayAdapter<>(VacunasActivity.this, R.layout.activity_vacunas, empleadoList);
-        vacunaAdapter.setDropDownViewResource(R.layout.activity_vacunas);
-        empleadoAdapter.setDropDownViewResource(R.layout.activity_vacunas);
-        vacspin.setAdapter(vacunaAdapter);
-        empspin.setAdapter(empleadoAdapter);
+
+
+
+
     }
 
     private class GetData extends AsyncTask<Void, Void, Void> {
@@ -100,6 +95,7 @@ public class VacunasActivity extends AppCompatActivity {
             String currentTime = Calendar.getInstance().getTime().toString();
 
             if(jsonStr != null){
+
                 try{
                     JSONArray data = new JSONArray(jsonStr);
 
@@ -109,8 +105,9 @@ public class VacunasActivity extends AppCompatActivity {
 
                         bovinos = c.getString("nombre");
                         fechas = currentTime;
-                        //cowList.add(cowData);
                     }
+                    vacunaList = DataHelper.getVacunas();
+                    empleadoList = DataHelper.getEmpleados();
 
                 } catch (final JSONException e){
                     Log.e(TAG,"Json parsing error: " + e.getMessage());
@@ -148,8 +145,13 @@ public class VacunasActivity extends AppCompatActivity {
 
             bovino.setText(bovinos);
             fecha.setText(fechas);
+            vacspin = (Spinner) findViewById(R.id.vacspin);
+            empspin = (Spinner) findViewById(R.id.empspin);
+            vacunaAdapter = new ArrayAdapter<>(VacunasActivity.this, R.layout.support_simple_spinner_dropdown_item, vacunaList);
+            empleadoAdapter = new ArrayAdapter<>(VacunasActivity.this, R.layout.support_simple_spinner_dropdown_item, empleadoList);
 
-
+            vacspin.setAdapter(vacunaAdapter);
+            empspin.setAdapter(empleadoAdapter);
 
         }
     }
