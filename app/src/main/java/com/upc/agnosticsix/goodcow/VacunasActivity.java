@@ -2,12 +2,9 @@ package com.upc.agnosticsix.goodcow;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -19,12 +16,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 import model.DataHelper;
-import model.Empleados;
-import model.Vacunas;
 
 public class VacunasActivity extends AppCompatActivity {
 
@@ -37,8 +30,6 @@ public class VacunasActivity extends AppCompatActivity {
     private static String url = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/bovinos/";
     private static String urlVacuna = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/vacunas";
     private static String urlEmpleado = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/empleados";
-    String idvacuna;
-
     String url2;
     ArrayList<String> vacunaList;
     ArrayList<String> empleadoList;
@@ -59,21 +50,14 @@ public class VacunasActivity extends AppCompatActivity {
         bovino = (TextView) findViewById(R.id.bovinovacuna);
         fecha = (TextView) findViewById(R.id.fechavacuna);
 
-
-
     }
 
     private void initObjects(){
         final String idintent = getIntent().getStringExtra("idbovino");
-
         dataHelper = new DataHelper();
         url2 = url.concat(idintent);
         vacunaList = new ArrayList<>();
         empleadoList = new ArrayList<>();
-
-
-
-
     }
 
     private class GetData extends AsyncTask<Void, Void, Void> {

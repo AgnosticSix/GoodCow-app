@@ -24,19 +24,18 @@
 
             <TextView
 
-                android:layout_width="match_parent"
+                android:layout_width="212dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:textColor="@color/colorPrimary"
-                android:text="Semental id"/>
+                android:text="Semental id"
+                android:textColor="@color/colorPrimary" />
 
-            <EditText
-                android:id="@+id/textViewSemental"
+            <Spinner
+                android:id="@+id/sementalSpin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@color/textColor"
-                android:text="@string/app_name"/>
+                android:layout_weight="2" />
+
         </LinearLayout>
 
 
@@ -55,11 +54,11 @@
                 android:text="Empleado id"/>
 
             <Spinner
-                android:id="@+id/textViewEmpleado"
+                android:id="@+id/empSpinCruza"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="@color/textColor"/>
+                android:textColor="@color/textColor" />
         </LinearLayout>
 
 
@@ -78,12 +77,12 @@
                 android:text="Fecha"/>
 
             <EditText
-                android:id="@+id/textViewClase"
+                android:id="@+id/fechaCruza"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="@color/textColor"
-                android:text="@string/app_name"/>
+                android:text="@string/app_name"
+                android:textColor="@color/textColor" />
         </LinearLayout>
 
 
@@ -101,11 +100,11 @@
                 android:text="Estado"/>
 
             <Spinner
-                android:id="@+id/textViewEstado"
+                android:id="@+id/estadoSpinCruza"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="@color/textColor"/>
+                android:textColor="@color/textColor" />
         </LinearLayout>
 
 
@@ -123,12 +122,12 @@
                 android:text="Descripcion"/>
 
             <EditText
-                android:id="@+id/textViewDescripcion"
+                android:id="@+id/descripCruza"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="@color/textColor"
-                android:text="@string/app_name"/>
+                android:text="@string/app_name"
+                android:textColor="@color/textColor" />
         </LinearLayout>
 
 
@@ -140,11 +139,12 @@
 
 
             <Button
+                android:id="@+id/addCruzaBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="@color/colorPrimary"
-                android:text="Agregar"/>
+                android:text="Agregar"
+                android:textColor="@color/colorPrimary" />
         </LinearLayout>
 
 

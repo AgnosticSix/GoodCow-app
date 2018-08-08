@@ -17,31 +17,29 @@
 
 
         <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:orientation="horizontal">
-
-        <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:textColor="@color/colorPrimary"
-            android:text="Fierro"/>
+            android:layout_height="40dp"
+            android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/textViewMatricula"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="@color/textColor"
-            android:text="@string/app_name"/>
-    </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Fierro"
+                android:textColor="@color/colorPrimary" />
+
+            <EditText
+                android:id="@+id/fierroAddBovino"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/textColor" />
+        </LinearLayout>
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
@@ -50,16 +48,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:textColor="@color/colorPrimary"
-                android:text="Nombre"/>
+                android:text="Nombre"
+                android:textColor="@color/colorPrimary" />
 
             <EditText
-                android:id="@+id/textViewNombre"
+                android:id="@+id/nombreAddBovino"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:textColor="@color/textColor"
-                android:text="@string/app_name"/>
+                android:editable="true"
+                android:textColor="@color/textColor" />
         </LinearLayout>
 
 
@@ -70,11 +68,12 @@
             android:orientation="horizontal">
 
             <Switch
+                android:id="@+id/swSexoBovino"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:textColor="@color/colorPrimary"
-                android:text="Sexo"/>
+                android:text="Sexo"
+                android:textColor="@color/colorPrimary" />
         </LinearLayout>
 
 
@@ -93,11 +92,11 @@
                 android:text="Clase"/>
 
             <Spinner
-                android:id="@+id/textViewClase"
+                android:id="@+id/claseSpinBovino"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="25dp"
                 android:layout_weight="1"
-                android:textColor="@color/textColor"/>
+                android:textColor="@color/textColor" />
         </LinearLayout>
 
 
@@ -115,11 +114,11 @@
                 android:text="Siniiga"/>
 
             <Spinner
-                android:id="@+id/textViewSiniiga"
+                android:id="@+id/siniigaSpinBovino"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="25dp"
                 android:layout_weight="1"
-                android:textColor="@color/textColor"/>
+                android:textColor="@color/textColor" />
         </LinearLayout>
 
 
@@ -137,11 +136,11 @@
                 android:text="Raza"/>
 
             <Spinner
-                android:id="@+id/textViewRaza"
+                android:id="@+id/razaSpinBovino"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="25dp"
                 android:layout_weight="1"
-                android:textColor="@color/textColor"/>
+                android:textColor="@color/textColor" />
         </LinearLayout>
 
 
@@ -159,17 +158,17 @@
                 android:text="Empadre"/>
 
             <Spinner
-                android:id="@+id/textViewEmpadre"
+                android:id="@+id/empadreSpinBovino"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="25dp"
                 android:layout_weight="1"
-                android:textColor="@color/textColor"/>
+                android:textColor="@color/textColor" />
         </LinearLayout>
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
@@ -177,16 +176,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:textColor="@color/colorPrimary"
-                android:text="Fecha Nacimiento"/>
+                android:text="Fecha"
+                android:textColor="@color/colorPrimary" />
 
             <EditText
-                android:id="@+id/textViewFecha_Nac"
+                android:id="@+id/fechaAddBovino"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:editable="false"
                 android:textColor="@color/textColor"
-                android:text="@string/app_name"/>
+                android:textSize="14sp"
+                tools:clickable="false" />
         </LinearLayout>
 
 
@@ -204,11 +205,11 @@
                 android:text="Estado Bovino"/>
 
             <Spinner
-                android:id="@+id/textViewEstado"
+                android:id="@+id/estadoSpinBovino"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="25dp"
                 android:layout_weight="1"
-                android:textColor="@color/textColor"/>
+                android:textColor="@color/textColor" />
         </LinearLayout>
 
 
@@ -219,13 +220,13 @@
             android:orientation="horizontal">
 
 
-
             <Button
+                android:id="@+id/addBovinoBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="@color/colorPrimary"
-                android:text="Agregar"/>
+                android:text="Agregar"
+                android:textColor="@color/colorPrimary" />
         </LinearLayout>
 
     </LinearLayout>

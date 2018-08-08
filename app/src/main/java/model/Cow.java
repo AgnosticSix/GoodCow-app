@@ -10,6 +10,7 @@ public class Cow {
     private String raza;
     private String empadre;
     private String fecha_nac;
+    private String fecha_are;
     private String estado;
 
     public String getId() {
@@ -48,6 +49,10 @@ public class Cow {
         return fecha_nac;
     }
 
+    public String getFecha_are() {
+        return fecha_are;
+    }
+
     public String getEstado() {
         return estado;
     }
@@ -64,6 +69,37 @@ public class Cow {
         this.matricula = matricula;
     }
 
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+
+    public void setClase(String clase) {
+        this.clase = clase;
+    }
+
+    public void setSiniiga(String siniiga) {
+        this.siniiga = siniiga;
+    }
+
+    public void setRaza(String raza) {
+        this.raza = raza;
+    }
+
+    public void setEmpadre(String empadre) {
+        this.empadre = empadre;
+    }
+
+    public void setFecha_nac(String fecha_nac) {
+        this.fecha_nac = fecha_nac;
+    }
+
+    public void setFecha_are(String fecha_are) {
+        this.fecha_are = fecha_are;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
 
     public Cow(String id, String matricula, String nombre){
         this.id = id;
