@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DataHelper {
     private static String urlSiniiga = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/siniigas/";
@@ -23,11 +24,12 @@ public class DataHelper {
     private static String siniiga, clase, raza, empadre, estado, bovino, vacuna, empleado, sexo;
     static ArrayList<String> vacunaList = new ArrayList<>();
     static ArrayList<String> empleadoList = new ArrayList<>();
-    static ArrayList<String> claseList = new ArrayList<>();
-    static ArrayList<String> razaList = new ArrayList<>();
-    static ArrayList<String> empadreList = new ArrayList<>();
-    static ArrayList<String> estadoList = new ArrayList<>();
-    static ArrayList<String> siniigaList = new ArrayList<>();
+
+    static List<Clases> clasesList = new ArrayList<>();
+    static List<Siniigas> siniigasList = new ArrayList<>();
+    static List<Razas> razasList = new ArrayList<>();
+    static List<Empadres> empadresList = new ArrayList<>();
+    static List<Estados> estadosList = new ArrayList<>();
 
     public String getClase(String id){
         HttpHandler sh = new HttpHandler();
@@ -184,7 +186,7 @@ public class DataHelper {
         return empleadoList;
     }
 
-    public static ArrayList<String> getClases(){
+    public static List<Clases> getClases(){
         HttpHandler sh = new HttpHandler();
         String url = urlClase.substring(0, urlClase.length()-1);
         String jsonStr = sh.makeServiceCall(url);
@@ -196,19 +198,20 @@ public class DataHelper {
 
                 for(int i = 0; i < data.length(); i++){
                     JSONObject c = data.getJSONObject(i);
-                    clase = c.getString("clase_bovino_id");
-                    clase = c.getString("nombre");
 
-                    claseList.add(clase);
+                    Clases clases = new Clases(c.getString("clase_bovino_id"),
+                            c.getString("nombre"));
+
+                    clasesList.add(clases);
                 }
             }catch (final JSONException e){
                 Log.e(TAG,"Json parsing error: " + e.getMessage());
             }
         }
-        return claseList;
+        return clasesList;
     }
 
-    public static ArrayList<String> getSiniigas(){
+    public static List<Siniigas> getSiniigas(){
         HttpHandler sh = new HttpHandler();
         String url = urlSiniiga.substring(0, urlSiniiga.length()-1);
         String jsonStr = sh.makeServiceCall(url);
@@ -220,19 +223,20 @@ public class DataHelper {
 
                 for(int i = 0; i < data.length(); i++){
                     JSONObject c = data.getJSONObject(i);
-                    siniiga = c.getString("siniiga_id");
-                    siniiga = c.getString("codigo");
 
-                    siniigaList.add(siniiga);
+                    Siniigas siniigas = new Siniigas(c.getString("siniiga_id"),
+                            c.getString("codigo"));
+
+                    siniigasList.add(siniigas);
                 }
             }catch (final JSONException e){
                 Log.e(TAG,"Json parsing error: " + e.getMessage());
             }
         }
-        return siniigaList;
+        return siniigasList;
     }
 
-    public static ArrayList<String> getRazas(){
+    public static List<Razas> getRazas(){
         HttpHandler sh = new HttpHandler();
         String url = urlRaza.substring(0, urlRaza.length()-1);
         String jsonStr = sh.makeServiceCall(url);
@@ -244,19 +248,20 @@ public class DataHelper {
 
                 for(int i = 0; i < data.length(); i++){
                     JSONObject c = data.getJSONObject(i);
-                    raza = c.getString("raza_bovino_id");
-                    raza = c.getString("nombre");
 
-                    razaList.add(raza);
+                    Razas razas = new Razas(c.getString("raza_bovino_id"),
+                            c.getString("nombre"));
+
+                    razasList.add(razas);
                 }
             }catch (final JSONException e){
                 Log.e(TAG,"Json parsing error: " + e.getMessage());
             }
         }
-        return razaList;
+        return razasList;
     }
 
-    public static ArrayList<String> getEmpadres(){
+    public static List<Empadres> getEmpadres(){
         HttpHandler sh = new HttpHandler();
         String url = urlEmpadre.substring(0, urlEmpadre.length()-1);
         String jsonStr = sh.makeServiceCall(url);
@@ -268,19 +273,20 @@ public class DataHelper {
 
                 for(int i = 0; i < data.length(); i++){
                     JSONObject c = data.getJSONObject(i);
-                    empadre = c.getString("empadre_id");
-                    empadre = c.getString("nombre");
 
-                    empadreList.add(empadre);
+                    Empadres empadres = new Empadres(c.getString("empadre_id"),
+                            c.getString("nombre"));
+
+                    empadresList.add(empadres);
                 }
             }catch (final JSONException e){
                 Log.e(TAG,"Json parsing error: " + e.getMessage());
             }
         }
-        return empadreList;
+        return empadresList;
     }
 
-    public static ArrayList<String> getEstados(){
+    public static List<Estados> getEstados(){
         HttpHandler sh = new HttpHandler();
         String url = urlEstado.substring(0, urlEstado.length()-1);
         String jsonStr = sh.makeServiceCall(url);
@@ -292,15 +298,16 @@ public class DataHelper {
 
                 for(int i = 0; i < data.length(); i++){
                     JSONObject c = data.getJSONObject(i);
-                    estado = c.getString("estado_id");
-                    estado = c.getString("nombre");
 
-                    estadoList.add(estado);
+                    Estados estados = new Estados(c.getString("estado_id"),
+                            c.getString("nombre"));
+
+                    estadosList.add(estados);
                 }
             }catch (final JSONException e){
                 Log.e(TAG,"Json parsing error: " + e.getMessage());
             }
         }
-        return estadoList;
+        return estadosList;
     }
 }

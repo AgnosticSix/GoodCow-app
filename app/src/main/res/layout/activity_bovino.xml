@@ -94,7 +94,7 @@
             <Spinner
                 android:id="@+id/claseSpinBovino"
                 android:layout_width="match_parent"
-                android:layout_height="25dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textColor="@color/textColor" />
         </LinearLayout>
@@ -116,7 +116,7 @@
             <Spinner
                 android:id="@+id/siniigaSpinBovino"
                 android:layout_width="match_parent"
-                android:layout_height="25dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textColor="@color/textColor" />
         </LinearLayout>
@@ -138,7 +138,7 @@
             <Spinner
                 android:id="@+id/razaSpinBovino"
                 android:layout_width="match_parent"
-                android:layout_height="25dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textColor="@color/textColor" />
         </LinearLayout>
@@ -160,7 +160,7 @@
             <Spinner
                 android:id="@+id/empadreSpinBovino"
                 android:layout_width="match_parent"
-                android:layout_height="25dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textColor="@color/textColor" />
         </LinearLayout>
@@ -207,7 +207,7 @@
             <Spinner
                 android:id="@+id/estadoSpinBovino"
                 android:layout_width="match_parent"
-                android:layout_height="25dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textColor="@color/textColor" />
         </LinearLayout>

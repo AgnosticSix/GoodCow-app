@@ -18,8 +18,10 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import model.DataHelper;
+import model.Estados;
 
 public class CruzamientoActivity extends AppCompatActivity {
 
@@ -29,8 +31,10 @@ public class CruzamientoActivity extends AppCompatActivity {
     private TextView fecha;
     private EditText descripcion;
     private ProgressDialog progressDialog;
-    ArrayList<String> sementalList, empleadoList, estadoList;
-    ArrayAdapter<String> sementalAdapter, empleadoAdapter, estadoAdapter;
+    ArrayList<String> sementalList, empleadoList;
+    List<Estados> estadoList;
+    ArrayAdapter<String> sementalAdapter, empleadoAdapter;
+    ArrayAdapter<Estados> estadoAdapter;
     private String semental, fechas;
     private DataHelper dataHelper;
 
@@ -131,7 +135,7 @@ public class CruzamientoActivity extends AppCompatActivity {
             estadoSpin = (Spinner) findViewById(R.id.estadoSpinCruza);
             sementalAdapter = new ArrayAdapter<String>(CruzamientoActivity.this, R.layout.support_simple_spinner_dropdown_item, sementalList);
             empleadoAdapter = new ArrayAdapter<String>(CruzamientoActivity.this, R.layout.support_simple_spinner_dropdown_item, empleadoList);
-            estadoAdapter = new ArrayAdapter<String>(CruzamientoActivity.this, R.layout.support_simple_spinner_dropdown_item, estadoList);
+            estadoAdapter = new ArrayAdapter<>(CruzamientoActivity.this, R.layout.support_simple_spinner_dropdown_item, estadoList);
             sementalSpin.setAdapter(sementalAdapter);
             empleadoSpin.setAdapter(empleadoAdapter);
             estadoSpin.setAdapter(estadoAdapter);

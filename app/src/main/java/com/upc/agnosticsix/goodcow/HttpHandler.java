@@ -13,6 +13,8 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.util.HashMap;
 
+import javax.net.ssl.HttpsURLConnection;
+
 public class HttpHandler {
 
     private static final String TAG = HttpHandler.class.getSimpleName();
@@ -42,6 +44,22 @@ public class HttpHandler {
             Log.e(TAG, "Exception: " + e.getMessage());
         }
         return response;
+    }
+
+    public void sendData(String reqUrl, HashMap<String, String> params){
+        try{
+            URL url = new URL(reqUrl);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setReadTimeout(15000 /* milliseconds */);
+            conn.setConnectTimeout(15000 /* milliseconds */);
+            conn.setRequestMethod("POST");
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
+
+
+        }catch(Exception e){
+
+        }
     }
 
     private String convertStreamToString(InputStream is) {

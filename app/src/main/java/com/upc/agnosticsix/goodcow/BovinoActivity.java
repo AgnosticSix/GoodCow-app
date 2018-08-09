@@ -34,25 +34,45 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import adapters.ClaseAdapter;
+import adapters.EmpadreAdapter;
+import adapters.EstadoAdapter;
+import adapters.RazaAdapter;
+import adapters.SiniigaAdapter;
+import model.Clases;
 import model.DataHelper;
+import model.Empadres;
+import model.Estados;
+import model.Razas;
+import model.Siniigas;
 
 public class BovinoActivity extends AppCompatActivity {
 
     private String TAG = BovinoActivity.class.getSimpleName();
     private Spinner claseSpin, siniigaSpin, razaSpin, empadreSpin, estadoSpin;
     private EditText fierro, nombre;
-    private TextView fecha;
+    private TextView fecha, spinnerItems;
     private Switch sexo;
     private Button agregarBtn;
     private ProgressDialog progressDialog;
     private String fechas, sexos, currentTime, response;
-    ArrayList<String> claseList, siniigaList, razaList, empadreList, estadoList;
-    ArrayAdapter<String> claseAdapter, siniigaAdapter, razaAdapter, empadreAdapter, estadoAdapter;
+    List<Clases> claseList;
+    List<Siniigas> siniigaList;
+    List<Razas> razaList;
+    List<Empadres> empadreList;
+    List<Estados> estadoList;
+    ClaseAdapter claseAdapter;
+    SiniigaAdapter siniigaAdapter;
+    RazaAdapter razaAdapter;
+    EmpadreAdapter empadreAdapter;
+    EstadoAdapter estadoAdapter;
     private DataHelper dataHelper;
-    private long clase, siniiga, raza, empadre, estado, fierroStr, nombreStr;
+    private String clase, siniiga, raza, empadre, estado;
+    private String fierroStr = "", nombreStr = "";
     private static String urla = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/bovinos";
 
     @Override
@@ -69,7 +89,9 @@ public class BovinoActivity extends AppCompatActivity {
         nombre = (EditText) findViewById(R.id.nombreAddBovino);
         sexo = (Switch) findViewById(R.id.swSexoBovino);
         fecha = (TextView) findViewById(R.id.fechaAddBovino);
+        spinnerItems = (TextView) findViewById(R.id.textViewItem);
         agregarBtn = (Button) findViewById(R.id.addBovinoBtn);
+
         sexo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -90,9 +112,12 @@ public class BovinoActivity extends AppCompatActivity {
         empadreList = new ArrayList<>();
         estadoList = new ArrayList<>();
         currentTime = Calendar.getInstance().getTime().toString();
-    }
-
-    private void onClick(View v){
+        agregarBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new uploadData().execute();
+            }
+        });
 
     }
 
@@ -115,12 +140,7 @@ public class BovinoActivity extends AppCompatActivity {
             razaList = dataHelper.getRazas();
             empadreList = dataHelper.getEmpadres();
             estadoList = dataHelper.getEstados();
-            agregarBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    uploadData();
-                }
-            });
+
             return null;
         }
 
@@ -139,11 +159,11 @@ public class BovinoActivity extends AppCompatActivity {
             empadreSpin = (Spinner) findViewById(R.id.empadreSpinBovino);
             estadoSpin = (Spinner) findViewById(R.id.estadoSpinBovino);
 
-            claseAdapter = new ArrayAdapter<>(BovinoActivity.this, R.layout.support_simple_spinner_dropdown_item, claseList);
-            siniigaAdapter = new ArrayAdapter<>(BovinoActivity.this, R.layout.support_simple_spinner_dropdown_item, siniigaList);
-            razaAdapter = new ArrayAdapter<>(BovinoActivity.this, R.layout.support_simple_spinner_dropdown_item, razaList);
-            empadreAdapter = new ArrayAdapter<>(BovinoActivity.this, R.layout.support_simple_spinner_dropdown_item, empadreList);
-            estadoAdapter = new ArrayAdapter<>(BovinoActivity.this, R.layout.support_simple_spinner_dropdown_item, estadoList);
+            claseAdapter = new ClaseAdapter(BovinoActivity.this, R.layout.custom_spinner_items, claseList);
+            siniigaAdapter = new SiniigaAdapter(BovinoActivity.this, R.layout.custom_spinner_items, siniigaList);
+            razaAdapter = new RazaAdapter(BovinoActivity.this, R.layout.custom_spinner_items, razaList);
+            empadreAdapter = new EmpadreAdapter(BovinoActivity.this, R.layout.custom_spinner_items, empadreList);
+            estadoAdapter = new EstadoAdapter(BovinoActivity.this, R.layout.custom_spinner_items, estadoList);
 
             claseSpin.setAdapter(claseAdapter);
             siniigaSpin.setAdapter(siniigaAdapter);
@@ -151,77 +171,140 @@ public class BovinoActivity extends AppCompatActivity {
             empadreSpin.setAdapter(empadreAdapter);
             estadoSpin.setAdapter(estadoAdapter);
 
-            clase = claseSpin.getSelectedItemId();
-            siniiga = siniigaSpin.getSelectedItemId();
-            raza = razaSpin.getSelectedItemId();
-            empadre = empadreSpin.getSelectedItemId();
-            estado = estadoSpin.getSelectedItemId();
+            claseSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    clase = claseList.get(position).getClase_id();
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
+            razaSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    raza = razaList.get(position).getRaza_id();
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
+            siniigaSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    siniiga = siniigaList.get(position).getSiniiga_id();
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
+            empadreSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    empadre = empadreList.get(position).getEmpadre_id();
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
+            estadoSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    estado = estadoList.get(position).getEstado_id();
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
 
 
         }
     }
 
-    public void uploadData(){
+    private class uploadData extends AsyncTask<Void, Void, Void>{
 
-        try {
-            URL url = new URL(urla);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(15000 /* milliseconds */);
-            conn.setConnectTimeout(15000 /* milliseconds */);
-            conn.setRequestMethod("POST");
-            conn.setDoInput(true);
-            conn.setDoOutput(true);
-            conn.setRequestProperty("Content-Type", "application/json");
 
-            JSONObject c = new JSONObject();
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
 
-            c.put("fierro", fierro.getText().toString());
-            c.put("nombre", nombre.getText().toString());
-            c.put("clase_bovino_id", clase);
-            c.put("siniiga_id", siniiga);
-            c.put("raza_bovino_id", raza);
-            c.put("empadre_id", empadre);
-            c.put("estado_bovino_id", estado);
-            c.put("fecha_nacimiento", fecha.getText().toString());
-            c.put("fecha_aretado", fecha.getText().toString());
-            c.put("sexo", sexos);
+                URL url = new URL(urla);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setReadTimeout(15000 /* milliseconds */);
+                conn.setConnectTimeout(15000 /* milliseconds */);
+                conn.setRequestMethod("POST");
+                conn.setDoInput(true);
+                conn.setDoOutput(true);
+                conn.setRequestProperty("Content-Type", "application/json");
 
-            String str = c.toString();
-            byte[] output = str.getBytes("UTF-8");
+                JSONObject c = new JSONObject();
 
-            OutputStream os = conn.getOutputStream();
-            os.write(output);
+                c.put("fierro", fierro.getText().toString());
+                c.put("nombre", nombre.getText().toString());
+                c.put("clase_bovino_id", clase);
+                c.put("siniiga_id", siniiga);
+                c.put("raza_bovino_id", raza);
+                c.put("empadre_id", empadre);
+                c.put("estado_bovino_id", estado);
+                c.put("fecha_nacimiento", fecha.getText().toString());
+                c.put("fecha_aretado", fecha.getText().toString());
+                c.put("sexo", sexos);
 
-            os.flush();
-            os.close();
+                String str = c.toString();
+                byte[] output = str.getBytes("UTF-8");
+                Log.i(TAG, str+"");
+                String out = conn.getOutputStream().toString();
 
-            int responseCode = conn.getResponseCode();
-            Log.i(TAG, responseCode+"");
+                OutputStream os = conn.getOutputStream();
+                os.write(output);
 
-            if(responseCode == HttpsURLConnection.HTTP_CREATED){
-                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                //StringBuffer sb = new StringBuffer("");
-                String line = "";
+                os.flush();
+                os.close();
 
-                while((line = br.readLine()) != null) {
-                    response += line;
-                    break;
+                int responseCode = conn.getResponseCode();
+                Log.i(TAG, responseCode+"");
+
+                if(responseCode == HttpURLConnection.HTTP_CREATED){
+                    BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    //StringBuffer sb = new StringBuffer("");
+                    String line = "";
+
+                    while((line = br.readLine()) != null) {
+                        response += line;
+                        break;
+                    }
+
+                    br.close();
+                }else if (responseCode == HttpURLConnection.HTTP_INTERNAL_ERROR){
+                    Toast.makeText(getApplicationContext(), ""+ responseCode,Toast.LENGTH_LONG).show();
+                    response = "";
                 }
-
-                br.close();
-            }else{
-                Toast.makeText(getApplicationContext(), ""+ responseCode,Toast.LENGTH_LONG).show();
-                response = "";
+                conn.disconnect();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            conn.disconnect();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
+            return null;
         }
     }
 
