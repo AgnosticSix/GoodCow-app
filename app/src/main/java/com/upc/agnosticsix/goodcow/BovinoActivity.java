@@ -35,6 +35,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -57,8 +58,7 @@ public class BovinoActivity extends AppCompatActivity {
     private String TAG = BovinoActivity.class.getSimpleName();
     private Spinner claseSpin, siniigaSpin, razaSpin, empadreSpin, estadoSpin;
     private EditText fierro, nombre;
-    private View calBovino;
-    private TextView fecha, spinnerItems;
+    private TextView fecha;
     private Switch sexo;
     private Button agregarBtn;
     private ProgressDialog progressDialog;
@@ -91,10 +91,8 @@ public class BovinoActivity extends AppCompatActivity {
         fierro = (EditText) findViewById(R.id.fierroAddBovino);
         nombre = (EditText) findViewById(R.id.nombreAddBovino);
         sexo = (Switch) findViewById(R.id.swSexoBovino);
-        //fecha = (TextView) findViewById(R.id.fechaAddBovino);
-        spinnerItems = (TextView) findViewById(R.id.textViewItem);
+        fecha = (TextView) findViewById(R.id.fechaAddBovino);
         agregarBtn = (Button) findViewById(R.id.addBovinoBtn);
-        calBovino = (View) findViewById(R.id.calendarBovino);
 
         sexo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -122,7 +120,9 @@ public class BovinoActivity extends AppCompatActivity {
                 new uploadData().execute();
             }
         });
-        currentTime = DateFormat.getDateTimeInstance().format(calBovino);
+        Date date = new Date();
+        DateFormat HDFormat = new SimpleDateFormat("yyyy-MM-dd");
+        currentTime = HDFormat.format(date);
 
     }
 

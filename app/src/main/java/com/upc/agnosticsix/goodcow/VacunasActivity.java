@@ -33,8 +33,6 @@ public class VacunasActivity extends AppCompatActivity {
     private String bovinos, fechas, vacuna, empleado;
     private DataHelper dataHelper;
     private static String url = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/bovinos/";
-    private static String urlVacuna = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/vacunas";
-    private static String urlEmpleado = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/empleados";
     String url2;
     List<Vacunas> vacunaList;
     List<Empleados> empleadoList;
