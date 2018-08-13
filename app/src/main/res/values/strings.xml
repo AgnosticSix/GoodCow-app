@@ -21,4 +21,6 @@
         completions."
     </string>
     <string name="loading">Cargando...</string>
+    <string name="dialog_title">Listo</string>
+    <string name="dialog_message">Datos subidos</string>
 </resources>

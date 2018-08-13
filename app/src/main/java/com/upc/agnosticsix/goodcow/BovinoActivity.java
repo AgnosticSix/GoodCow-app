@@ -1,6 +1,8 @@
 package com.upc.agnosticsix.goodcow;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -62,7 +64,7 @@ public class BovinoActivity extends AppCompatActivity {
     private Switch sexo;
     private Button agregarBtn;
     private ProgressDialog progressDialog;
-    private String fechas, currentTime, response;
+    private String currentTime, response;
     List<Clases> claseList;
     List<Siniigas> siniigaList;
     List<Razas> razaList;
@@ -74,7 +76,7 @@ public class BovinoActivity extends AppCompatActivity {
     EmpadreAdapter empadreAdapter;
     EstadoAdapter estadoAdapter;
     private DataHelper dataHelper;
-    private int clase, siniiga, raza, empadre, estado, sexos = 1;
+    private int clase, siniiga, raza, empadre, estado, sexos = 1, responseCode;
     private String fierroStr = "", nombreStr = "";
     private static String urla = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/bovinos";
 
@@ -121,9 +123,8 @@ public class BovinoActivity extends AppCompatActivity {
             }
         });
         Date date = new Date();
-        DateFormat HDFormat = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat HDFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         currentTime = HDFormat.format(date);
-
     }
 
     private class GetData extends AsyncTask<Void, Void, Void> {
@@ -145,8 +146,6 @@ public class BovinoActivity extends AppCompatActivity {
             razaList = dataHelper.getRazas();
             empadreList = dataHelper.getEmpadres();
             estadoList = dataHelper.getEstados();
-
-
             return null;
         }
 
@@ -158,7 +157,6 @@ public class BovinoActivity extends AppCompatActivity {
                 progressDialog.dismiss();
 
             fecha.setText(currentTime);
-            Log.i(TAG, currentTime);
 
             claseSpin = (Spinner) findViewById(R.id.claseSpinBovino);
             siniigaSpin = (Spinner) findViewById(R.id.siniigaSpinBovino);
@@ -239,13 +237,10 @@ public class BovinoActivity extends AppCompatActivity {
 
                 }
             });
-
-
         }
     }
 
     private class uploadData extends AsyncTask<Void, Void, Void>{
-
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -280,28 +275,23 @@ public class BovinoActivity extends AppCompatActivity {
 
                 OutputStream os = conn.getOutputStream();
                 os.write(output);
-
                 os.flush();
                 os.close();
 
-                int responseCode = conn.getResponseCode();
+                responseCode = conn.getResponseCode();
                 Log.i(TAG, responseCode+"");
 
                 if(responseCode == HttpURLConnection.HTTP_CREATED){
                     BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                    //StringBuffer sb = new StringBuffer("");
                     String line = "";
 
                     while((line = br.readLine()) != null) {
                         response += line;
                         break;
                     }
-
                     br.close();
-                    //fierro.se;
                 }else if (responseCode == HttpURLConnection.HTTP_INTERNAL_ERROR){
-                    Toast.makeText(getApplicationContext(), ""+ responseCode,Toast.LENGTH_LONG).show();
-                    response = "";
+
                 }
                 conn.disconnect();
             } catch (MalformedURLException e) {
@@ -315,8 +305,21 @@ public class BovinoActivity extends AppCompatActivity {
             }
             return null;
         }
-    }
 
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            if(responseCode == HttpURLConnection.HTTP_CREATED){
+                Toast.makeText(getApplicationContext(), "Datos insertados: "+ responseCode,Toast.LENGTH_LONG).show();
+                response = "";
+                fierro.setText("");
+                nombre.setText("");
+            }else if (responseCode == HttpURLConnection.HTTP_INTERNAL_ERROR){
+                Toast.makeText(getApplicationContext(), "Error: "+ responseCode,Toast.LENGTH_LONG).show();
+                response = "";
+            }
+        }
+    }
 
     @Override
     public void onBackPressed() {

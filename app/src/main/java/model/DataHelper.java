@@ -19,6 +19,7 @@ public class DataHelper {
 
     private static String urlVacuna = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/vacunas";
     private static String urlEmpleado = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/empleados";
+    private static String urlResPal = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/resultados_palpamientos";
     private static String TAG2 = "";
     private static String TAG = "LOOKUP-MATEO";
     private static String siniiga, clase, raza, empadre, estado, bovino, sexo;
@@ -30,6 +31,7 @@ public class DataHelper {
     static List<Razas> razasList = new ArrayList<>();
     static List<Empadres> empadresList = new ArrayList<>();
     static List<Estados> estadosList = new ArrayList<>();
+    static List<ResultadosPalpamientos> resultadosPalpamientosList = new ArrayList<>();
 
     public String getClase(String id){
         HttpHandler sh = new HttpHandler();
@@ -310,5 +312,29 @@ public class DataHelper {
             }
         }
         return estadosList;
+    }
+
+    public static List<ResultadosPalpamientos> getResPalpamientos(){
+        HttpHandler sh = new HttpHandler();
+        String jsonStr = sh.makeServiceCall(urlResPal);
+        //Log.i(TAG, urlVacuna+"\n"+jsonStr+"");
+
+        if(jsonStr != null){
+            try{
+                JSONArray data = new JSONArray(jsonStr);
+
+                for(int i = 0; i < data.length(); i++){
+                    JSONObject c = data.getJSONObject(i);
+
+                    ResultadosPalpamientos resultadosPalpamientos = new ResultadosPalpamientos(c.getString("resultado_palpamiento_id"),
+                            c.getString("nombre"));
+
+                    resultadosPalpamientosList.add(resultadosPalpamientos);
+                }
+            }catch (final JSONException e){
+                Log.e(TAG,"Json parsing error: " + e.getMessage());
+            }
+        }
+        return resultadosPalpamientosList;
     }
 }

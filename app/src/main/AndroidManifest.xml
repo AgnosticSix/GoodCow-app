@@ -27,12 +27,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".BovinoActivity" />
-        <activity android:name=".NacenciasActivity" />
         <activity android:name=".DetallesActivity" />
         <activity android:name=".PalpamientoActivity" />
         <activity android:name=".VacunasActivity" />
         <activity android:name=".CruzamientoActivity" />
-        <activity android:name=".OrdenhaActivity"></activity>
+        <activity android:name=".OrdenhaActivity" />
+        <activity android:name=".AcercaDeActivity"></activity>
     </application>
 
 </manifest>

@@ -10,10 +10,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="16dp">
-
 
 
         <LinearLayout
@@ -42,18 +41,46 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
-            <Switch
-                android:id="@+id/swPal"
-                android:layout_width="match_parent"
+            <TextView
+
+                android:layout_width="214dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="Resultado Palpamiento"
+                android:text="Resultado"
                 android:textColor="@color/colorPrimary" />
+
+            <Spinner
+                android:id="@+id/resultadoPalSpin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2" />
+
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+
+                android:layout_width="214dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Empleado"
+                android:textColor="@color/colorPrimary" />
+
+            <Spinner
+                android:id="@+id/empleadoPal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -66,8 +93,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:textColor="@color/colorPrimary"
-                android:text="Fecha"/>
+                android:text="Fecha"
+                android:textColor="@color/colorPrimary" />
 
             <EditText
                 android:id="@+id/fechaPal"
@@ -91,8 +118,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:textColor="@color/colorPrimary"
-                android:text="Observaciones"/>
+                android:text="Observaciones"
+                android:textColor="@color/colorPrimary" />
 
             <EditText
                 android:id="@+id/observaPal"
@@ -114,7 +141,7 @@
 
 
             <Button
-                android:id="@+id/addBtn"
+                android:id="@+id/addPalBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

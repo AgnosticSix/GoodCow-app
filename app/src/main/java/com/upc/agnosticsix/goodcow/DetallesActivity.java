@@ -30,8 +30,6 @@ public class DetallesActivity extends AppCompatActivity {
     private String idbovino, fierros, nombres, sexos, siniigaa, clases, razas, empadres, estados, fechas;
     private ProgressDialog progressDialog;
     private static String url = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/bovinos/";
-
-    ArrayList<HashMap<String,String>> dataList;
     String url2;
     private List<Cow> cowList;
     private TextView fierro, nombre, sexo, clase, siniiga, raza, empadre, fecha, estado;
@@ -44,9 +42,7 @@ public class DetallesActivity extends AppCompatActivity {
 
         initObjects();
         initViews();
-        //running();
         new GetData().execute();
-
     }
 
     private void initViews(){
@@ -78,10 +74,6 @@ public class DetallesActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
-
 
     private class GetData extends AsyncTask<Void, Void, Void> {
 
@@ -117,10 +109,6 @@ public class DetallesActivity extends AppCompatActivity {
                         empadres = dataHelper.getEmpadre(c.getString("empadre_id"));
                         fechas = c.getString("fecha_nacimiento");
                         estados = dataHelper.getEstado(c.getString("estado_bovino_id"));
-
-
-
-                        //cowList.add(cowData);
                     }
 
 
@@ -167,7 +155,6 @@ public class DetallesActivity extends AppCompatActivity {
             empadre.setText(empadres);
             fecha.setText(fechas);
             estado.setText(estados);
-
         }
     }
 

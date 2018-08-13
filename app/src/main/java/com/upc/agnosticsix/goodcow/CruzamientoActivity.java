@@ -14,8 +14,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import adapters.BovinoAdapter;
@@ -40,7 +43,7 @@ public class CruzamientoActivity extends AppCompatActivity {
     EmpleadoAdapter empleadoAdapter;
     BovinoAdapter sementalAdapter;
     EstadoAdapter estadoAdapter;
-    private String semental, fechas;
+    private String semental, currentTime;
     private DataHelper dataHelper;
 
 
@@ -64,6 +67,10 @@ public class CruzamientoActivity extends AppCompatActivity {
         empleadoList = new ArrayList<>();
         estadoList = new ArrayList<>();
 
+        Date date = new Date();
+        DateFormat HDFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        currentTime = HDFormat.format(date);
+
     }
 
     private class GetData extends AsyncTask<Void, Void, Void> {
@@ -82,7 +89,6 @@ public class CruzamientoActivity extends AppCompatActivity {
             HttpHandler sh = new HttpHandler();
 
             String jsonStr = sh.makeServiceCall(url);
-            String currentTime = Calendar.getInstance().getTime().toString();
 
             if(jsonStr != null){
                 try{
@@ -100,8 +106,6 @@ public class CruzamientoActivity extends AppCompatActivity {
 
                     empleadoList = dataHelper.getEmpleados();
                     estadoList = dataHelper.getEstados();
-                    fechas = currentTime;
-
 
                 } catch (final JSONException e){
                     Log.e(TAG,"Json parsing error: " + e.getMessage());
@@ -137,6 +141,7 @@ public class CruzamientoActivity extends AppCompatActivity {
             if(progressDialog.isShowing())
                 progressDialog.dismiss();
 
+            fecha.setText(currentTime);
             sementalSpin = (Spinner) findViewById(R.id.sementalSpin);
             empleadoSpin = (Spinner) findViewById(R.id.empSpinCruza);
             estadoSpin = (Spinner) findViewById(R.id.estadoSpinCruza);
@@ -146,8 +151,6 @@ public class CruzamientoActivity extends AppCompatActivity {
             sementalSpin.setAdapter(sementalAdapter);
             empleadoSpin.setAdapter(empleadoAdapter);
             estadoSpin.setAdapter(estadoAdapter);
-            fecha.setText(fechas);
-
 
         }
     }

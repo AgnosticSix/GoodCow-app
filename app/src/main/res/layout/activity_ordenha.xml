@@ -24,19 +24,18 @@
 
             <TextView
 
-                android:layout_width="match_parent"
+                android:layout_width="216dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:textColor="@color/colorPrimary"
-                android:text="Bobino id"/>
+                android:text="Bovino"
+                android:textColor="@color/colorPrimary" />
 
-            <EditText
-                android:id="@+id/textViewBobino"
+            <Spinner
+                android:id="@+id/bovinoOrdeSpin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@color/textColor"
-                android:text="@string/app_name"/>
+                android:layout_weight="2" />
+
         </LinearLayout>
 
 
@@ -55,11 +54,11 @@
                 android:text="Empleado id"/>
 
             <Spinner
-                android:id="@+id/textViewEmpleado"
+                android:id="@+id/empOrdeSpin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="@color/textColor"/>
+                android:textColor="@color/textColor" />
         </LinearLayout>
 
 
@@ -77,12 +76,37 @@
                 android:text="Fecha"/>
 
             <EditText
-                android:id="@+id/textViewFecha"
+                android:id="@+id/fechaOrdeTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="@color/textColor"
-                android:text="@string/app_name"/>
+                android:text="@string/loading"
+                android:textColor="@color/textColor" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+
+                android:layout_width="113dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Cantidad"
+                android:textColor="@color/colorPrimary" />
+
+            <EditText
+                android:id="@+id/cantiOrdeTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:ems="10"
+                android:inputType="number|numberDecimal" />
+
         </LinearLayout>
 
 
@@ -97,40 +121,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:textColor="@color/colorPrimary"
-                android:text="Cantidad id"/>
+                android:text="Observaciones"
+                android:textColor="@color/colorPrimary" />
 
             <EditText
-                android:id="@+id/textViewCantidad"
+                android:id="@+id/observaOrdeTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="@color/textColor"
-                android:text="@string/app_name"/>
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:orientation="horizontal">
-
-            <TextView
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:textColor="@color/colorPrimary"
-                android:text="Observaciones id"/>
-
-            <EditText
-                android:id="@+id/textViewObserva"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@color/textColor"
-                android:text="@string/app_name"/>
+                android:textColor="@color/textColor" />
         </LinearLayout>
 
 
@@ -142,11 +141,12 @@
 
 
             <Button
+                android:id="@+id/addOrdeBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="@color/colorPrimary"
-                android:text="Agregar"/>
+                android:text="Agregar"
+                android:textColor="@color/colorPrimary" />
         </LinearLayout>
 
 

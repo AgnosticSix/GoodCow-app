@@ -158,10 +158,7 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            Intent intent = new Intent(activity, NacenciasActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_gallery) {
             Intent intent = new Intent(activity, OrdenhaActivity.class);
             startActivity(intent);
 
@@ -173,10 +170,9 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(activity, CruzamientoActivity.class);
             startActivity(intent);
 
-        } else if (id == R.id.nav_manage) {
-
         } else if (id == R.id.nav_share) {
-
+            Intent intent = new Intent(activity, AcercaDeActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -252,7 +248,6 @@ public class MainActivity extends AppCompatActivity
 
             if(progressDialog.isShowing())
                 progressDialog.dismiss();
-
 
             recyclerViewCow.setAdapter(cowRecyclerAdapter);
         }
