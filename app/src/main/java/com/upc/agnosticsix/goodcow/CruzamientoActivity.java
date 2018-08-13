@@ -2,11 +2,9 @@ package com.upc.agnosticsix.goodcow;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -20,7 +18,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import adapters.BovinoAdapter;
+import adapters.EmpleadoAdapter;
+import adapters.EstadoAdapter;
+import model.Cow;
 import model.DataHelper;
+import model.Empleados;
 import model.Estados;
 
 public class CruzamientoActivity extends AppCompatActivity {
@@ -31,10 +34,12 @@ public class CruzamientoActivity extends AppCompatActivity {
     private TextView fecha;
     private EditText descripcion;
     private ProgressDialog progressDialog;
-    ArrayList<String> sementalList, empleadoList;
+    List<Cow> sementalList;
+    List<Empleados> empleadoList;
     List<Estados> estadoList;
-    ArrayAdapter<String> sementalAdapter, empleadoAdapter;
-    ArrayAdapter<Estados> estadoAdapter;
+    EmpleadoAdapter empleadoAdapter;
+    BovinoAdapter sementalAdapter;
+    EstadoAdapter estadoAdapter;
     private String semental, fechas;
     private DataHelper dataHelper;
 
@@ -86,9 +91,11 @@ public class CruzamientoActivity extends AppCompatActivity {
                     for(int i = 0; i < data.length(); i++) {
 
                         JSONObject c = data.getJSONObject(i);
-                        semental = c.getString("nombre");
+                        Cow cow = new Cow(c.getString("bovino_id"),
+                                c.getString("fierro"),
+                                c.getString("nombre"));
 
-                        sementalList.add(semental);
+                        sementalList.add(cow);
                     }
 
                     empleadoList = dataHelper.getEmpleados();
@@ -133,9 +140,9 @@ public class CruzamientoActivity extends AppCompatActivity {
             sementalSpin = (Spinner) findViewById(R.id.sementalSpin);
             empleadoSpin = (Spinner) findViewById(R.id.empSpinCruza);
             estadoSpin = (Spinner) findViewById(R.id.estadoSpinCruza);
-            sementalAdapter = new ArrayAdapter<String>(CruzamientoActivity.this, R.layout.support_simple_spinner_dropdown_item, sementalList);
-            empleadoAdapter = new ArrayAdapter<String>(CruzamientoActivity.this, R.layout.support_simple_spinner_dropdown_item, empleadoList);
-            estadoAdapter = new ArrayAdapter<>(CruzamientoActivity.this, R.layout.support_simple_spinner_dropdown_item, estadoList);
+            sementalAdapter = new BovinoAdapter(CruzamientoActivity.this, R.layout.custom_spinner_items, sementalList);
+            empleadoAdapter = new EmpleadoAdapter(CruzamientoActivity.this, R.layout.custom_spinner_items, empleadoList);
+            estadoAdapter = new EstadoAdapter(CruzamientoActivity.this, R.layout.custom_spinner_items, estadoList);
             sementalSpin.setAdapter(sementalAdapter);
             empleadoSpin.setAdapter(empleadoAdapter);
             estadoSpin.setAdapter(estadoAdapter);
@@ -149,4 +156,6 @@ public class CruzamientoActivity extends AppCompatActivity {
     public void onBackPressed() {
         finish();
     }
+
+    //TODO: uploadMethod
 }

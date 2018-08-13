@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="5dp">
 
 
         <LinearLayout
@@ -88,8 +88,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:textColor="@color/colorPrimary"
-                android:text="Clase"/>
+                android:text="Clase"
+                android:textColor="@color/colorPrimary" />
 
             <Spinner
                 android:id="@+id/claseSpinBovino"
@@ -110,8 +110,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:textColor="@color/colorPrimary"
-                android:text="Siniiga"/>
+                android:text="Siniiga"
+                android:textColor="@color/colorPrimary" />
 
             <Spinner
                 android:id="@+id/siniigaSpinBovino"
@@ -132,8 +132,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:textColor="@color/colorPrimary"
-                android:text="Raza"/>
+                android:text="Raza"
+                android:textColor="@color/colorPrimary" />
 
             <Spinner
                 android:id="@+id/razaSpinBovino"
@@ -154,8 +154,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:textColor="@color/colorPrimary"
-                android:text="Empadre"/>
+                android:text="Empadre"
+                android:textColor="@color/colorPrimary" />
 
             <Spinner
                 android:id="@+id/empadreSpinBovino"
@@ -168,26 +168,23 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="65dp"
             android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="218dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:text="Fecha"
                 android:textColor="@color/colorPrimary" />
 
-            <EditText
-                android:id="@+id/fechaAddBovino"
+            <CalendarView
+                android:id="@+id/calendarBovino"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:editable="false"
-                android:textColor="@color/textColor"
-                android:textSize="14sp"
-                tools:clickable="false" />
+                android:layout_weight="2" />
+
         </LinearLayout>
 
 
@@ -201,8 +198,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:textColor="@color/colorPrimary"
-                android:text="Estado Bovino"/>
+                android:text="Estado Bovino"
+                android:textColor="@color/colorPrimary" />
 
             <Spinner
                 android:id="@+id/estadoSpinBovino"

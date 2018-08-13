@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -17,21 +18,25 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
+import adapters.BovinoAdapter;
+import model.Cow;
 import model.DataHelper;
 
 public class PalpamientoActivity extends AppCompatActivity {
 
     private String TAG = PalpamientoActivity.class.getSimpleName();
     private Spinner bovinospin;
-    private Switch resultado;
+    private Switch palSw;
+    private int resultado;
     private ProgressDialog progressDialog;
     private static String url = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/bovinos?where=sexo:2";
-    private String bovinos, fechas;
+    private String fechas;
     private TextView observa, fecha;
     private DataHelper dataHelper;
-    ArrayList<String> bovinoHList;
-    ArrayAdapter<String> bovinoAdapter;
+    List<Cow> bovinoHList;
+    BovinoAdapter bovinoAdapter;
 
 
     @Override
@@ -46,7 +51,17 @@ public class PalpamientoActivity extends AppCompatActivity {
 
     private void initViews(){
         bovinospin = (Spinner) findViewById(R.id.bovinoPal);
-        resultado = (Switch) findViewById(R.id.swPal);
+        palSw = (Switch) findViewById(R.id.swPal);
+        palSw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    resultado = 1;
+                }else{
+                    resultado = 2;
+                }
+            }
+        });
         fecha = (TextView) findViewById(R.id.fechaPal);
         observa = (TextView) findViewById(R.id.observaPal);
 
@@ -82,9 +97,11 @@ public class PalpamientoActivity extends AppCompatActivity {
                     for(int i = 0; i < data.length(); i++) {
 
                         JSONObject c = data.getJSONObject(i);
-                        bovinos = c.getString("nombre");
+                        Cow cow = new Cow(c.getString("bovino_id"),
+                                c.getString("fierro"),
+                                c.getString("nombre"));
 
-                        bovinoHList.add(bovinos);
+                        bovinoHList.add(cow);
                     }
 
                     fechas = currentTime;
@@ -124,7 +141,7 @@ public class PalpamientoActivity extends AppCompatActivity {
             if(progressDialog.isShowing())
                 progressDialog.dismiss();
 
-            bovinoAdapter = new ArrayAdapter<String>(PalpamientoActivity.this, R.layout.support_simple_spinner_dropdown_item, bovinoHList);
+            bovinoAdapter = new BovinoAdapter(PalpamientoActivity.this, R.layout.custom_spinner_items, bovinoHList);
             bovinospin.setAdapter(bovinoAdapter);
             fecha.setText(fechas);
 
@@ -136,4 +153,6 @@ public class PalpamientoActivity extends AppCompatActivity {
     public void onBackPressed() {
         finish();
     }
+
+    //TODO: uploadMethod
 }

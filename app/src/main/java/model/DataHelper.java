@@ -21,9 +21,9 @@ public class DataHelper {
     private static String urlEmpleado = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/empleados";
     private static String TAG2 = "";
     private static String TAG = "LOOKUP-MATEO";
-    private static String siniiga, clase, raza, empadre, estado, bovino, vacuna, empleado, sexo;
-    static ArrayList<String> vacunaList = new ArrayList<>();
-    static ArrayList<String> empleadoList = new ArrayList<>();
+    private static String siniiga, clase, raza, empadre, estado, bovino, sexo;
+    static List<Vacunas> vacunaList = new ArrayList<>();
+    static List<Empleados> empleadoList = new ArrayList<>();
 
     static List<Clases> clasesList = new ArrayList<>();
     static List<Siniigas> siniigasList = new ArrayList<>();
@@ -142,7 +142,7 @@ public class DataHelper {
         return estado;
     }
 
-    public static ArrayList<String> getVacunas(){
+    public static List<Vacunas> getVacunas(){
         HttpHandler sh = new HttpHandler();
         String jsonStr = sh.makeServiceCall(urlVacuna);
         //Log.i(TAG, urlVacuna+"\n"+jsonStr+"");
@@ -153,9 +153,10 @@ public class DataHelper {
 
                 for(int i = 0; i < data.length(); i++){
                     JSONObject c = data.getJSONObject(i);
-                    vacuna = c.getString("nombre");
+                    Vacunas vacunas = new Vacunas(c.getString("vacuna_id"),
+                            c.getString("nombre"));
 
-                    vacunaList.add(vacuna);
+                    vacunaList.add(vacunas);
                 }
             }catch (final JSONException e){
                 Log.e(TAG,"Json parsing error: " + e.getMessage());
@@ -164,20 +165,20 @@ public class DataHelper {
         return vacunaList;
     }
 
-    public static ArrayList<String> getEmpleados(){
+    public static List<Empleados> getEmpleados(){
         HttpHandler sh = new HttpHandler();
 
         String jsonStr = sh.makeServiceCall(urlEmpleado);
-        //Log.i(TAG, urlVacuna+"\n"+jsonStr+"");
+
         if(jsonStr != null){
             try{
                 JSONArray data = new JSONArray(jsonStr);
 
                 for(int i = 0; i < data.length(); i++){
                     JSONObject c = data.getJSONObject(i);
-                    empleado = c.getString("empleado_id");
+                    Empleados empleados = new Empleados(c.getString("empleado_id"));
 
-                    empleadoList.add(empleado);
+                    empleadoList.add(empleados);
                 }
             }catch (final JSONException e){
                 Log.e(TAG2,"Json parsing error: " + e.getMessage());

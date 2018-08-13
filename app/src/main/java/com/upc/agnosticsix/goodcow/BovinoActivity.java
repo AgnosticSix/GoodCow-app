@@ -31,6 +31,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -55,11 +57,12 @@ public class BovinoActivity extends AppCompatActivity {
     private String TAG = BovinoActivity.class.getSimpleName();
     private Spinner claseSpin, siniigaSpin, razaSpin, empadreSpin, estadoSpin;
     private EditText fierro, nombre;
+    private View calBovino;
     private TextView fecha, spinnerItems;
     private Switch sexo;
     private Button agregarBtn;
     private ProgressDialog progressDialog;
-    private String fechas, sexos, currentTime, response;
+    private String fechas, currentTime, response;
     List<Clases> claseList;
     List<Siniigas> siniigaList;
     List<Razas> razaList;
@@ -71,7 +74,7 @@ public class BovinoActivity extends AppCompatActivity {
     EmpadreAdapter empadreAdapter;
     EstadoAdapter estadoAdapter;
     private DataHelper dataHelper;
-    private String clase, siniiga, raza, empadre, estado;
+    private int clase, siniiga, raza, empadre, estado, sexos = 1;
     private String fierroStr = "", nombreStr = "";
     private static String urla = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/bovinos";
 
@@ -88,17 +91,18 @@ public class BovinoActivity extends AppCompatActivity {
         fierro = (EditText) findViewById(R.id.fierroAddBovino);
         nombre = (EditText) findViewById(R.id.nombreAddBovino);
         sexo = (Switch) findViewById(R.id.swSexoBovino);
-        fecha = (TextView) findViewById(R.id.fechaAddBovino);
+        //fecha = (TextView) findViewById(R.id.fechaAddBovino);
         spinnerItems = (TextView) findViewById(R.id.textViewItem);
         agregarBtn = (Button) findViewById(R.id.addBovinoBtn);
+        calBovino = (View) findViewById(R.id.calendarBovino);
 
         sexo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    sexos = "2";
+                    sexos = 2;
                 }else{
-                    sexos = "1";
+                    sexos = 1;
                 }
             }
         });
@@ -111,13 +115,14 @@ public class BovinoActivity extends AppCompatActivity {
         razaList = new ArrayList<>();
         empadreList = new ArrayList<>();
         estadoList = new ArrayList<>();
-        currentTime = Calendar.getInstance().getTime().toString();
+
         agregarBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new uploadData().execute();
             }
         });
+        currentTime = DateFormat.getDateTimeInstance().format(calBovino);
 
     }
 
@@ -141,6 +146,7 @@ public class BovinoActivity extends AppCompatActivity {
             empadreList = dataHelper.getEmpadres();
             estadoList = dataHelper.getEstados();
 
+
             return null;
         }
 
@@ -152,6 +158,7 @@ public class BovinoActivity extends AppCompatActivity {
                 progressDialog.dismiss();
 
             fecha.setText(currentTime);
+            Log.i(TAG, currentTime);
 
             claseSpin = (Spinner) findViewById(R.id.claseSpinBovino);
             siniigaSpin = (Spinner) findViewById(R.id.siniigaSpinBovino);
@@ -175,7 +182,8 @@ public class BovinoActivity extends AppCompatActivity {
 
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    clase = claseList.get(position).getClase_id();
+                    clase = Integer.parseInt(claseList.get(position).getClase_id());
+
                 }
 
                 @Override
@@ -187,7 +195,7 @@ public class BovinoActivity extends AppCompatActivity {
             razaSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    raza = razaList.get(position).getRaza_id();
+                    raza = Integer.parseInt(razaList.get(position).getRaza_id());
                 }
 
                 @Override
@@ -199,7 +207,7 @@ public class BovinoActivity extends AppCompatActivity {
             siniigaSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    siniiga = siniigaList.get(position).getSiniiga_id();
+                    siniiga = Integer.parseInt(siniigaList.get(position).getSiniiga_id());
                 }
 
                 @Override
@@ -211,7 +219,7 @@ public class BovinoActivity extends AppCompatActivity {
             empadreSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    empadre = empadreList.get(position).getEmpadre_id();
+                    empadre = Integer.parseInt(empadreList.get(position).getEmpadre_id());
                 }
 
                 @Override
@@ -223,7 +231,7 @@ public class BovinoActivity extends AppCompatActivity {
             estadoSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    estado = estadoList.get(position).getEstado_id();
+                    estado = Integer.parseInt(estadoList.get(position).getEstado_id());
                 }
 
                 @Override
@@ -290,6 +298,7 @@ public class BovinoActivity extends AppCompatActivity {
                     }
 
                     br.close();
+                    //fierro.se;
                 }else if (responseCode == HttpURLConnection.HTTP_INTERNAL_ERROR){
                     Toast.makeText(getApplicationContext(), ""+ responseCode,Toast.LENGTH_LONG).show();
                     response = "";

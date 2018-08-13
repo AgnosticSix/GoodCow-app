@@ -1,6 +1,5 @@
 package adapters;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,26 +9,25 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.upc.agnosticsix.goodcow.CustomItemClickListener;
 import com.upc.agnosticsix.goodcow.R;
 
-import java.util.ArrayList;
 import java.util.List;
-import model.Clases;
 
-public class ClaseAdapter extends ArrayAdapter<Clases>{
+import model.Cow;
+
+public class BovinoAdapter extends ArrayAdapter<Cow> {
 
     private final Context context;
-    private final List<Clases> clasesList;
+    private final List<Cow> cowList;
     private final LayoutInflater inflater;
     private final int mRes;
 
-    public ClaseAdapter(Context context, int resource, List<Clases> objects) {
+    public BovinoAdapter(@NonNull Context context, int resource, @NonNull List<Cow> objects) {
         super(context, resource, objects);
         this.context = context;
+        this.cowList = objects;
         this.inflater = LayoutInflater.from(context);
         this.mRes = resource;
-        this.clasesList = objects;
     }
 
     @Override
@@ -51,9 +49,9 @@ public class ClaseAdapter extends ArrayAdapter<Clases>{
 
         TextView textView = (TextView) view.findViewById(R.id.textViewItem);
 
-        Clases clases = clasesList.get(position);
+        Cow cow = cowList.get(position);
 
-        textView.setText(clases.getNombre());
+        textView.setText(cow.getNombre());
 
         return view;
     }

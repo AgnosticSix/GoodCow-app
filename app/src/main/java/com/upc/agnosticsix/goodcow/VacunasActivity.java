@@ -16,8 +16,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
+import adapters.EmpleadoAdapter;
+import adapters.VacunaAdapter;
 import model.DataHelper;
+import model.Empleados;
+import model.Vacunas;
 
 public class VacunasActivity extends AppCompatActivity {
 
@@ -31,10 +36,10 @@ public class VacunasActivity extends AppCompatActivity {
     private static String urlVacuna = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/vacunas";
     private static String urlEmpleado = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/empleados";
     String url2;
-    ArrayList<String> vacunaList;
-    ArrayList<String> empleadoList;
-    ArrayAdapter<String> vacunaAdapter;
-    ArrayAdapter<String> empleadoAdapter;
+    List<Vacunas> vacunaList;
+    List<Empleados> empleadoList;
+    VacunaAdapter vacunaAdapter;
+    EmpleadoAdapter empleadoAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,8 +136,8 @@ public class VacunasActivity extends AppCompatActivity {
             fecha.setText(fechas);
             vacspin = (Spinner) findViewById(R.id.vacspin);
             empspin = (Spinner) findViewById(R.id.empspin);
-            vacunaAdapter = new ArrayAdapter<>(VacunasActivity.this, R.layout.support_simple_spinner_dropdown_item, vacunaList);
-            empleadoAdapter = new ArrayAdapter<>(VacunasActivity.this, R.layout.support_simple_spinner_dropdown_item, empleadoList);
+            vacunaAdapter = new VacunaAdapter(VacunasActivity.this, R.layout.custom_spinner_items, vacunaList);
+            empleadoAdapter = new EmpleadoAdapter(VacunasActivity.this, R.layout.custom_spinner_items, empleadoList);
 
             vacspin.setAdapter(vacunaAdapter);
             empspin.setAdapter(empleadoAdapter);
@@ -143,4 +148,6 @@ public class VacunasActivity extends AppCompatActivity {
     public void onBackPressed() {
         finish();
     }
+
+    //TODO: uploadMethod
 }
