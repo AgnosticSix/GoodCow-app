@@ -46,11 +46,11 @@ public class PalpamientoActivity extends AppCompatActivity {
 
     private String TAG = PalpamientoActivity.class.getSimpleName();
     private Spinner bovinospin, empspin, resspin;
-    private Switch palSw;
     private Button agregarbtn;
     private int resultado, idbovino, empleado, responseCode;
     private ProgressDialog progressDialog;
     private static String url = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/bovinos?where=sexo:2";
+    private static String urla = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/palpamientos";
     private String currentTime, response;
     private TextView observa, fecha;
     private DataHelper dataHelper;
@@ -212,7 +212,7 @@ public class PalpamientoActivity extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
 
             try{
-                URL url2 = new URL(url);
+                URL url2 = new URL(urla);
                 HttpURLConnection conn = (HttpURLConnection) url2.openConnection();
                 conn.setReadTimeout(15000 /* milliseconds */);
                 conn.setConnectTimeout(15000 /* milliseconds */);

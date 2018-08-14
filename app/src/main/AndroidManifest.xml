@@ -32,7 +32,8 @@
         <activity android:name=".VacunasActivity" />
         <activity android:name=".CruzamientoActivity" />
         <activity android:name=".OrdenhaActivity" />
-        <activity android:name=".AcercaDeActivity"></activity>
+        <activity android:name=".AcercaDeActivity" />
+        <activity android:name=".DecesosActivity"></activity>
     </application>
 
 </manifest>

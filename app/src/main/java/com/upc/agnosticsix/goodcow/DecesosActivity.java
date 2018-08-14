@@ -8,10 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,91 +27,73 @@ import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import adapters.BovinoAdapter;
+import adapters.DecesoAdapter;
 import adapters.EmpleadoAdapter;
-import adapters.EstadoAdapter;
 import model.Cow;
 import model.DataHelper;
+import model.Decesos;
 import model.Empleados;
-import model.Estados;
 
-public class CruzamientoActivity extends AppCompatActivity {
+public class DecesosActivity extends AppCompatActivity {
 
-    private String TAG = CruzamientoActivity.class.getSimpleName();
-    private static String url = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/bovinos?where=clase_bovino_id:6";
-    private static String url2 = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/bovinos?where=sexo:2";
-    private static String urla = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/cruzamientos";
-    private Spinner sementalSpin, empleadoSpin, vacaSpin;
-    private Switch estadosw;
+    private String TAG = DecesosActivity.class.getSimpleName();
+    private Spinner bovspin, decesospin, empspin;
     private TextView fecha;
-    private EditText descripcion;
-    private Button agregarBtn;
     private ProgressDialog progressDialog;
-    List<Cow> sementalList, vacaList;
-    List<Empleados> empleadoList;
-    List<Estados> estadoList;
-    EmpleadoAdapter empleadoAdapter;
-    BovinoAdapter sementalAdapter, vacaAdapter;
+    private Button agregarBtn;
     private String currentTime, response;
-    private int responseCode, idsemental, idvaca, estado = 0, empleado;
+    private int idbovino, causaDeceso, empleado, responseCode;
     private DataHelper dataHelper;
+    private static String url = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/bovinos";
+    private static String urla = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/decesos_bovinos";
 
+    List<Decesos> decesosList;
+    List<Cow> cowList;
+    List<Empleados> empleadosList;
+    DecesoAdapter decesoAdapter;
+    EmpleadoAdapter empleadoAdapter;
+    BovinoAdapter bovinoAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cruzamiento);
+        setContentView(R.layout.activity_decesos);
+
         initViews();
         initObjects();
         new GetData().execute();
     }
 
     private void initViews(){
-        fecha = (TextView) findViewById(R.id.fechaCruza);
-        descripcion = (EditText) findViewById(R.id.descripCruza);
-        agregarBtn = (Button) findViewById(R.id.addCruzaBtn);
-        estadosw = findViewById(R.id.estadoCruzaSw);
+        fecha = (TextView) findViewById(R.id.fechadeceso);
+        agregarBtn = (Button) findViewById(R.id.addBovDecBtn);
     }
 
     private void initObjects(){
         dataHelper = new DataHelper();
-        sementalList = new ArrayList<>();
-        empleadoList = new ArrayList<>();
-        estadoList = new ArrayList<>();
-        vacaList = new ArrayList<>();
+        decesosList = new ArrayList<>();
+        cowList = new ArrayList<>();
+        empleadosList = new ArrayList<>();
         agregarBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new uploadData().execute();
             }
         });
-
-        estadosw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    estado = 1;
-                }else{
-                    estado = 0;
-                }
-            }
-        });
         Date date = new Date();
         DateFormat HDFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         currentTime = HDFormat.format(date);
-
     }
 
-    private class GetData extends AsyncTask<Void, Void, Void> {
-
+    private class GetData extends AsyncTask<Void, Void, Void>{
         @Override
-        protected void onPreExecute(){
+        protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(CruzamientoActivity.this);
+            progressDialog = new ProgressDialog(DecesosActivity.this);
             progressDialog.setMessage("Please wait...");
             progressDialog.setCancelable(false);
             progressDialog.show();
@@ -125,35 +104,24 @@ public class CruzamientoActivity extends AppCompatActivity {
             HttpHandler sh = new HttpHandler();
 
             String jsonStr = sh.makeServiceCall(url);
-            String jsonStr2 = sh.makeServiceCall(url2);
 
             if(jsonStr != null){
+
                 try{
                     JSONArray data = new JSONArray(jsonStr);
-                    JSONArray data2 = new JSONArray(jsonStr2);
 
                     for(int i = 0; i < data.length(); i++) {
 
                         JSONObject c = data.getJSONObject(i);
+
                         Cow cow = new Cow(c.getString("bovino_id"),
                                 c.getString("fierro"),
                                 c.getString("nombre"));
 
-                        sementalList.add(cow);
+                        cowList.add(cow);
                     }
-
-                    for(int i = 0; i < data2.length(); i++) {
-
-                        JSONObject c = data2.getJSONObject(i);
-                        Cow cow = new Cow(c.getString("bovino_id"),
-                                c.getString("fierro"),
-                                c.getString("nombre"));
-
-                        vacaList.add(cow);
-                    }
-
-                    empleadoList = dataHelper.getEmpleados();
-                    estadoList = dataHelper.getEstados();
+                    decesosList = DataHelper.getDecesos();
+                    empleadosList = DataHelper.getEmpleados();
 
                 } catch (final JSONException e){
                     Log.e(TAG,"Json parsing error: " + e.getMessage());
@@ -183,26 +151,25 @@ public class CruzamientoActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(Void result){
-            super.onPostExecute(result);
-
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
             if(progressDialog.isShowing())
                 progressDialog.dismiss();
 
             fecha.setText(currentTime);
-            sementalSpin = (Spinner) findViewById(R.id.sementalSpin);
-            empleadoSpin = (Spinner) findViewById(R.id.empSpinCruza);
-            vacaSpin = (Spinner) findViewById(R.id.vacaSpin);
-            sementalAdapter = new BovinoAdapter(CruzamientoActivity.this, R.layout.custom_spinner_items, sementalList);
-            empleadoAdapter = new EmpleadoAdapter(CruzamientoActivity.this, R.layout.custom_spinner_items, empleadoList);
-            vacaAdapter = new BovinoAdapter(CruzamientoActivity.this, R.layout.custom_spinner_items, vacaList);
-            sementalSpin.setAdapter(sementalAdapter);
-            empleadoSpin.setAdapter(empleadoAdapter);
-            vacaSpin.setAdapter(vacaAdapter);
-            sementalSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            bovspin = (Spinner) findViewById(R.id.bovinoDecSpin);
+            decesospin = (Spinner) findViewById(R.id.causaDecSpin);
+            empspin = (Spinner) findViewById(R.id.empDecSpin);
+            bovinoAdapter = new BovinoAdapter(DecesosActivity.this, R.layout.custom_spinner_items, cowList);
+            decesoAdapter = new DecesoAdapter(DecesosActivity.this, R.layout.custom_spinner_items, decesosList);
+            empleadoAdapter = new EmpleadoAdapter(DecesosActivity.this, R.layout.custom_spinner_items, empleadosList);
+            bovspin.setAdapter(bovinoAdapter);
+            decesospin.setAdapter(decesoAdapter);
+            empspin.setAdapter(empleadoAdapter);
+            bovspin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    idsemental = Integer.parseInt(sementalList.get(position).getId());
+                    idbovino = Integer.parseInt(cowList.get(position).getId());
                 }
 
                 @Override
@@ -210,10 +177,10 @@ public class CruzamientoActivity extends AppCompatActivity {
 
                 }
             });
-            vacaSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            decesospin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    idvaca = Integer.parseInt(vacaList.get(position).getId());
+                    causaDeceso = Integer.parseInt(decesosList.get(position).getId());
                 }
 
                 @Override
@@ -221,10 +188,10 @@ public class CruzamientoActivity extends AppCompatActivity {
 
                 }
             });
-            empleadoSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            empspin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    empleado = Integer.parseInt(empleadoList.get(position).getId());
+                    empleado = Integer.parseInt(empleadosList.get(position).getId());
                 }
 
                 @Override
@@ -251,12 +218,10 @@ public class CruzamientoActivity extends AppCompatActivity {
 
                 JSONObject c = new JSONObject();
 
-                c.put("vaca_id", idvaca);
-                c.put("semental_id", idsemental);
+                c.put("bovino_id", idbovino);
+                c.put("causa_deceso_id", causaDeceso);
                 c.put("empleado_id", empleado);
                 c.put("fecha", currentTime);
-                c.put("estado", estado);
-                c.put("descripcion", descripcion.getText());
 
                 String str = c.toString();
                 byte[] output = str.getBytes("UTF-8");
@@ -309,10 +274,5 @@ public class CruzamientoActivity extends AppCompatActivity {
                 response = "";
             }
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        finish();
     }
 }

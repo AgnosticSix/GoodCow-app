@@ -20,6 +20,7 @@ public class DataHelper {
     private static String urlVacuna = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/vacunas";
     private static String urlEmpleado = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/empleados";
     private static String urlResPal = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/resultados_palpamientos";
+    private static String urlDeceso = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/causas_decesos";
     private static String TAG2 = "";
     private static String TAG = "LOOKUP-MATEO";
     private static String siniiga, clase, raza, empadre, estado, bovino, sexo;
@@ -32,6 +33,7 @@ public class DataHelper {
     static List<Empadres> empadresList = new ArrayList<>();
     static List<Estados> estadosList = new ArrayList<>();
     static List<ResultadosPalpamientos> resultadosPalpamientosList = new ArrayList<>();
+    static List<Decesos> decesosList = new ArrayList<>();
 
     public String getClase(String id){
         HttpHandler sh = new HttpHandler();
@@ -317,7 +319,6 @@ public class DataHelper {
     public static List<ResultadosPalpamientos> getResPalpamientos(){
         HttpHandler sh = new HttpHandler();
         String jsonStr = sh.makeServiceCall(urlResPal);
-        //Log.i(TAG, urlVacuna+"\n"+jsonStr+"");
 
         if(jsonStr != null){
             try{
@@ -336,5 +337,28 @@ public class DataHelper {
             }
         }
         return resultadosPalpamientosList;
+    }
+
+    public static List<Decesos> getDecesos(){
+        HttpHandler sh = new HttpHandler();
+        String jsonStr = sh.makeServiceCall(urlDeceso);
+
+        if(jsonStr != null){
+            try{
+                JSONArray data = new JSONArray(jsonStr);
+
+                for(int i = 0; i < data.length(); i++){
+                    JSONObject c = data.getJSONObject(i);
+
+                    Decesos decesos = new Decesos(c.getString("causa_deceso_id"),
+                            c.getString("nombre"));
+
+                    decesosList.add(decesos);
+                }
+            }catch (final JSONException e){
+                Log.e(TAG,"Json parsing error: " + e.getMessage());
+            }
+        }
+        return decesosList;
     }
 }

@@ -173,6 +173,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_share) {
             Intent intent = new Intent(activity, AcercaDeActivity.class);
             startActivity(intent);
+        } else if (id == R.id.nav_camera){
+            Intent intent = new Intent(activity, DecesosActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

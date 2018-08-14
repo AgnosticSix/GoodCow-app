@@ -10,4 +10,9 @@ public class AcercaDeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_acerca_de);
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }

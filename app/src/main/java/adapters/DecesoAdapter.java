@@ -13,19 +13,19 @@ import com.upc.agnosticsix.goodcow.R;
 
 import java.util.List;
 
-import model.Cow;
+import model.Decesos;
 
-public class BovinoAdapter extends ArrayAdapter<Cow> {
+public class DecesoAdapter extends ArrayAdapter<Decesos>{
 
     private final Context context;
-    private final List<Cow> cowList;
+    private final List<Decesos> decesosList;
     private final LayoutInflater inflater;
     private final int mRes;
 
-    public BovinoAdapter(@NonNull Context context, int resource, @NonNull List<Cow> objects) {
+    public DecesoAdapter(@NonNull Context context, int resource, @NonNull List<Decesos> objects) {
         super(context, resource, objects);
         this.context = context;
-        this.cowList = objects;
+        this.decesosList = objects;
         this.inflater = LayoutInflater.from(context);
         this.mRes = resource;
     }
@@ -48,9 +48,9 @@ public class BovinoAdapter extends ArrayAdapter<Cow> {
 
         TextView textView = (TextView) view.findViewById(R.id.textViewItem);
 
-        Cow cow = cowList.get(position);
+        Decesos decesos = decesosList.get(position);
 
-        textView.setText(cow.getNombre()+" "+cow.getMatricula());
+        textView.setText(decesos.getNombre());
 
         return view;
     }

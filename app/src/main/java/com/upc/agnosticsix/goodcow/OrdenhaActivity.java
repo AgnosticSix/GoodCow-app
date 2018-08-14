@@ -47,6 +47,7 @@ public class OrdenhaActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private DataHelper dataHelper;
     private static String url = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/bovinos?where=clase_bovino_id:1";
+    private static String urla = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/ordenhas";
     private String currentTime, response;
     private int empleado, responseCode, idbovino;
     private float cantidad2;
@@ -190,7 +191,7 @@ public class OrdenhaActivity extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
 
             try{
-                URL url2 = new URL(url);
+                URL url2 = new URL(urla);
                 HttpURLConnection conn = (HttpURLConnection) url2.openConnection();
                 conn.setReadTimeout(15000 /* milliseconds */);
                 conn.setConnectTimeout(15000 /* milliseconds */);

@@ -4,84 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CruzamientoActivity"
-    android:padding="15sp"
-    android:orientation="vertical">
+    tools:context=".DecesosActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="16dp">
-
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
-
-            <TextView
-
-                android:layout_width="212dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:text="Vaca"
-                android:textColor="@color/colorPrimary" />
-
-            <Spinner
-                android:id="@+id/vacaSpin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="2" />
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
-
-            <TextView
-
-                android:layout_width="212dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:text="Semental"
-                android:textColor="@color/colorPrimary" />
-
-            <Spinner
-                android:id="@+id/sementalSpin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="2" />
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
-
-            <TextView
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:textColor="@color/colorPrimary"
-                android:text="Empleado"/>
-
-            <Spinner
-                android:id="@+id/empSpinCruza"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@color/textColor" />
-        </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -91,59 +20,82 @@
 
             <TextView
 
+                android:layout_width="215dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Bovino"
+                android:textColor="@color/colorPrimary" />
+
+            <Spinner
+                android:id="@+id/bovinoDecSpin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+
+                android:layout_width="215dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Causa"
+                android:textColor="@color/colorPrimary" />
+
+            <Spinner
+                android:id="@+id/causaDecSpin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+
+                android:layout_width="215dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Empleado"
+                android:textColor="@color/colorPrimary" />
+
+            <Spinner
+                android:id="@+id/empDecSpin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:textColor="@color/colorPrimary"
-                android:text="Fecha"/>
+                android:text="Fecha"
+                android:textColor="@color/colorPrimary" />
 
             <EditText
-                android:id="@+id/fechaCruza"
+                android:id="@+id/fechadeceso"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/loading"
                 android:textColor="@color/textColor" />
         </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:orientation="horizontal">
-
-            <Switch
-                android:id="@+id/estadoCruzaSw"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:text="Estado" />
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:textColor="@color/colorPrimary"
-                android:text="Descripcion"/>
-
-            <EditText
-                android:id="@+id/descripCruza"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@color/textColor" />
-        </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -153,7 +105,7 @@
 
 
             <Button
-                android:id="@+id/addCruzaBtn"
+                android:id="@+id/addBovDecBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -161,8 +113,6 @@
                 android:textColor="@color/colorPrimary" />
         </LinearLayout>
 
-
     </LinearLayout>
-
 
 </RelativeLayout>

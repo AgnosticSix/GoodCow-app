@@ -16,6 +16,10 @@
             android:id="@+id/nav_slideshow2"
             android:icon="@drawable/indice"
             android:title="Cruzamiento" />
+        <item
+            android:id="@+id/nav_camera"
+            android:icon="@drawable/indice"
+            android:title="Decesos" />
     </group>
 
     <item android:title="About">
