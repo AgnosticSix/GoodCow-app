@@ -77,7 +77,7 @@ public class BovinoActivity extends AppCompatActivity {
     EstadoAdapter estadoAdapter;
     private DataHelper dataHelper;
     private int clase, siniiga, raza, empadre, estado, sexos = 1, responseCode;
-    private String fierroStr = "", nombreStr = "";
+    private String fierros, nombres, postId= "0", fechas;
     private static String urla = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/bovinos";
 
     @Override
@@ -115,16 +115,30 @@ public class BovinoActivity extends AppCompatActivity {
         razaList = new ArrayList<>();
         empadreList = new ArrayList<>();
         estadoList = new ArrayList<>();
+        postId = getIntent().getStringExtra("idbovino");
+
+        if(postId == "0" || postId == null){
+
+            agregarBtn.setText("Agregar");
+        }else{
+            agregarBtn.setText("Actualizar");
+        }
 
         agregarBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new uploadData().execute();
+                if(agregarBtn.getText().equals("Agregar")){
+                    new uploadData().execute();
+                }else if(agregarBtn.getText().equals("Actualizar")){
+                    new updateData().execute();
+                }
+
             }
         });
         Date date = new Date();
         DateFormat HDFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         currentTime = HDFormat.format(date);
+
     }
 
     private class GetData extends AsyncTask<Void, Void, Void> {
@@ -141,11 +155,65 @@ public class BovinoActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
 
-            claseList = dataHelper.getClases();
-            siniigaList = dataHelper.getSiniigas();
-            razaList = dataHelper.getRazas();
-            empadreList = dataHelper.getEmpadres();
-            estadoList = dataHelper.getEstados();
+            if(postId == "0" || postId == null){
+                claseList = dataHelper.getClases();
+                siniigaList = dataHelper.getSiniigas();
+                razaList = dataHelper.getRazas();
+                empadreList = dataHelper.getEmpadres();
+                estadoList = dataHelper.getEstados();
+            }else{
+                HttpHandler sh = new HttpHandler();
+                String url2 = urla.concat("/"+postId);
+
+                String jsonStr = sh.makeServiceCall(url2);
+
+                if(jsonStr != null){
+                    try{
+                        JSONArray data = new JSONArray(jsonStr);
+
+                        for(int i = 0; i < data.length(); i++) {
+
+                            JSONObject c = data.getJSONObject(i);
+
+                            fierros = c.getString("fierro");
+                            nombres = c.getString("nombre");
+                            sexos = Integer.parseInt(c.getString("sexo"));
+                            fechas = c.getString("fecha_nacimiento");
+                        }
+
+                        claseList = dataHelper.getClases();
+                        siniigaList = dataHelper.getSiniigas();
+                        razaList = dataHelper.getRazas();
+                        empadreList = dataHelper.getEmpadres();
+                        estadoList = dataHelper.getEstados();
+
+
+                    } catch (final JSONException e){
+                        Log.e(TAG,"Json parsing error: " + e.getMessage());
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getApplicationContext(),
+                                        "Json parsing error" + e.getMessage(),
+                                        Toast.LENGTH_LONG)
+                                        .show();
+                            }
+                        });
+                    }
+                } else {
+                    Log.e(TAG, jsonStr);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(),
+                                    "Couldn't get json from server. Check LogCat for possible errors!",
+                                    Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                    });
+                }
+            }
+
             return null;
         }
 
@@ -156,7 +224,9 @@ public class BovinoActivity extends AppCompatActivity {
             if(progressDialog.isShowing())
                 progressDialog.dismiss();
 
-            fecha.setText(currentTime);
+            fierro.setText(fierros);
+            nombre.setText(nombres);
+
 
             claseSpin = (Spinner) findViewById(R.id.claseSpinBovino);
             siniigaSpin = (Spinner) findViewById(R.id.siniigaSpinBovino);
@@ -181,7 +251,6 @@ public class BovinoActivity extends AppCompatActivity {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     clase = Integer.parseInt(claseList.get(position).getClase_id());
-
                 }
 
                 @Override
@@ -237,6 +306,11 @@ public class BovinoActivity extends AppCompatActivity {
 
                 }
             });
+            if(postId == "0" || postId == null){
+                fecha.setText(currentTime);
+            }else{
+                fecha.setText(fechas);
+            }
         }
     }
 
@@ -245,7 +319,7 @@ public class BovinoActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-
+                //String url2 = urla.substring(0, urla.length()-1);
                 URL url = new URL(urla);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setReadTimeout(15000 /* milliseconds */);
@@ -312,8 +386,6 @@ public class BovinoActivity extends AppCompatActivity {
             if(responseCode == HttpURLConnection.HTTP_CREATED){
                 Toast.makeText(getApplicationContext(), "Datos insertados: "+ responseCode,Toast.LENGTH_LONG).show();
                 response = "";
-                fierro.setText("");
-                nombre.setText("");
             }else if (responseCode == HttpURLConnection.HTTP_INTERNAL_ERROR){
                 Toast.makeText(getApplicationContext(), "Error: "+ responseCode,Toast.LENGTH_LONG).show();
                 response = "";
@@ -321,8 +393,94 @@ public class BovinoActivity extends AppCompatActivity {
         }
     }
 
+    private class updateData extends AsyncTask<Void, Void, Void>{
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            try {
+                String url2 = urla.concat("/"+postId);
+                URL url = new URL(url2);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setReadTimeout(15000 /* milliseconds */);
+                conn.setConnectTimeout(15000 /* milliseconds */);
+                conn.setRequestMethod("PUT");
+                conn.setDoInput(true);
+                conn.setDoOutput(true);
+                conn.setRequestProperty("Content-Type", "application/json");
+
+                JSONObject c = new JSONObject();
+
+                c.put("fierro", fierro.getText().toString());
+                c.put("nombre", nombre.getText().toString());
+                c.put("clase_bovino_id", clase);
+                c.put("siniiga_id", siniiga);
+                c.put("raza_bovino_id", raza);
+                c.put("empadre_id", empadre);
+                c.put("estado_bovino_id", estado);
+                //c.put("fecha_nacimiento", fecha.getText().toString());
+                //c.put("fecha_aretado", fecha.getText().toString());
+                c.put("sexo", sexos);
+
+                String str = c.toString();
+                byte[] output = str.getBytes("UTF-8");
+                Log.i(TAG, str+"");
+                String out = conn.getOutputStream().toString();
+
+                OutputStream os = conn.getOutputStream();
+                os.write(output);
+                os.flush();
+                os.close();
+
+                responseCode = conn.getResponseCode();
+                Log.i(TAG, responseCode+"");
+
+                if(responseCode == HttpURLConnection.HTTP_OK){
+                    BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    String line = "";
+
+                    while((line = br.readLine()) != null) {
+                        response += line;
+                        break;
+                    }
+                    br.close();
+                }else if (responseCode == HttpURLConnection.HTTP_INTERNAL_ERROR){
+
+                }
+                conn.disconnect();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            if(responseCode == HttpURLConnection.HTTP_OK){
+                Toast.makeText(getApplicationContext(), "Datos insertados: "+ responseCode,Toast.LENGTH_LONG).show();
+                response = "";
+            }else if (responseCode == HttpURLConnection.HTTP_INTERNAL_ERROR){
+                Toast.makeText(getApplicationContext(), "Error: "+ responseCode,Toast.LENGTH_LONG).show();
+                response = "";
+            }
+        }
+
+    }
+
     @Override
     public void onBackPressed() {
             finish();
+            claseList.clear();
+            razaList.clear();
+            siniigaList.clear();
+            empadreList.clear();
+            estadoList.clear();
     }
 }

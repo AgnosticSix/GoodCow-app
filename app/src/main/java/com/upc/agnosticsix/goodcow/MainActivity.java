@@ -1,6 +1,8 @@
 package com.upc.agnosticsix.goodcow;
 
 import android.app.ProgressDialog;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,6 +22,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +47,7 @@ public class MainActivity extends AppCompatActivity
     private CowRecyclerAdapter cowRecyclerAdapter;
     private Cow cow;
     SwipeRefreshLayout swipeRefreshLayout;
+    private SearchView searchView;
     private ProgressDialog progressDialog;
     private static String url = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/bovinos";
     private String postId;
@@ -115,6 +119,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onRefresh(){
         new GetData().execute();
+        cowRecyclerAdapter.notifyDataSetChanged();
         swipeRefreshLayout.setRefreshing(false);
 
     }
@@ -128,12 +133,37 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
             finish();
         }
+
+        if (!searchView.isIconified()) {
+            searchView.setIconified(true);
+            return;
+        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) menu.findItem(R.id.action_search)
+                .getActionView();
+        searchView.setSearchableInfo(searchManager
+                .getSearchableInfo(getComponentName()));
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                cowRecyclerAdapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                cowRecyclerAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
         return true;
     }
 
@@ -145,9 +175,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        //if (id == R.id.action_settings) {
-        //    return true;
-        //}
+        if (id == R.id.action_search) {
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -210,9 +240,6 @@ public class MainActivity extends AppCompatActivity
                         Cow cowData = new Cow(c.getString("bovino_id"),
                                 c.getString("fierro"),
                                 c.getString("nombre"));
-                        //String id = c.getString("bovino_id");
-                        //String matricula = c.getString("fierro");
-                        //String nombre = c.getString("nombre");
 
                         cowList.add(cowData);
                     }

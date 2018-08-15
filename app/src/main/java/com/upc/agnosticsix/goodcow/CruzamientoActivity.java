@@ -314,5 +314,8 @@ public class CruzamientoActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         finish();
+        vacaList.clear();
+        estadoList.clear();
+        empleadoList.clear();
     }
 }

@@ -266,5 +266,7 @@ public class OrdenhaActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         finish();
+        cowList.clear();
+        empleadosList.clear();
     }
 }

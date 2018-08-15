@@ -1,17 +1,12 @@
 package com.upc.agnosticsix.goodcow;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,83 +20,59 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
-import adapters.EmpleadoAdapter;
-import adapters.VacunaAdapter;
-import model.Cow;
 import model.DataHelper;
-import model.Empleados;
-import model.Vacunas;
+import model.Zoometricas;
 
-public class VacunasActivity extends AppCompatActivity {
+public class ZoometricasActivity extends AppCompatActivity {
 
-    private String TAG = VacunasActivity.class.getSimpleName();
-    private Spinner vacspin, empspin;
+    private String TAG = ZoometricasActivity.class.getSimpleName();
     private ProgressDialog progressDialog;
-    private TextView bovino, fecha;
-    private Button agregarBtn;
-    private String currentTime, response;
-    private int vacuna, empleado, idintent2, responseCode;
+    private List<Zoometricas> zoometricasList;
     private DataHelper dataHelper;
-    private static String url = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/bovinos/";
-    private static String urla = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/vacunas_bovinos";
-    String url2;
-    List<Vacunas> vacunaList;
-    List<Empleados> empleadoList;
-    List<Cow> cowList;
-    VacunaAdapter vacunaAdapter;
-    EmpleadoAdapter empleadoAdapter;
-    String idintent;
+    private TextView bovino, altura, fecha, peso, testiculos;
+    private String bovinos, alturas, fechas, pesos, testiculoss, idintent, response;
+    private int responseCode;
+    private Button agregarBtn;
+    private static String url = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/zoometricas?where=bovino_id:";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_vacunas);
+        setContentView(R.layout.activity_zoometricas);
         initViews();
         initObjects();
         new GetData().execute();
     }
 
     private void initViews(){
-
-        bovino = (TextView) findViewById(R.id.bovinovacuna);
-        fecha = (TextView) findViewById(R.id.fechavacuna);
-        agregarBtn = (Button) findViewById(R.id.addVacunaBtn);
+        bovino = (TextView) findViewById(R.id.bovinoZooText);
+        altura = (TextView) findViewById(R.id.alturaZooText);
+        fecha = (TextView) findViewById(R.id.fechaZooText);
+        peso = (TextView) findViewById(R.id.pesoZooText);
+        testiculos = (TextView) findViewById(R.id.testiZooText);
+        agregarBtn = (Button) findViewById(R.id.updateZooBtn);
     }
 
     private void initObjects(){
-        idintent = getIntent().getStringExtra("idbovino");
-        idintent2 = Integer.parseInt(idintent);
         dataHelper = new DataHelper();
-        url2 = url.concat(idintent);
-        vacunaList = new ArrayList<>();
-        empleadoList = new ArrayList<>();
-        cowList = new ArrayList<>();
+        idintent = getIntent().getStringExtra("idbovino");
         agregarBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new uploadData().execute();
+                new updateData().execute();
             }
         });
-        Date date = new Date();
-        DateFormat HDFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-        currentTime = HDFormat.format(date);
+
     }
 
-    private class GetData extends AsyncTask<Void, Void, Void> {
-
+    private class GetData extends AsyncTask<Void,Void,Void>{
         @Override
-        protected void onPreExecute(){
+        protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(VacunasActivity.this);
+            progressDialog = new ProgressDialog(ZoometricasActivity.this);
             progressDialog.setMessage("Please wait...");
             progressDialog.setCancelable(false);
             progressDialog.show();
@@ -110,11 +81,9 @@ public class VacunasActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             HttpHandler sh = new HttpHandler();
-
+            String url2 = url.concat(idintent);
             String jsonStr = sh.makeServiceCall(url2);
-
             if(jsonStr != null){
-
                 try{
                     JSONArray data = new JSONArray(jsonStr);
 
@@ -122,15 +91,12 @@ public class VacunasActivity extends AppCompatActivity {
 
                         JSONObject c = data.getJSONObject(i);
 
-                        Cow cow = new Cow(c.getString("bovino_id"),
-                                c.getString("fierro"),
-                                c.getString("nombre"));
-
-                        cowList.add(cow);
+                        bovinos = dataHelper.getCow(idintent);
+                        alturas = c.getString("altura");
+                        fechas = c.getString("fecha");
+                        pesos = c.getString("peso");
+                        testiculoss = c.getString("testiculos");
                     }
-                    vacunaList = DataHelper.getVacunas();
-                    empleadoList = DataHelper.getEmpleados();
-
                 } catch (final JSONException e){
                     Log.e(TAG,"Json parsing error: " + e.getMessage());
                     runOnUiThread(new Runnable() {
@@ -159,70 +125,43 @@ public class VacunasActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(Void result){
-            super.onPostExecute(result);
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
 
             if(progressDialog.isShowing())
                 progressDialog.dismiss();
 
-            bovino.setText(cowList.get(0).getNombre());
-            fecha.setText(currentTime);
-            vacspin = (Spinner) findViewById(R.id.vacspin);
-            empspin = (Spinner) findViewById(R.id.empspin);
-            vacunaAdapter = new VacunaAdapter(VacunasActivity.this, R.layout.custom_spinner_items, vacunaList);
-            empleadoAdapter = new EmpleadoAdapter(VacunasActivity.this, R.layout.custom_spinner_items, empleadoList);
-
-            vacspin.setAdapter(vacunaAdapter);
-            empspin.setAdapter(empleadoAdapter);
-
-            vacspin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    vacuna = Integer.parseInt(vacunaList.get(position).getId());
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-
-                }
-            });
-
-            empspin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    empleado = Integer.parseInt(empleadoList.get(position).getId());
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-
-                }
-            });
-
+            bovino.setText(bovinos);
+            altura.setText(fechas);
+            peso.setText(pesos);
+            fecha.setText(fechas);
+            testiculos.setText(testiculoss);
         }
     }
 
-    private class uploadData extends AsyncTask<Void, Void, Void>{
+    private class updateData extends AsyncTask<Void,Void,Void>{
 
         @Override
         protected Void doInBackground(Void... voids) {
 
-            try{
-                URL url = new URL(urla);
+            try {
+                String url2 = url.concat(idintent);
+                URL url = new URL(url2);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setReadTimeout(15000 /* milliseconds */);
                 conn.setConnectTimeout(15000 /* milliseconds */);
-                conn.setRequestMethod("POST");
+                conn.setRequestMethod("PUT");
                 conn.setDoInput(true);
                 conn.setDoOutput(true);
                 conn.setRequestProperty("Content-Type", "application/json");
 
                 JSONObject c = new JSONObject();
 
-                c.put("vacuna_id", vacuna);
-                c.put("bovino_id", idintent2);
-                c.put("empleado_id", empleado);
-                c.put("fecha", currentTime);
+                c.put("bovino_id", idintent);
+                c.put("altura", alturas);
+                c.put("peso", pesos);
+                c.put("fecha", fechas);
+                c.put("testiculos", testiculoss);
 
                 String str = c.toString();
                 byte[] output = str.getBytes("UTF-8");
@@ -237,38 +176,35 @@ public class VacunasActivity extends AppCompatActivity {
                 responseCode = conn.getResponseCode();
                 Log.i(TAG, responseCode+"");
 
-                if(responseCode == HttpURLConnection.HTTP_CREATED){
+                if(responseCode == HttpURLConnection.HTTP_OK){
                     BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                    //StringBuffer sb = new StringBuffer("");
                     String line = "";
 
                     while((line = br.readLine()) != null) {
                         response += line;
                         break;
                     }
-
                     br.close();
                 }else if (responseCode == HttpURLConnection.HTTP_INTERNAL_ERROR){
 
                 }
                 conn.disconnect();
-            } catch (ProtocolException e) {
-                e.printStackTrace();
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
                 e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            if(responseCode == HttpURLConnection.HTTP_CREATED){
+            if(responseCode == HttpURLConnection.HTTP_OK){
                 Toast.makeText(getApplicationContext(), "Datos insertados: "+ responseCode,Toast.LENGTH_LONG).show();
                 response = "";
             }else if (responseCode == HttpURLConnection.HTTP_INTERNAL_ERROR){
@@ -277,11 +213,4 @@ public class VacunasActivity extends AppCompatActivity {
             }
         }
     }
-    @Override
-    public void onBackPressed() {
-        finish();
-        vacunaList.clear();
-        empleadoList.clear();
-    }
-
 }

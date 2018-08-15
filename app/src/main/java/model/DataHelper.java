@@ -8,9 +8,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 
 public class DataHelper {
+    private static String urlBovino = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/bovinos";
     private static String urlSiniiga = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/siniigas/";
     private static String urlClase = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/clases_bovinos/";
     private static String urlRaza = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/razas_bovinos/";
@@ -23,9 +25,10 @@ public class DataHelper {
     private static String urlDeceso = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/causas_decesos";
     private static String TAG2 = "";
     private static String TAG = "LOOKUP-MATEO";
-    private static String siniiga, clase, raza, empadre, estado, bovino, sexo;
+    private static String siniiga, clase, raza, empadre, estado, bovino, sexo, cow;
     static List<Vacunas> vacunaList = new ArrayList<>();
     static List<Empleados> empleadoList = new ArrayList<>();
+    static List<Cow> cowList = new ArrayList<>();
 
     static List<Clases> clasesList = new ArrayList<>();
     static List<Siniigas> siniigasList = new ArrayList<>();
@@ -34,6 +37,28 @@ public class DataHelper {
     static List<Estados> estadosList = new ArrayList<>();
     static List<ResultadosPalpamientos> resultadosPalpamientosList = new ArrayList<>();
     static List<Decesos> decesosList = new ArrayList<>();
+
+    public String getCow(String id){
+        HttpHandler sh = new HttpHandler();
+        String url = urlBovino.concat("/"+id);
+
+        String jsonStr = sh.makeServiceCall(url);
+
+        if(jsonStr != null){
+            try{
+                JSONArray data = new JSONArray(jsonStr);
+
+                for(int i = 0; i < data.length(); i++){
+                    JSONObject c = data.getJSONObject(i);
+                    cow = c.getString("nombre");
+
+                }
+            }catch (final JSONException e){
+                Log.e(TAG,"Json parsing error: " + e.getMessage());
+            }
+        }
+        return cow;
+    }
 
     public String getClase(String id){
         HttpHandler sh = new HttpHandler();
@@ -127,7 +152,6 @@ public class DataHelper {
         HttpHandler sh = new HttpHandler();
         String url = urlEstado.concat(id);
 
-        //final String finalJsonStr = jsonStr;
         String jsonStr = sh.makeServiceCall(url);
 
         if(jsonStr != null){
@@ -147,25 +171,25 @@ public class DataHelper {
     }
 
     public static List<Vacunas> getVacunas(){
+
         HttpHandler sh = new HttpHandler();
         String jsonStr = sh.makeServiceCall(urlVacuna);
-        //Log.i(TAG, urlVacuna+"\n"+jsonStr+"");
 
-        if(jsonStr != null){
-            try{
-                JSONArray data = new JSONArray(jsonStr);
+        try{
+            JSONArray data = new JSONArray(jsonStr);
 
-                for(int i = 0; i < data.length(); i++){
-                    JSONObject c = data.getJSONObject(i);
-                    Vacunas vacunas = new Vacunas(c.getString("vacuna_id"),
-                            c.getString("nombre"));
+            for(int i = 0; i < data.length(); i++){
 
-                    vacunaList.add(vacunas);
-                }
-            }catch (final JSONException e){
-                Log.e(TAG,"Json parsing error: " + e.getMessage());
+                JSONObject c = data.getJSONObject(i);
+                Vacunas vacunas = new Vacunas(c.getString("vacuna_id"),
+                        c.getString("nombre"));
+
+                vacunaList.add(vacunas);
             }
+        }catch (final JSONException e){
+            Log.e(TAG,"Json parsing error: " + e.getMessage());
         }
+
         return vacunaList;
     }
 
@@ -194,6 +218,7 @@ public class DataHelper {
     public static List<Clases> getClases(){
         HttpHandler sh = new HttpHandler();
         String url = urlClase.substring(0, urlClase.length()-1);
+        Log.i("clases", url);
         String jsonStr = sh.makeServiceCall(url);
         //Log.i(TAG, urlVacuna+"\n"+jsonStr+"");
 

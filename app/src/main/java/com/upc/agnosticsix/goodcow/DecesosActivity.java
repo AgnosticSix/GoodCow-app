@@ -275,4 +275,12 @@ public class DecesosActivity extends AppCompatActivity {
             }
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        cowList.clear();
+        decesosList.clear();
+        empleadosList.clear();
+    }
 }

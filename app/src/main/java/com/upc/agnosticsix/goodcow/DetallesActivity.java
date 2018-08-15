@@ -8,6 +8,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,7 +36,6 @@ public class DetallesActivity extends AppCompatActivity {
     private List<Cow> cowList;
     private TextView fierro, nombre, sexo, clase, siniiga, raza, empadre, fecha, estado;
     private DataHelper dataHelper;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,8 +60,8 @@ public class DetallesActivity extends AppCompatActivity {
     }
 
     private void initObjects(){
-        final String idintent = getIntent().getStringExtra("idbovino");
-        url2 = url.concat(idintent);
+        final String idbovino = getIntent().getStringExtra("idbovino");
+        url2 = url.concat(idbovino);
         dataHelper = new DataHelper();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab2);
@@ -68,11 +69,40 @@ public class DetallesActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(DetallesActivity.this, VacunasActivity.class);
-                intent.putExtra("idbovino", idintent);
+                intent.putExtra("idbovino", idbovino);
                 startActivity(intent);
 
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        final String postId = getIntent().getStringExtra("idbovino");
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.menu_datos) {
+            Intent intent = new Intent(this, BovinoActivity.class);
+            intent.putExtra("idbovino", postId);
+            startActivity(intent);
+        }else if(id == R.id.menu_zoo){
+            Intent intent = new Intent(this, ZoometricasActivity.class);
+            intent.putExtra("idbovino", postId);
+            startActivity(intent);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private class GetData extends AsyncTask<Void, Void, Void> {

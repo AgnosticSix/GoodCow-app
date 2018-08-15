@@ -287,5 +287,8 @@ public class PalpamientoActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         finish();
+        bovinoHList.clear();
+        resultadosPalpamientosList.clear();
+        empleadosList.clear();
     }
 }

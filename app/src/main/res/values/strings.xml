@@ -23,4 +23,6 @@
     <string name="loading">Cargando...</string>
     <string name="dialog_title">Listo</string>
     <string name="dialog_message">Datos subidos</string>
+    <string name="action_search">Search</string>
+    <string name="search_hint">Type name…</string>
 </resources>
