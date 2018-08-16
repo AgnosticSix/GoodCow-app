@@ -26,12 +26,14 @@ import java.util.List;
 import model.Cow;
 import model.DataHelper;
 
+import static model.DataHelper.HOST_URL;
+
 public class DetallesActivity extends AppCompatActivity {
 
     private String TAG = DetallesActivity.class.getSimpleName();
     private String idbovino, fierros, nombres, sexos, siniigaa, clases, razas, empadres, estados, fechas;
     private ProgressDialog progressDialog;
-    private static String url = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/bovinos/";
+    private static String url = HOST_URL + "bovinos/";
     String url2;
     private List<Cow> cowList;
     private TextView fierro, nombre, sexo, clase, siniiga, raza, empadre, fecha, estado;

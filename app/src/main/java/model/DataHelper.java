@@ -12,17 +12,18 @@ import java.util.Hashtable;
 import java.util.List;
 
 public class DataHelper {
-    private static String urlBovino = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/bovinos";
-    private static String urlSiniiga = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/siniigas/";
-    private static String urlClase = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/clases_bovinos/";
-    private static String urlRaza = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/razas_bovinos/";
-    private static String urlEmpadre = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/empadres/";
-    private static String urlEstado = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/estados/";
+    public static String HOST_URL = "http://192.168.1.105:8080/";
+    private static String urlBovino = HOST_URL + "bovinos";
+    private static String urlSiniiga = HOST_URL + "siniigas/";
+    private static String urlClase = HOST_URL + "clases_bovinos/";
+    private static String urlRaza = HOST_URL + "razas_bovinos/";
+    private static String urlEmpadre = HOST_URL + "empadres/";
+    private static String urlEstado = HOST_URL + "estados_bovinos/";
 
-    private static String urlVacuna = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/vacunas";
-    private static String urlEmpleado = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/empleados";
-    private static String urlResPal = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/resultados_palpamientos";
-    private static String urlDeceso = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/causas_decesos";
+    private static String urlVacuna = HOST_URL + "vacunas";
+    private static String urlEmpleado = HOST_URL + "personas";
+    private static String urlResPal = HOST_URL + "resultados_palpamientos";
+    private static String urlDeceso = HOST_URL + "causas_decesos";
     private static String TAG2 = "";
     private static String TAG = "LOOKUP-MATEO";
     private static String siniiga, clase, raza, empadre, estado, bovino, sexo, cow;
@@ -204,7 +205,8 @@ public class DataHelper {
 
                 for(int i = 0; i < data.length(); i++){
                     JSONObject c = data.getJSONObject(i);
-                    Empleados empleados = new Empleados(c.getString("empleado_id"));
+                    Empleados empleados = new Empleados(c.getString("persona_id"),
+                            c.getString("nombre"));
 
                     empleadoList.add(empleados);
                 }
@@ -329,7 +331,7 @@ public class DataHelper {
                 for(int i = 0; i < data.length(); i++){
                     JSONObject c = data.getJSONObject(i);
 
-                    Estados estados = new Estados(c.getString("estado_id"),
+                    Estados estados = new Estados(c.getString("estado_bovino_id"),
                             c.getString("nombre"));
 
                     estadosList.add(estados);

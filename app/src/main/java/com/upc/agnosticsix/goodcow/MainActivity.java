@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.util.SortedList;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -37,19 +38,21 @@ import java.util.List;
 import adapters.CowRecyclerAdapter;
 import model.Cow;
 
+import static model.DataHelper.HOST_URL;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, SwipeRefreshLayout.OnRefreshListener {
 
     private String TAG = MainActivity.class.getSimpleName();
     private AppCompatActivity activity = MainActivity.this;
     private RecyclerView recyclerViewCow;
-    private List<Cow> cowList;
+    private List<Cow> cowList, cowList2;
     private CowRecyclerAdapter cowRecyclerAdapter;
     private Cow cow;
     SwipeRefreshLayout swipeRefreshLayout;
-    private SearchView searchView;
+    private android.support.v7.widget.SearchView searchView;
     private ProgressDialog progressDialog;
-    private static String url = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/bovinos";
+    private static String url = HOST_URL + "bovinos";
     private String postId;
 
 
@@ -118,10 +121,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onRefresh(){
+        cowRecyclerAdapter.update(cowList);
         new GetData().execute();
-        cowRecyclerAdapter.notifyDataSetChanged();
         swipeRefreshLayout.setRefreshing(false);
-
     }
 
     @Override
@@ -133,11 +135,6 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
             finish();
         }
-
-        if (!searchView.isIconified()) {
-            searchView.setIconified(true);
-            return;
-        }
     }
 
     @Override
@@ -145,13 +142,13 @@ public class MainActivity extends AppCompatActivity
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        searchView = (SearchView) menu.findItem(R.id.action_search)
+        searchView = (android.support.v7.widget.SearchView) menu.findItem(R.id.action_search)
                 .getActionView();
         searchView.setSearchableInfo(searchManager
                 .getSearchableInfo(getComponentName()));
         searchView.setMaxWidth(Integer.MAX_VALUE);
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        searchView.setOnQueryTextListener(new android.support.v7.widget.SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 cowRecyclerAdapter.getFilter().filter(query);
@@ -164,6 +161,10 @@ public class MainActivity extends AppCompatActivity
                 return false;
             }
         });
+
+        if (!searchView.isIconified()) {
+            searchView.setIconified(true);
+        }
         return true;
     }
 
@@ -243,7 +244,7 @@ public class MainActivity extends AppCompatActivity
 
                         cowList.add(cowData);
                     }
-
+                    cowList2 = cowList;
 
                 } catch (final JSONException e){
                     Log.e(TAG,"Json parsing error: " + e.getMessage());

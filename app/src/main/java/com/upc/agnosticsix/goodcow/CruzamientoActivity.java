@@ -42,12 +42,14 @@ import model.DataHelper;
 import model.Empleados;
 import model.Estados;
 
+import static model.DataHelper.HOST_URL;
+
 public class CruzamientoActivity extends AppCompatActivity {
 
     private String TAG = CruzamientoActivity.class.getSimpleName();
-    private static String url = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/bovinos?where=clase_bovino_id:6";
-    private static String url2 = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/bovinos?where=sexo:2";
-    private static String urla = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/cruzamientos";
+    private static String url = HOST_URL + "bovinos?where=clase_bovino_id:6";
+    private static String url2 = HOST_URL + "bovinos?where=sexo:2";
+    private static String urla = HOST_URL + "cruzamientos";
     private Spinner sementalSpin, empleadoSpin, vacaSpin;
     private Switch estadosw;
     private TextView fecha;

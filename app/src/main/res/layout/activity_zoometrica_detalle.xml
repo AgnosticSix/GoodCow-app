@@ -4,116 +4,86 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".OrdenhaActivity"
-    android:padding="15sp"
-    android:orientation="vertical">
+    tools:context=".ZoometricaDetalleActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="16dp">
-
+        android:padding="10dp">
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_height="40dp"
             android:orientation="horizontal">
 
             <TextView
-
-                android:layout_width="216dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:text="Bovino"
                 android:textColor="@color/colorPrimary" />
 
-            <Spinner
-                android:id="@+id/bovinoOrdeSpin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="2" />
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:orientation="horizontal">
-
-            <TextView
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:textColor="@color/colorPrimary"
-                android:text="Empleado id"/>
-
-            <Spinner
-                android:id="@+id/empOrdeSpin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@color/textColor" />
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:textColor="@color/colorPrimary"
-                android:text="Fecha"/>
-
             <EditText
-                android:id="@+id/fechaOrdeTxt"
+                android:id="@+id/bovinoZooText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/loading"
                 android:textColor="@color/textColor" />
         </LinearLayout>
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
             <TextView
 
-                android:layout_width="113dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="Cantidad(Litros)"
+                android:text="Altura(cm)"
                 android:textColor="@color/colorPrimary" />
 
             <EditText
-                android:id="@+id/cantiOrdeTxt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:ems="10"
-                android:inputType="number|numberDecimal" />
-
+                android:id="@+id/alturaZooText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:inputType="numberDecimal"
+                android:textColor="@color/textColor" />
         </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Fecha"
+                android:textColor="@color/colorPrimary" />
+
+            <EditText
+                android:id="@+id/fechaZooText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:editable="false"
+                android:textColor="@color/textColor"
+                android:textSize="14sp"
+                tools:editable="false" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
             <TextView
@@ -121,17 +91,40 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="Observaciones"
+                android:text="Peso(Kg)"
                 android:textColor="@color/colorPrimary" />
 
             <EditText
-                android:id="@+id/observaOrdeTxt"
+                android:id="@+id/pesoZooText"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:inputType="numberDecimal"
                 android:textColor="@color/textColor" />
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Testiculos"
+                android:textColor="@color/colorPrimary" />
+
+            <EditText
+                android:id="@+id/testiZooText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:inputType="numberDecimal"
+                android:textColor="@color/textColor" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -141,16 +134,14 @@
 
 
             <Button
-                android:id="@+id/addOrdeBtn"
+                android:id="@+id/updateZooBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Agregar"
+                android:text="Actualizar"
                 android:textColor="@color/colorPrimary" />
         </LinearLayout>
 
-
     </LinearLayout>
-
 
 </RelativeLayout>

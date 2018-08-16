@@ -38,6 +38,8 @@ import model.DataHelper;
 import model.Decesos;
 import model.Empleados;
 
+import static model.DataHelper.HOST_URL;
+
 public class DecesosActivity extends AppCompatActivity {
 
     private String TAG = DecesosActivity.class.getSimpleName();
@@ -48,8 +50,8 @@ public class DecesosActivity extends AppCompatActivity {
     private String currentTime, response;
     private int idbovino, causaDeceso, empleado, responseCode;
     private DataHelper dataHelper;
-    private static String url = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/bovinos";
-    private static String urla = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/decesos_bovinos";
+    private static String url = HOST_URL + "bovinos";
+    private static String urla = HOST_URL + "decesos_bovinos";
 
     List<Decesos> decesosList;
     List<Cow> cowList;

@@ -42,6 +42,8 @@ import model.DataHelper;
 import model.Empleados;
 import model.ResultadosPalpamientos;
 
+import static model.DataHelper.HOST_URL;
+
 public class PalpamientoActivity extends AppCompatActivity {
 
     private String TAG = PalpamientoActivity.class.getSimpleName();
@@ -49,8 +51,8 @@ public class PalpamientoActivity extends AppCompatActivity {
     private Button agregarbtn;
     private int resultado, idbovino, empleado, responseCode;
     private ProgressDialog progressDialog;
-    private static String url = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/bovinos?where=sexo:2";
-    private static String urla = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/palpamientos";
+    private static String url = HOST_URL + "bovinos?where=sexo:2";
+    private static String urla = HOST_URL + "palpamientos";
     private String currentTime, response;
     private TextView observa, fecha;
     private DataHelper dataHelper;

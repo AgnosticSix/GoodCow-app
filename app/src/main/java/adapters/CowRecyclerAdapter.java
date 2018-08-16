@@ -81,6 +81,12 @@ public class CowRecyclerAdapter extends RecyclerView.Adapter<CowRecyclerAdapter.
         }
     }
 
+    public void update(List<Cow> data) {
+        cowList.clear();
+        cowList.addAll(data);
+        notifyDataSetChanged();
+    }
+
     @Override
     public Filter getFilter() {
         return new Filter() {
@@ -104,7 +110,9 @@ public class CowRecyclerAdapter extends RecyclerView.Adapter<CowRecyclerAdapter.
 
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                cowListFiltered = (ArrayList<Cow>) results.values;
+                cowListFiltered = (List<Cow>) results.values;
+                cowList.clear();
+                cowList.addAll(cowListFiltered);
                 notifyDataSetChanged();
             }
         };

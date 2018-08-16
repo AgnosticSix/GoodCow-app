@@ -55,6 +55,8 @@ import model.Estados;
 import model.Razas;
 import model.Siniigas;
 
+import static model.DataHelper.HOST_URL;
+
 public class BovinoActivity extends AppCompatActivity {
 
     private String TAG = BovinoActivity.class.getSimpleName();
@@ -78,7 +80,7 @@ public class BovinoActivity extends AppCompatActivity {
     private DataHelper dataHelper;
     private int clase, siniiga, raza, empadre, estado, sexos = 1, responseCode;
     private String fierros, nombres, postId= "0", fechas;
-    private static String urla = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/bovinos";
+    private static String urla = HOST_URL + "bovinos";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,6 +133,7 @@ public class BovinoActivity extends AppCompatActivity {
                     new uploadData().execute();
                 }else if(agregarBtn.getText().equals("Actualizar")){
                     new updateData().execute();
+                    finish();
                 }
 
             }

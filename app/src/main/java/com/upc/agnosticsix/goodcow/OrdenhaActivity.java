@@ -37,6 +37,8 @@ import model.Cow;
 import model.DataHelper;
 import model.Empleados;
 
+import static model.DataHelper.HOST_URL;
+
 public class OrdenhaActivity extends AppCompatActivity {
 
     private String TAG = OrdenhaActivity.class.getSimpleName();
@@ -46,8 +48,8 @@ public class OrdenhaActivity extends AppCompatActivity {
     private Button agregarbtn;
     private ProgressDialog progressDialog;
     private DataHelper dataHelper;
-    private static String url = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/bovinos?where=clase_bovino_id:1";
-    private static String urla = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/ordenhas";
+    private static String url = HOST_URL + "bovinos?where=clase_bovino_id:1";
+    private static String urla = HOST_URL + "ordenhas";
     private String currentTime, response;
     private int empleado, responseCode, idbovino;
     private float cantidad2;

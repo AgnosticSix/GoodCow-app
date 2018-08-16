@@ -50,7 +50,7 @@ public class EmpleadoAdapter extends ArrayAdapter<Empleados> {
 
         Empleados empleados = empleadosList.get(position);
 
-        textView.setText(empleados.getId());
+        textView.setText(empleados.getNombre());
 
         return view;
     }

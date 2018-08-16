@@ -1,12 +1,22 @@
 package com.upc.agnosticsix.goodcow;
 
 import android.app.ProgressDialog;
+import android.app.SearchManager;
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,51 +31,111 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
+import adapters.ZoometricaAdapter;
 import model.DataHelper;
 import model.Zoometricas;
 
-public class ZoometricasActivity extends AppCompatActivity {
+import static model.DataHelper.HOST_URL;
+
+public class ZoometricasActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
 
     private String TAG = ZoometricasActivity.class.getSimpleName();
+    private AppCompatActivity activity = ZoometricasActivity.this;
+    private RecyclerView recyclerViewZoo;
+    private List<Zoometricas> zooList;
+    private ZoometricaAdapter zoometricaAdapter;
+    private Zoometricas zoo;
+    SwipeRefreshLayout swipeRefreshLayout;
+    private android.support.v7.widget.SearchView searchView;
     private ProgressDialog progressDialog;
-    private List<Zoometricas> zoometricasList;
-    private DataHelper dataHelper;
-    private TextView bovino, altura, fecha, peso, testiculos;
-    private String bovinos, alturas, fechas, pesos, testiculoss, idintent, response;
-    private int responseCode;
-    private Button agregarBtn;
-    private static String url = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/zoometricas?where=bovino_id:";
+    private static String url = HOST_URL + "zoometricas_bovinos";
+    private String postId, idbovino, urla;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_zoometricas);
+
         initViews();
         initObjects();
+
         new GetData().execute();
     }
 
     private void initViews(){
-        bovino = (TextView) findViewById(R.id.bovinoZooText);
-        altura = (TextView) findViewById(R.id.alturaZooText);
-        fecha = (TextView) findViewById(R.id.fechaZooText);
-        peso = (TextView) findViewById(R.id.pesoZooText);
-        testiculos = (TextView) findViewById(R.id.testiZooText);
-        agregarBtn = (Button) findViewById(R.id.updateZooBtn);
+        recyclerViewZoo = (RecyclerView) findViewById(R.id.recyclerViewZoo);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container2);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary,
+                android.R.color.holo_green_dark,
+                android.R.color.holo_orange_dark,
+                android.R.color.holo_blue_dark);
+
     }
 
     private void initObjects(){
-        dataHelper = new DataHelper();
-        idintent = getIntent().getStringExtra("idbovino");
-        agregarBtn.setOnClickListener(new View.OnClickListener() {
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab4);
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                new updateData().execute();
+            public void onClick(View view) {
+                Intent intent = new Intent(activity, ZoometricaDetalleActivity.class);
+                startActivity(intent);
             }
         });
+        zooList = new ArrayList<>();
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerViewZoo.setLayoutManager(layoutManager);
+        recyclerViewZoo.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewZoo.setHasFixedSize(true);
+        zoometricaAdapter = new ZoometricaAdapter(getApplicationContext(), zooList, new CustomItemClickListener() {
+            @Override
+            public void onItemClick(View view, int i) {
+                postId = zooList.get(i).getId();
+                Intent intent = new Intent(activity, ZoometricaDetalleActivity.class);
+                intent.putExtra("idzoometrica", postId);
+            }
+        });
+        idbovino = getIntent().getStringExtra("idbovino");
 
+    }
+
+    @Override
+    public void onRefresh(){
+        zoometricaAdapter.update(zooList);
+        new GetData().execute();
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView = (android.support.v7.widget.SearchView) menu.findItem(R.id.action_search)
+                .getActionView();
+        searchView.setSearchableInfo(searchManager
+                .getSearchableInfo(getComponentName()));
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+
+        searchView.setOnQueryTextListener(new android.support.v7.widget.SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                zoometricaAdapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                zoometricaAdapter.getFilter().filter(newText);
+                zoometricaAdapter.update(zooList);
+                return false;
+            }
+        });
+        return true;
     }
 
     private class GetData extends AsyncTask<Void,Void,Void>{
@@ -81,22 +151,23 @@ public class ZoometricasActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             HttpHandler sh = new HttpHandler();
-            String url2 = url.concat(idintent);
-            String jsonStr = sh.makeServiceCall(url2);
+            urla = url.concat("?where=bovino_id:"+idbovino);
+            String jsonStr = sh.makeServiceCall(urla);
+
             if(jsonStr != null){
                 try{
                     JSONArray data = new JSONArray(jsonStr);
 
-                    for(int i = 0; i < data.length(); i++) {
-
+                    for(int i = 0; i < data.length(); i++){
                         JSONObject c = data.getJSONObject(i);
 
-                        bovinos = dataHelper.getCow(idintent);
-                        alturas = c.getString("altura");
-                        fechas = c.getString("fecha");
-                        pesos = c.getString("peso");
-                        testiculoss = c.getString("testiculos");
+                        Zoometricas zoometricas = new Zoometricas(c.getString("zoometricas_bovino_id"),
+                                c.getString("bovino_id"));
+
+                        zooList.add(zoometricas);
                     }
+
+
                 } catch (final JSONException e){
                     Log.e(TAG,"Json parsing error: " + e.getMessage());
                     runOnUiThread(new Runnable() {
@@ -131,86 +202,18 @@ public class ZoometricasActivity extends AppCompatActivity {
             if(progressDialog.isShowing())
                 progressDialog.dismiss();
 
-            bovino.setText(bovinos);
-            altura.setText(fechas);
-            peso.setText(pesos);
-            fecha.setText(fechas);
-            testiculos.setText(testiculoss);
+            recyclerViewZoo.setAdapter(zoometricaAdapter);
         }
     }
 
-    private class updateData extends AsyncTask<Void,Void,Void>{
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-
-            try {
-                String url2 = url.concat(idintent);
-                URL url = new URL(url2);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setReadTimeout(15000 /* milliseconds */);
-                conn.setConnectTimeout(15000 /* milliseconds */);
-                conn.setRequestMethod("PUT");
-                conn.setDoInput(true);
-                conn.setDoOutput(true);
-                conn.setRequestProperty("Content-Type", "application/json");
-
-                JSONObject c = new JSONObject();
-
-                c.put("bovino_id", idintent);
-                c.put("altura", alturas);
-                c.put("peso", pesos);
-                c.put("fecha", fechas);
-                c.put("testiculos", testiculoss);
-
-                String str = c.toString();
-                byte[] output = str.getBytes("UTF-8");
-                Log.i(TAG, str+"");
-                String out = conn.getOutputStream().toString();
-
-                OutputStream os = conn.getOutputStream();
-                os.write(output);
-                os.flush();
-                os.close();
-
-                responseCode = conn.getResponseCode();
-                Log.i(TAG, responseCode+"");
-
-                if(responseCode == HttpURLConnection.HTTP_OK){
-                    BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                    String line = "";
-
-                    while((line = br.readLine()) != null) {
-                        response += line;
-                        break;
-                    }
-                    br.close();
-                }else if (responseCode == HttpURLConnection.HTTP_INTERNAL_ERROR){
-
-                }
-                conn.disconnect();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
+    @Override
+    public void onBackPressed() {
+        if (!searchView.isIconified()) {
+            searchView.setIconified(true);
+            return;
         }
 
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            if(responseCode == HttpURLConnection.HTTP_OK){
-                Toast.makeText(getApplicationContext(), "Datos insertados: "+ responseCode,Toast.LENGTH_LONG).show();
-                response = "";
-            }else if (responseCode == HttpURLConnection.HTTP_INTERNAL_ERROR){
-                Toast.makeText(getApplicationContext(), "Error: "+ responseCode,Toast.LENGTH_LONG).show();
-                response = "";
-            }
-        }
+        finish();
+        super.onBackPressed();
     }
 }

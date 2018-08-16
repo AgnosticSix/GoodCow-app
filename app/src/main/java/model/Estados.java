@@ -7,16 +7,8 @@ public class Estados {
         return estado_id;
     }
 
-    public String getPais_id() {
-        return pais_id;
-    }
-
     public String getNombre() {
         return nombre;
-    }
-
-    public String getCodigo() {
-        return codigo;
     }
 
     public void setEstado_id(String estado_id) {

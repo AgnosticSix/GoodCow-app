@@ -41,6 +41,8 @@ import model.DataHelper;
 import model.Empleados;
 import model.Vacunas;
 
+import static model.DataHelper.HOST_URL;
+
 public class VacunasActivity extends AppCompatActivity {
 
     private String TAG = VacunasActivity.class.getSimpleName();
@@ -51,8 +53,8 @@ public class VacunasActivity extends AppCompatActivity {
     private String currentTime, response;
     private int vacuna, empleado, idintent2, responseCode;
     private DataHelper dataHelper;
-    private static String url = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/bovinos/";
-    private static String urla = "http://goodcow-api-goodcow.7e14.starter-us-west-2.openshiftapps.com/vacunas_bovinos";
+    private static String url = HOST_URL + "bovinos/";
+    private static String urla = HOST_URL + "vacunas_bovinos";
     String url2;
     List<Vacunas> vacunaList;
     List<Empleados> empleadoList;
