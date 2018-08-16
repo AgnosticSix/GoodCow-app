@@ -33,15 +33,16 @@ import static model.DataHelper.HOST_URL;
 
 public class ZoometricaDetalleActivity extends AppCompatActivity {
 
-    private String TAG = ZoometricasActivity.class.getSimpleName();
+    private String TAG = ZoometricaDetalleActivity.class.getSimpleName();
     private ProgressDialog progressDialog;
     private List<Zoometricas> zoometricasList;
     private DataHelper dataHelper;
     private TextView bovino, altura, fecha, peso, testiculos;
-    private String bovinos, alturas, fechas, pesos, testiculoss, idintent, response, currentTime;
+    private String bovinos, alturas, fechas, pesos, testiculoss, idintent, response, currentTime, idbovino2;
     private int responseCode;
     private Button agregarBtn;
     private static String urla = HOST_URL + "zoometricas_bovinos";
+    private static String urle = HOST_URL + "bovinos";
     private int idbovino;
 
     @Override
@@ -65,6 +66,8 @@ public class ZoometricaDetalleActivity extends AppCompatActivity {
     private void initObjects(){
         dataHelper = new DataHelper();
         idintent = getIntent().getStringExtra("idzoometrica");
+        idbovino2 = getIntent().getStringExtra("idbovino");
+        Log.i(TAG, ""+idbovino2);
         if(idintent == "0" || idintent == null){
             agregarBtn.setText("Agregar");
         }else{
@@ -101,11 +104,12 @@ public class ZoometricaDetalleActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            if(idintent == "0" || idintent == null){
+            if(idintent == "" || idintent == null || idintent.isEmpty()){
                 HttpHandler sh = new HttpHandler();
-                String url2 = urla.concat("/"+idintent);
+                String url2 = urle.concat("/"+idbovino2);
 
                 String jsonStr = sh.makeServiceCall(url2);
+                String id;
 
                 if(jsonStr != null){
                     try{
@@ -115,8 +119,9 @@ public class ZoometricaDetalleActivity extends AppCompatActivity {
 
                             JSONObject c = data.getJSONObject(i);
 
-                            idbovino = Integer.parseInt(c.getString("bovino_id"));
-                            bovinos = dataHelper.getCow(c.getString("bovino_id"));
+                            //idbovino = Integer.parseInt(c.getString("bovino_id"));
+                            id = c.getString("bovino_id");
+
                         }
 
                     } catch (final JSONException e){
@@ -132,7 +137,7 @@ public class ZoometricaDetalleActivity extends AppCompatActivity {
                         });
                     }
                 } else {
-                    Log.e(TAG, jsonStr);
+                    Log.e(TAG, "" + jsonStr);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -158,14 +163,13 @@ public class ZoometricaDetalleActivity extends AppCompatActivity {
 
                             JSONObject c = data.getJSONObject(i);
 
-                            idbovino = Integer.parseInt(c.getString("bovino_id"));
-                            bovinos = dataHelper.getCow(c.getString("bovino_id"));
+                            //idbovino = Integer.parseInt(c.getString("bovino_id"));
+                            bovinos = dataHelper.getCow(c.getString(idbovino2));
                             alturas = c.getString("altura");
                             fechas = c.getString("fecha");
                             pesos = c.getString("peso");
                             testiculoss = c.getString("testiculos");
                         }
-
                     } catch (final JSONException e){
                         Log.e(TAG,"Json parsing error: " + e.getMessage());
                         runOnUiThread(new Runnable() {
@@ -191,7 +195,6 @@ public class ZoometricaDetalleActivity extends AppCompatActivity {
                     });
                 }
             }
-
             return null;
         }
 
@@ -233,7 +236,7 @@ public class ZoometricaDetalleActivity extends AppCompatActivity {
 
                 JSONObject c = new JSONObject();
 
-                c.put("bovino_id", idbovino);
+                c.put("bovino_id", idbovino = Integer.parseInt(idbovino2));
                 c.put("altura", altura.getText().toString());
                 c.put("fecha", fecha.getText().toString());
                 c.put("peso", peso.getText().toString());
@@ -308,7 +311,7 @@ public class ZoometricaDetalleActivity extends AppCompatActivity {
 
                 JSONObject c = new JSONObject();
 
-                c.put("bovino_id", idintent);
+                c.put("bovino_id", idbovino = Integer.parseInt(idbovino2));
                 c.put("altura", alturas);
                 c.put("peso", pesos);
                 c.put("fecha", fechas);

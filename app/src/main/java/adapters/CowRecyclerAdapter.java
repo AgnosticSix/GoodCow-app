@@ -1,9 +1,6 @@
 package adapters;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +10,7 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.upc.agnosticsix.goodcow.CustomItemClickListener;
-import com.upc.agnosticsix.goodcow.DetallesActivity;
-import com.upc.agnosticsix.goodcow.MainActivity;
 import com.upc.agnosticsix.goodcow.R;
-import com.upc.agnosticsix.goodcow.VacunasActivity;
-import com.upc.agnosticsix.goodcow.ZoometricasActivity;
 
 import org.w3c.dom.Text;
 

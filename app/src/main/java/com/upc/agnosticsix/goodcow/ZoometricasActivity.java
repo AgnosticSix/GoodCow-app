@@ -52,7 +52,7 @@ public class ZoometricasActivity extends AppCompatActivity implements SwipeRefre
     private android.support.v7.widget.SearchView searchView;
     private ProgressDialog progressDialog;
     private static String url = HOST_URL + "zoometricas_bovinos";
-    private String postId, idbovino, urla;
+    private String postId, idbovino, urla, sinid = "-1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,12 +77,14 @@ public class ZoometricasActivity extends AppCompatActivity implements SwipeRefre
     }
 
     private void initObjects(){
-
+        idbovino = getIntent().getStringExtra("idbovino");
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab4);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(activity, ZoometricaDetalleActivity.class);
+                //intent.putExtra("idzoometrica", sinid);
+                intent.putExtra("idbovino", idbovino);
                 startActivity(intent);
             }
         });
@@ -97,9 +99,11 @@ public class ZoometricasActivity extends AppCompatActivity implements SwipeRefre
                 postId = zooList.get(i).getId();
                 Intent intent = new Intent(activity, ZoometricaDetalleActivity.class);
                 intent.putExtra("idzoometrica", postId);
+                intent.putExtra("idbovino", idbovino);
+                startActivity(intent);
             }
         });
-        idbovino = getIntent().getStringExtra("idbovino");
+
 
     }
 
@@ -131,7 +135,6 @@ public class ZoometricasActivity extends AppCompatActivity implements SwipeRefre
             @Override
             public boolean onQueryTextChange(String newText) {
                 zoometricaAdapter.getFilter().filter(newText);
-                zoometricaAdapter.update(zooList);
                 return false;
             }
         });
@@ -173,18 +176,21 @@ public class ZoometricasActivity extends AppCompatActivity implements SwipeRefre
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            idbovino = getIntent().getStringExtra("idbovino");
                             Toast.makeText(getApplicationContext(),
-                                    "Json parsing error" + e.getMessage(),
+                                    "No hay Zoometricas",
                                     Toast.LENGTH_LONG)
                                     .show();
                         }
                     });
+                    idbovino = getIntent().getStringExtra("idbovino");
                 }
             } else {
-                Log.e(TAG, jsonStr);
+                Log.e(TAG, ""+jsonStr);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        idbovino = getIntent().getStringExtra("idbovino");
                         Toast.makeText(getApplicationContext(),
                                 "Couldn't get json from server. Check LogCat for possible errors!",
                                 Toast.LENGTH_LONG)

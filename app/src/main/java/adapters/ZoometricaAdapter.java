@@ -32,7 +32,7 @@ public class ZoometricaAdapter extends RecyclerView.Adapter<ZoometricaAdapter.Zo
         this.itemClickListener = itemClickListener;
     }
 
-    public ZooViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ZooViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.itemlist_zoo, parent, false);
 
@@ -49,7 +49,7 @@ public class ZoometricaAdapter extends RecyclerView.Adapter<ZoometricaAdapter.Zo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ZooViewHolder holder, int position) {
+    public void onBindViewHolder(ZooViewHolder holder, int position) {
         holder.alturaZooText.setText(zooList.get(position).getAltura());
         holder.pesoZooText.setText(zooList.get(position).getPeso());
         holder.fechaZooText.setText(zooList.get(position).getFecha());
