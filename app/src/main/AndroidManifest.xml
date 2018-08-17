@@ -42,7 +42,10 @@
         <activity android:name=".ZoometricaDetalleActivity" />
         <activity android:name=".PalpamientoRActivity" />
         <activity android:name=".OrdenhaRActivity" />
-        <activity android:name=".CruzamientoRActivity"></activity>
+        <activity android:name=".CruzamientoRActivity" />
+        <activity android:name=".PalpamientoDetalleActivity" />
+        <activity android:name=".OrdenhaDetalleActivity" />
+        <activity android:name=".CruzamientoDetalleActivity"></activity>
     </application>
 
 </manifest>
