@@ -45,7 +45,7 @@
         <activity android:name=".CruzamientoRActivity" />
         <activity android:name=".PalpamientoDetalleActivity" />
         <activity android:name=".OrdenhaDetalleActivity" />
-        <activity android:name=".CruzamientoDetalleActivity"></activity>
+        <activity android:name=".CruzamientoDetalleActivity" />
     </application>
 
 </manifest>
