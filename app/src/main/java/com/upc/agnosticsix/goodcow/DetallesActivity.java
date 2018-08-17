@@ -31,7 +31,7 @@ import static model.DataHelper.HOST_URL;
 public class DetallesActivity extends AppCompatActivity {
 
     private String TAG = DetallesActivity.class.getSimpleName();
-    private String idbovino, fierros, nombres, sexos, siniigaa, clases, razas, empadres, estados, fechas;
+    private String idbovino, fierros, nombres, sexos, siniigaa, clases, razas, empadres, estados, fechas, padre;
     private ProgressDialog progressDialog;
     private static String url = HOST_URL + "bovinos/";
     String url2;
@@ -62,7 +62,7 @@ public class DetallesActivity extends AppCompatActivity {
     }
 
     private void initObjects(){
-        final String idbovino = getIntent().getStringExtra("idbovino");
+        idbovino = getIntent().getStringExtra("idbovino");
         url2 = url.concat(idbovino);
         dataHelper = new DataHelper();
 
@@ -91,16 +91,32 @@ public class DetallesActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        final String postId = getIntent().getStringExtra("idbovino");
+        //final String postId = getIntent().getStringExtra("idbovino");
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.menu_datos) {
             Intent intent = new Intent(this, BovinoActivity.class);
-            intent.putExtra("idbovino", postId);
+            intent.putExtra("idbovino", idbovino);
             startActivity(intent);
         }else if(id == R.id.menu_zoo){
             Intent intent = new Intent(this, ZoometricasActivity.class);
-            intent.putExtra("idbovino", postId);
+            intent.putExtra("idbovinozoo", idbovino);
+            startActivity(intent);
+        }else if(id == R.id.menu_registro){
+            //Intent intent = new Intent(this, ZoometricasActivity.class);
+            //intent.putExtra("idbovino", postId);
+            //startActivity(intent);
+        }else if(id == R.id.menu_cruzamiento){
+            Intent intent = new Intent(this, CruzamientoRActivity.class);
+            intent.putExtra("idbovinocruza", idbovino);
+            startActivity(intent);
+        }else if(id == R.id.menu_palpamiento){
+            Intent intent = new Intent(this, PalpamientoRActivity.class);
+            intent.putExtra("idbovinopal", idbovino);
+            startActivity(intent);
+        }else if(id == R.id.menu_ordena){
+            Intent intent = new Intent(this, OrdenhaRActivity.class);
+            intent.putExtra("idbovinoorde", idbovino);
             startActivity(intent);
         }
 
@@ -135,13 +151,16 @@ public class DetallesActivity extends AppCompatActivity {
                         fierros = c.getString("fierro");
                         nombres = c.getString("nombre");
                         sexos = c.getString("sexo").equals("1") ? "Macho" : "Hembra";
-                        clases = dataHelper.getClase(c.getString("clase_bovino_id"));
-                        siniigaa = dataHelper.getSiniiga(c.getString("siniiga_id"));
-                        razas = dataHelper.getRaza(c.getString("raza_bovino_id"));
-                        empadres = dataHelper.getEmpadre(c.getString("empadre_id"));
+                        clases = dataHelper.getClase(c.getString("clase_bovino_id").trim());
+                        padre = c.getString("padre_id");
+                        siniigaa = dataHelper.getSiniiga(c.getString("siniiga_id").trim());
+                        razas = dataHelper.getRaza(c.getString("raza_bovino_id").trim());
+                        empadres = dataHelper.getEmpadre(c.getString("empadre_id").trim());
                         fechas = c.getString("fecha_nacimiento");
-                        estados = dataHelper.getEstado(c.getString("estado_bovino_id"));
+                        estados = dataHelper.getEstado(c.getString("estado_bovino_id").trim());
                     }
+
+
 
 
                 } catch (final JSONException e){
@@ -187,7 +206,27 @@ public class DetallesActivity extends AppCompatActivity {
             empadre.setText(empadres);
             fecha.setText(fechas);
             estado.setText(estados);
+
+
+
         }
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        if(sexos.equals("Hembra")){
+            menu.findItem(R.id.menu_palpamiento).setVisible(true);
+            menu.findItem(R.id.menu_ordena).setVisible(true);
+            menu.findItem(R.id.menu_cruzamiento).setVisible(true);
+        }else if(sexos.equals("Hembra") && clases.equals("Lechera")){
+
+            //menu.findItem(R.id.menu_palpamiento).setVisible(true);
+
+        }else if(padre != null){
+            menu.findItem(R.id.menu_registro).setVisible(true);
+        }
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override

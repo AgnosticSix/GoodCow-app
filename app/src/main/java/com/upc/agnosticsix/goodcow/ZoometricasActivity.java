@@ -52,7 +52,9 @@ public class ZoometricasActivity extends AppCompatActivity implements SwipeRefre
     private android.support.v7.widget.SearchView searchView;
     private ProgressDialog progressDialog;
     private static String url = HOST_URL + "zoometricas_bovinos";
-    private String postId, idbovino, urla, sinid = "-1";
+    private String postId;
+    private String idbovino;
+    private String sinid = "-1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,14 +79,14 @@ public class ZoometricasActivity extends AppCompatActivity implements SwipeRefre
     }
 
     private void initObjects(){
-        idbovino = getIntent().getStringExtra("idbovino");
+        idbovino = getIntent().getStringExtra("idbovinozoo");
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab4);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(activity, ZoometricaDetalleActivity.class);
                 //intent.putExtra("idzoometrica", sinid);
-                intent.putExtra("idbovino", idbovino);
+                intent.putExtra("idbovinozoo2", idbovino);
                 startActivity(intent);
             }
         });
@@ -99,7 +101,7 @@ public class ZoometricasActivity extends AppCompatActivity implements SwipeRefre
                 postId = zooList.get(i).getId();
                 Intent intent = new Intent(activity, ZoometricaDetalleActivity.class);
                 intent.putExtra("idzoometrica", postId);
-                intent.putExtra("idbovino", idbovino);
+                intent.putExtra("idbovinozoo3", idbovino);
                 startActivity(intent);
             }
         });
@@ -154,7 +156,7 @@ public class ZoometricasActivity extends AppCompatActivity implements SwipeRefre
         @Override
         protected Void doInBackground(Void... voids) {
             HttpHandler sh = new HttpHandler();
-            urla = url.concat("?where=bovino_id:"+idbovino);
+            String urla = url.concat("?where=bovino_id:" + idbovino);
             String jsonStr = sh.makeServiceCall(urla);
 
             if(jsonStr != null){

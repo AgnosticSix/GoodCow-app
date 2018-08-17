@@ -1,5 +1,6 @@
 package com.upc.agnosticsix.goodcow;
 
+import android.app.Application;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
@@ -133,7 +134,7 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
-            finish();
+
         }
     }
 

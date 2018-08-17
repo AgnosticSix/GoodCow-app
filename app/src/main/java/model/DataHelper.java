@@ -12,7 +12,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 public class DataHelper {
-    public static String HOST_URL = "http://192.168.55.20:8080/";
+    public static String HOST_URL = "http://192.168.1.105:8080/";
     private static String urlBovino = HOST_URL + "bovinos";
     private static String urlSiniiga = HOST_URL + "siniigas/";
     private static String urlClase = HOST_URL + "clases_bovinos/";
@@ -26,7 +26,7 @@ public class DataHelper {
     private static String urlDeceso = HOST_URL + "causas_decesos";
     private static String TAG2 = "";
     private static String TAG = "LOOKUP-MATEO";
-    private static String siniiga, clase, raza, empadre, estado, bovino, sexo;
+    private static String siniiga, clase, raza, empadre, estado, bovino, sexo, respal;
     static List<Vacunas> vacunaList = new ArrayList<>();
     static List<Empleados> empleadoList = new ArrayList<>();
     static List<Cow> cowList = new ArrayList<>();
@@ -170,6 +170,28 @@ public class DataHelper {
             }
         }
         return estado;
+    }
+
+    public String getResPalpamiento(String id){
+        HttpHandler sh = new HttpHandler();
+        String url = urlResPal.concat("/" +id);
+
+        String jsonStr = sh.makeServiceCall(url);
+
+        if(jsonStr != null){
+            try{
+                JSONArray data = new JSONArray(jsonStr);
+
+                for(int i = 0; i < data.length(); i++){
+                    JSONObject c = data.getJSONObject(i);
+                    respal = c.getString("nombre");
+
+                }
+            }catch (final JSONException e){
+                Log.e(TAG,"Json parsing error: " + e.getMessage());
+            }
+        }
+        return respal;
     }
 
     public static List<Vacunas> getVacunas(){

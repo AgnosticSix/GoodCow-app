@@ -44,8 +44,6 @@ public class EmpleadoAdapter extends ArrayAdapter<Empleados> {
     private View createItemView(int position, View convertView, ViewGroup parent){
         final View view = inflater.inflate(mRes, parent, false);
 
-        //TODO: buscar el id del textview para support_simple_spinner_dropdown_item
-
         TextView textView = (TextView) view.findViewById(R.id.textViewItem);
 
         Empleados empleados = empleadosList.get(position);

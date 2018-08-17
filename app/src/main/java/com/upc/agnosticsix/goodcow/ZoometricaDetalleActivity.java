@@ -119,8 +119,8 @@ public class ZoometricaDetalleActivity extends AppCompatActivity {
 
                             JSONObject c = data.getJSONObject(i);
 
-                            //idbovino = Integer.parseInt(c.getString("bovino_id"));
-                            id = c.getString("bovino_id");
+                            idbovino = Integer.parseInt(c.getString("bovino_id"));
+                            bovinos = c.getString("nombre");
 
                         }
 
@@ -164,7 +164,7 @@ public class ZoometricaDetalleActivity extends AppCompatActivity {
                             JSONObject c = data.getJSONObject(i);
 
                             //idbovino = Integer.parseInt(c.getString("bovino_id"));
-                            bovinos = dataHelper.getCow(c.getString(idbovino2));
+                            bovinos = dataHelper.getCow(c.getString("bovino_id"));
                             alturas = c.getString("altura");
                             fechas = c.getString("fecha");
                             pesos = c.getString("peso");
