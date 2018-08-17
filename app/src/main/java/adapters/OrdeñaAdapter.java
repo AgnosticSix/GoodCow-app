@@ -60,10 +60,10 @@ public class OrdeñaAdapter extends RecyclerView.Adapter<OrdeñaAdapter.OrdeView
         return ordeList.size();
     }
 
-    class OrdeViewHolder extends RecyclerView.ViewHolder{
-        TextView cantidad, fecha;
+    public class OrdeViewHolder extends RecyclerView.ViewHolder{
+        public TextView cantidad, fecha;
 
-        OrdeViewHolder(View view){
+        public OrdeViewHolder(View view){
             super(view);
             cantidad = (TextView) view.findViewById(R.id.cantidadOrdeRecy);
             fecha = (TextView) view.findViewById(R.id.fechaOrdeRecy);

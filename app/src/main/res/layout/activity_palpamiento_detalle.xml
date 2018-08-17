@@ -42,11 +42,11 @@
                 android:text="Vaca"/>
 
             <TextView
-                android:id="@+id/VacaDetalles"
+                android:id="@+id/vacaPalDetalles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/app_name"
+                android:text="@string/loading"
                 android:textColor="@color/textColor" />
         </LinearLayout>
 
@@ -66,11 +66,11 @@
                 android:text="Resultado"/>
 
             <TextView
-                android:id="@+id/ResultadoDetalles"
+                android:id="@+id/resultadoPalDetalles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/app_name"
+                android:text="@string/loading"
                 android:textColor="@color/textColor" />
         </LinearLayout>
 
@@ -90,11 +90,11 @@
                 android:text="Empleado"/>
 
             <TextView
-                android:id="@+id/EmpleadoDetalles"
+                android:id="@+id/empleadoPalDetalles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/app_name"
+                android:text="@string/loading"
                 android:textColor="@color/textColor" />
         </LinearLayout>
 
@@ -114,11 +114,11 @@
                 android:text="Fecha"/>
 
             <TextView
-                android:id="@+id/FechaDetalles"
+                android:id="@+id/fechaPalDetalles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/app_name"
+                android:text="@string/loading"
                 android:textColor="@color/textColor" />
         </LinearLayout>
 
@@ -137,16 +137,12 @@
                 android:text="Observaciones"/>
 
             <TextView
-                android:id="@+id/ObservacionesDetalles"
+                android:id="@+id/observacionesPalDetalles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/app_name"
+                android:text="@string/loading"
                 android:textColor="@color/textColor" />
         </LinearLayout>
-
-
-
     </LinearLayout>
-
 </RelativeLayout>

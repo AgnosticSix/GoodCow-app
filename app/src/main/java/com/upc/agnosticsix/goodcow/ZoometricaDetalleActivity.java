@@ -66,7 +66,7 @@ public class ZoometricaDetalleActivity extends AppCompatActivity {
     private void initObjects(){
         dataHelper = new DataHelper();
         idintent = getIntent().getStringExtra("idzoometrica");
-        idbovino2 = getIntent().getStringExtra("idbovino");
+        idbovino2 = getIntent().getStringExtra("idbovinozoo3");
         Log.i(TAG, ""+idbovino2);
         if(idintent == "0" || idintent == null){
             agregarBtn.setText("Agregar");
@@ -79,6 +79,7 @@ public class ZoometricaDetalleActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(agregarBtn.getText().equals("Agregar")){
                     new uploadData().execute();
+                    finish();
                 }else if(agregarBtn.getText().equals("Actualizar")){
                     new updateData().execute();
                     finish();
@@ -109,7 +110,6 @@ public class ZoometricaDetalleActivity extends AppCompatActivity {
                 String url2 = urle.concat("/"+idbovino2);
 
                 String jsonStr = sh.makeServiceCall(url2);
-                String id;
 
                 if(jsonStr != null){
                     try{
@@ -205,7 +205,7 @@ public class ZoometricaDetalleActivity extends AppCompatActivity {
             if(progressDialog.isShowing())
                 progressDialog.dismiss();
 
-            if(idintent == "0" || idintent == null){
+            if(idintent == "" || idintent == null){
                 bovino.setText(bovinos);
                 fecha.setText(currentTime);
             }else{

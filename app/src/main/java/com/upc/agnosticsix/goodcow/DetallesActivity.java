@@ -31,12 +31,12 @@ import static model.DataHelper.HOST_URL;
 public class DetallesActivity extends AppCompatActivity {
 
     private String TAG = DetallesActivity.class.getSimpleName();
-    private String idbovino, fierros, nombres, sexos, siniigaa, clases, razas, empadres, estados, fechas, padre;
+    private String idbovino, fierros, nombres, sexos, siniigaa, clases, razas, empadres, estados, fechas, padres, madres;
     private ProgressDialog progressDialog;
     private static String url = HOST_URL + "bovinos/";
     String url2;
     private List<Cow> cowList;
-    private TextView fierro, nombre, sexo, clase, siniiga, raza, empadre, fecha, estado;
+    private TextView fierro, nombre, sexo, clase, siniiga, raza, empadre, fecha, estado, padre, madre;
     private DataHelper dataHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +52,8 @@ public class DetallesActivity extends AppCompatActivity {
 
         fierro = (TextView) findViewById(R.id.fierroDetalles);
         nombre = (TextView) findViewById(R.id.nombreDetalles);
+        padre = (TextView) findViewById(R.id.padreDetalles);
+        madre = (TextView) findViewById(R.id.madreDetalles);
         sexo = (TextView) findViewById(R.id.sexoDetalles);
         clase = (TextView) findViewById(R.id.claseDetalles);
         siniiga = (TextView) findViewById(R.id.siniigaDetalles);
@@ -152,7 +154,8 @@ public class DetallesActivity extends AppCompatActivity {
                         nombres = c.getString("nombre");
                         sexos = c.getString("sexo").equals("1") ? "Macho" : "Hembra";
                         clases = dataHelper.getClase(c.getString("clase_bovino_id").trim());
-                        padre = c.getString("padre_id");
+                        padres = dataHelper.getCow(c.getString("padre_id"));
+                        madres = dataHelper.getCow(c.getString("madre_id"));
                         siniigaa = dataHelper.getSiniiga(c.getString("siniiga_id").trim());
                         razas = dataHelper.getRaza(c.getString("raza_bovino_id").trim());
                         empadres = dataHelper.getEmpadre(c.getString("empadre_id").trim());
@@ -199,6 +202,16 @@ public class DetallesActivity extends AppCompatActivity {
 
             fierro.setText(fierros);
             nombre.setText(nombres);
+            if(padres.isEmpty()){
+                padre.setText("S/P");
+            }else{
+                padre.setText(padres);
+            }
+            if(madres.isEmpty()){
+                madre.setText("S/M");
+            }else{
+                madre.setText(madres);
+            }
             sexo.setText(sexos);
             clase.setText(clases);
             siniiga.setText(siniigaa);
@@ -215,16 +228,14 @@ public class DetallesActivity extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
 
-        if(sexos.equals("Hembra")){
-            menu.findItem(R.id.menu_palpamiento).setVisible(true);
+        if(sexos.equals("Hembra") && clases.equals("Lechera")){
             menu.findItem(R.id.menu_ordena).setVisible(true);
             menu.findItem(R.id.menu_cruzamiento).setVisible(true);
-        }else if(sexos.equals("Hembra") && clases.equals("Lechera")){
-
-            //menu.findItem(R.id.menu_palpamiento).setVisible(true);
-
-        }else if(padre != null){
-            menu.findItem(R.id.menu_registro).setVisible(true);
+            menu.findItem(R.id.menu_palpamiento).setVisible(true);
+        }else if(sexos.equals("Macho") && clases.equals("Semental")) {
+            menu.findItem(R.id.menu_cruzamiento).setVisible(true);
+        }else if(sexos.equals("Hembra")){
+            menu.findItem(R.id.menu_palpamiento).setVisible(true);
         }
         return super.onPrepareOptionsMenu(menu);
     }

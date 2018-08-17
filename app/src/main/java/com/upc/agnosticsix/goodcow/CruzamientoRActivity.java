@@ -73,7 +73,7 @@ public class CruzamientoRActivity extends AppCompatActivity implements SwipeRefr
             @Override
             public void onItemClick(View view, int i) {
                 postid = cruzaList.get(i).getId();
-                Intent intent = new Intent(activity, PalpamientoDetalleActivity.class);
+                Intent intent = new Intent(activity, CruzamientoDetalleActivity.class);
                 intent.putExtra("idbovinocruza2", postid);
                 startActivity(intent);
             }
@@ -125,7 +125,8 @@ public class CruzamientoRActivity extends AppCompatActivity implements SwipeRefr
         @Override
         protected Void doInBackground(Void... voids) {
             HttpHandler sh = new HttpHandler();
-            String jsonStr = sh.makeServiceCall(url.concat("?where=vaca_id:"+idbovino));
+            String url2 = url.concat("?where=vaca_id:"+idbovino);
+            String jsonStr = sh.makeServiceCall(url2);
 
             if(jsonStr != null){
                 try{

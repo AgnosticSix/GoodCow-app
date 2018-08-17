@@ -26,6 +26,7 @@
         android:title="Editar datos" />
     <item
         android:id="@+id/menu_zoo"
-        android:title="Editar zoometricas" />
+        android:title="Editar zoometricas"
+        android:visible="true" />
 </menu>
 

@@ -86,7 +86,7 @@ public class ZoometricasActivity extends AppCompatActivity implements SwipeRefre
             public void onClick(View view) {
                 Intent intent = new Intent(activity, ZoometricaDetalleActivity.class);
                 //intent.putExtra("idzoometrica", sinid);
-                intent.putExtra("idbovinozoo2", idbovino);
+                intent.putExtra("idbovinozoo3", idbovino);
                 startActivity(intent);
             }
         });

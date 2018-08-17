@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity
     private String TAG = MainActivity.class.getSimpleName();
     private AppCompatActivity activity = MainActivity.this;
     private RecyclerView recyclerViewCow;
-    private List<Cow> cowList, cowList2;
+    private List<Cow> cowList;
     private CowRecyclerAdapter cowRecyclerAdapter;
     private Cow cow;
     SwipeRefreshLayout swipeRefreshLayout;
@@ -245,7 +245,6 @@ public class MainActivity extends AppCompatActivity
 
                         cowList.add(cowData);
                     }
-                    cowList2 = cowList;
 
                 } catch (final JSONException e){
                     Log.e(TAG,"Json parsing error: " + e.getMessage());

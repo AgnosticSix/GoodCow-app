@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetallesActivity"
-    android:padding="15sp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".DetallesActivity">
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab2"
@@ -15,8 +14,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_gravity="bottom|end"
-        android:layout_marginBottom="0dp"
-        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="23dp"
+        android:layout_marginEnd="25dp"
         android:paddingBottom="5dp"
         android:paddingEnd="5dp"
         app:srcCompat="@android:drawable/ic_input_add" />
@@ -25,28 +24,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:paddingLeft="15dp">
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:textColor="@color/colorPrimary"
-                android:text="Fierro"/>
+                android:text="Fierro"
+                android:textColor="@color/colorPrimary" />
 
             <TextView
                 android:id="@+id/fierroDetalles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/app_name"
+                android:text="@string/loading"
                 android:textColor="@color/textColor" />
         </LinearLayout>
 
@@ -54,7 +53,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <TextView
@@ -62,23 +61,44 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:textColor="@color/colorPrimary"
-                android:text="Nombre"/>
+                android:text="Nombre"
+                android:textColor="@color/colorPrimary" />
 
             <TextView
                 android:id="@+id/nombreDetalles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/app_name"
+                android:text="@string/loading"
                 android:textColor="@color/textColor" />
         </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Padre"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/padreDetalles"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/loading"
+                android:textColor="@color/textColor" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <TextView
@@ -86,15 +106,38 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:textColor="@color/colorPrimary"
-                android:text="Sexo"/>
+                android:text="Madre"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/madreDetalles"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/loading"
+                android:textColor="@color/textColor" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Sexo"
+                android:textColor="@color/colorPrimary" />
 
             <TextView
                 android:id="@+id/sexoDetalles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/app_name"
+                android:text="@string/loading"
                 android:textColor="@color/textColor" />
         </LinearLayout>
 
@@ -102,7 +145,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <TextView
@@ -110,15 +153,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:textColor="@color/colorPrimary"
-                android:text="Clase"/>
+                android:text="Clase"
+                android:textColor="@color/colorPrimary" />
 
             <TextView
                 android:id="@+id/claseDetalles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/app_name"
+                android:text="@string/loading"
                 android:textColor="@color/textColor" />
         </LinearLayout>
 
@@ -126,22 +169,22 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:textColor="@color/colorPrimary"
-                android:text="Siniiga"/>
+                android:text="Siniiga"
+                android:textColor="@color/colorPrimary" />
 
             <TextView
                 android:id="@+id/siniigaDetalles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/app_name"
+                android:text="@string/loading"
                 android:textColor="@color/textColor" />
         </LinearLayout>
 
@@ -149,22 +192,22 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:textColor="@color/colorPrimary"
-                android:text="Raza"/>
+                android:text="Raza"
+                android:textColor="@color/colorPrimary" />
 
             <TextView
                 android:id="@+id/razaDetalles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/app_name"
+                android:text="@string/loading"
                 android:textColor="@color/textColor" />
         </LinearLayout>
 
@@ -172,22 +215,22 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:textColor="@color/colorPrimary"
-                android:text="Empadre"/>
+                android:text="Empadre"
+                android:textColor="@color/colorPrimary" />
 
             <TextView
                 android:id="@+id/empadreDetalles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/app_name"
+                android:text="@string/loading"
                 android:textColor="@color/textColor" />
         </LinearLayout>
 
@@ -195,22 +238,22 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:textColor="@color/colorPrimary"
-                android:text="Fecha Nacimiento"/>
+                android:text="Fecha Nacimiento"
+                android:textColor="@color/colorPrimary" />
 
             <TextView
                 android:id="@+id/fechaDetalles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/app_name"
+                android:text="@string/loading"
                 android:textColor="@color/textColor" />
         </LinearLayout>
 
@@ -218,22 +261,22 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:textColor="@color/colorPrimary"
-                android:text="Estado Bovino"/>
+                android:text="Estado Bovino"
+                android:textColor="@color/colorPrimary" />
 
             <TextView
                 android:id="@+id/estadoDetalles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/app_name"
+                android:text="@string/loading"
                 android:textColor="@color/textColor" />
         </LinearLayout>
 

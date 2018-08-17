@@ -39,14 +39,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:textColor="@color/colorPrimary"
-                android:text="Bovino"/>
+                android:text="Vaca"/>
 
             <TextView
-                android:id="@+id/BovinoDetalles"
+                android:id="@+id/vacaOrdenaDetalles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/app_name"
+                android:text="@string/loading"
                 android:textColor="@color/textColor" />
         </LinearLayout>
 
@@ -66,11 +66,11 @@
                 android:text="Empleado"/>
 
             <TextView
-                android:id="@+id/EmpleadoDetalles"
+                android:id="@+id/empleadoOrdenaDetalles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/app_name"
+                android:text="@string/loading"
                 android:textColor="@color/textColor" />
         </LinearLayout>
 
@@ -90,11 +90,11 @@
                 android:text="Fecha"/>
 
             <TextView
-                android:id="@+id/FechaDetalles"
+                android:id="@+id/fechaOrdenaDetalles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/app_name"
+                android:text="@string/loading"
                 android:textColor="@color/textColor" />
         </LinearLayout>
 
@@ -114,11 +114,11 @@
                 android:text="Cantidad(litros)"/>
 
             <TextView
-                android:id="@+id/CantidadDetalles"
+                android:id="@+id/cantidadOrdeDetalles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/app_name"
+                android:text="@string/loading"
                 android:textColor="@color/textColor" />
         </LinearLayout>
 
@@ -137,16 +137,12 @@
                 android:text="Observaciones"/>
 
             <TextView
-                android:id="@+id/ObservacionesDetalles"
+                android:id="@+id/observaOrdeDetalles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/app_name"
+                android:text="@string/loading"
                 android:textColor="@color/textColor" />
         </LinearLayout>
-
-
-
     </LinearLayout>
-
 </RelativeLayout>
